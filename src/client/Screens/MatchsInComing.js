@@ -139,7 +139,7 @@ export default class MatchsInComing extends Component {
         return (
             <ScrollView>
                 <TouchableOpacity
-                    onPress={this.fetchMatchs}
+                    onPress={this.loadMatchs}
                     style={styles.buttonLoad}>
                     <Image style={styles.icon} source={require('../Images/refresh.png')}/>
                 </TouchableOpacity>
