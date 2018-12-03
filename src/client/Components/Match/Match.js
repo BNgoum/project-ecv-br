@@ -30,7 +30,22 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         marginLeft: 16,
         marginRight: 16,
-        marginTop: 16
+        marginTop: 16,
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingRight: 8,
+        paddingLeft: 8,
+        height: 120,
+        borderRadius: 15,
+        backgroundColor: '#fff',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     wrapperDate: {
       display: "flex",
@@ -38,7 +53,7 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
     dateMatch: {
-      fontSize: 18
+      fontSize: 13
     },
     wrapperTeams: {
       display: "flex",

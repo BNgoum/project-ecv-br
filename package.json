@@ -13,7 +13,6 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
-    "date-and-time": "^0.6.3",
     "dotenv": "^6.1.0",
     "expo": "^31.0.2",
     "express": "^4.16.4",
@@ -23,10 +22,11 @@
     "node-fetch": "^2.3.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
-    "react-native-axios": "^0.17.1",
+    "react-native-swiper": "^1.5.14",
     "react-navigation": "^3.0.0",
     "react-redux": "^5.1.1",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-form": "^7.4.2"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"

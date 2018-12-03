@@ -1,6 +1,11 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
-import AuthentificationReducer from './Reducers/AuthentificationReducer';
-import SetSignUp from './Reducers/SetSignUp';
+import AuthenticationReducer from './Reducers/User/reducer';
+import BetRoomReducer from './Reducers/BetRoom/reducer';
 
-export default createStore(AuthentificationReducer);
+const reducers = combineReducers({
+    AuthenticationReducer,
+    BetRoomReducer
+})
+
+export default createStore(reducers);

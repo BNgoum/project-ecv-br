@@ -36,7 +36,7 @@ Routes definition
                 // Use controller function
                 register(req.body)
                 .then( apiRes =>  sendApiSuccessResponse(res, 'User register', apiRes) )
-                .catch( apiErr => sendApiErrorResponse(res, 'User not register', apiErr) )
+                .catch( apiErr => sendApiErrorResponse(res, 'User already exist', apiErr) )
             });
 
             // Login

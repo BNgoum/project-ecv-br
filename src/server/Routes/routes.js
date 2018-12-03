@@ -12,7 +12,6 @@ var MatchsDeLaSemaine = require('../Models/match_de_la_semaine');
 var collectionOfMatchsDuJour = db.collection('matchsdujour');
 var collectionOfMatchsDeLaSemaine = db.collection('matchsdelasemaine');
 var collectionOfMatchsDuMois = db.collection('matchsdumois');
-var dateandtime = require('date-and-time');
 var today = moment().format('YYYY-MM-DD');
 var apiHeaders = { 'X-Auth-Token': '74a86b94a67541189f94e8266901f6e4' }
 
@@ -115,10 +114,19 @@ app.route('/fetchMatchDeLaSemaine')
 
                         collectionOfMatchsDeLaSemaine.insertOne(matchdujour);
                     })
+
+                    // if (err) {
+                    //     return res.json({status: 500, error: err});
+                    //   }
+                    // res.json({ status: 500, Resultat: "Les matchs de la semaine ont été ajoutés." });
                     
-                    res.status(201).json({Resultat: "Les matchs de la semaine ont été ajoutés."});
+                    // res.json({Resultat: "Les matchs de la semaine ont été ajoutés."});
+                .then((res) => {
+                    if (res) {
+                        res.json({ status: 200, Resultat: "Les matchs de la semaine ont été ajoutés." });
+                    }})
                 }).catch(err => {
-                    console.log('Erreur lors de l\'ajout des matchs de la semaine : ', err);
+                    console.log('Erreur lors de l\'ajout des matchs de la semaine (routes) : ', err);
                 });
             }
         }
@@ -251,4 +259,3 @@ app.route('/matchdumois')
         });
 })
 
-module.exports = app;
