@@ -58,7 +58,7 @@ const TabBarNavigator = createBottomTabNavigator({
         screen: HomeStack,
         navigationOptions: {
             tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/home.png')}/>
+                return <Image style={styles.icon} source={require('../Images/tab_bar/home.png')}/>
             }
         }
     },
@@ -66,7 +66,7 @@ const TabBarNavigator = createBottomTabNavigator({
         screen: MatchsInComingStack,
         navigationOptions: {
             tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/football.png')}/>
+                return <Image style={styles.icon} source={require('../Images/tab_bar/football.png')}/>
             }
         }
     },
@@ -74,7 +74,7 @@ const TabBarNavigator = createBottomTabNavigator({
         screen: CreateBetRoomStack,
         navigationOptions: {
             tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/plus.png')}/>
+                return <Image style={styles.icon} source={require('../Images/tab_bar/plus.png')}/>
             }
         }
     },
@@ -82,7 +82,7 @@ const TabBarNavigator = createBottomTabNavigator({
         screen: ClassementStack,
         navigationOptions: {
             tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/classement.png')}/>
+                return <Image style={styles.icon} source={require('../Images/tab_bar/classement.png')}/>
             }
         }
     },
@@ -90,7 +90,7 @@ const TabBarNavigator = createBottomTabNavigator({
         screen: FriendsAndProfilStack,
         navigationOptions: {
             tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/profile.png')}/>
+                return <Image style={styles.icon} source={require('../Images/tab_bar/profile.png')}/>
             }
         }
     }

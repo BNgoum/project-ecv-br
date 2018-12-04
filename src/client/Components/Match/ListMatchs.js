@@ -18,7 +18,6 @@ class ListMatchs extends Component {
             LiguedesChampions: [],
             isLoading: true
         }
-        this.domain = '192.168.1.81'
     }
 
     componentDidMount() {
@@ -43,81 +42,37 @@ class ListMatchs extends Component {
 
     fetchMatchs = () => {
         let today = moment().format('YYYY-MM-DD');
-        let nextWeek = moment(today, "YYYY-MM-DD").add(7, 'days');
-        return new Promise ((resolve, reject) => {
-            resolve(requestFetchMatchs(today, nextWeek))
-            .then(() => this.getMatchs())
-            .catch((error) => console.log('Erreur lors du fetch des matchs dans le composant ListMatchs : ', error))
-        })
+        let nextWeek = moment(today).add(7, 'days').format('YYYY-MM-DD');
+        return new Promise ((resolve, reject) => { resolve(requestFetchMatchs(today, nextWeek)) })
+        .then(() => { this.getMatchs() })
+        .catch((error) => console.log('Erreur lors du fetch des matchs dans le composant ListMatchs : ', error))
     }
 
-    // loadMatchs = () => {
-        
-    //     fetch('http://' + this.domain + ':3000/api/matchdelasemaine?championnat=Ligue 1')
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //         console.log(responseJson)
-    //         this.setState({
-    //             Ligue1: responseJson.matchs,
-    //         })
-    //     })
-    //     .catch((error) => console.error(error));
-
-    //     fetch('http://' + this.domain + ':3000/api/matchdelasemaine?championnat=La Liga')
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //         this.setState({
-    //             LaLiga: responseJson.matchs,
-    //         })
-    //     })
-    //     .catch((error) => console.error(error));
-
-    //     fetch('http://' + this.domain + ':3000/api/matchdelasemaine?championnat=Premier League')
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //         this.setState({
-    //             PremierLeague: responseJson.matchs,
-    //         })
-    //     })
-    //     .catch((error) => console.error(error));
-
-    //     fetch('http://' + this.domain + ':3000/api/matchdelasemaine?championnat=Bundesliga')
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //         this.setState({
-    //             Bundesliga: responseJson.matchs,
-    //         })
-    //     })
-    //     .catch((error) => console.error(error));
-
-    //     fetch('http://' + this.domain + ':3000/api/matchdelasemaine?championnat=Serie A')
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //         this.setState({
-    //             SerieA: responseJson.matchs,
-    //         })
-    //     })
-    //     .catch((error) => console.error(error));
-
-    //     fetch('http://' + this.domain + ':3000/api/matchdelasemaine?championnat=Ligue des champions')
-    //     .then((response) => response.json())
-    //     .then((responseJson) => {
-    //         this.setState({
-    //             LiguedesChampions: responseJson.matchs,
-    //         })
-    //     })
-    //     .catch((error) => console.error(error));
-    // }
-
     render() {
-        console.log(this.props.state.BetRoomReducer)
         return (
             <ScrollView>
                 <TouchableOpacity
                     onPress={this.fetchMatchs}
                     style={styles.buttonLoad}>
-                    <Image style={styles.icon} source={require('../../Images/refresh.png')}/>
+                    <Image style={styles.icon} source={require('../../Images/matchs/refresh.png')}/>
                 </TouchableOpacity>
+
+                { this.props.state.BetRoomReducer.LigueDesChampions.length > 0 ? 
+                    <View style={styles.wrapperLeague}>
+                        <View style={styles.wrapperLeagueHeader}>
+                            <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_des_champions.png')}/>
+                            <Text style={styles.titreLeague}>Ligue des Champions</Text>
+                        </View>
+
+                        <FlatList
+                            data={this.props.state.BetRoomReducer.LigueDesChampions}
+                            keyExtractor={(item) => item._id.toString()}
+                            renderItem={({item}) => <Match matchs={item} />}
+                        />
+                    </View>
+                :
+                    null
+                }
 
                 {
                     this.props.state.BetRoomReducer.Ligue1.length > 0 ?
@@ -206,23 +161,6 @@ class ListMatchs extends Component {
                         </View>
                     :
                         null
-                }
-
-                { this.props.state.BetRoomReducer.LigueDesChampions.length > 0 ? 
-                    <View style={styles.wrapperLeague}>
-                        <View style={styles.wrapperLeagueHeader}>
-                            <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_des_champions.png')}/>
-                            <Text style={styles.titreLeague}>Ligue des Champions</Text>
-                        </View>
-
-                        <FlatList
-                            data={this.props.state.BetRoomReducer.LigueDesChampions}
-                            keyExtractor={(item) => item._id.toString()}
-                            renderItem={({item}) => <Match matchs={item} />}
-                        />
-                    </View>
-                :
-                    null
                 }
             </ScrollView>
         )

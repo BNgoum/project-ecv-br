@@ -40,7 +40,7 @@ class MatchRouterClass {
         });
 
         // Get Match of championnats
-        matchRouter.get('/matchsChampionnat', (req, res) => {
+        matchRouter.post('/matchsChampionnat', (req, res) => {
 
             // Check for mandatories
             const { miss, extra, ok } = checkFields(['championnat'], req.body);

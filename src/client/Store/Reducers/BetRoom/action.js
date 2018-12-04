@@ -2,31 +2,27 @@ const axios = require('axios');
 const domain = '192.168.1.81';
 
 export const requestLigue1Matchs = () => {
-    return axios.get('http://' + domain + ':3000/api/matchsChampionnat', {
-        params: {
-            championnat: 'Ligue 1'
-        }
+    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+        championnat: "Ligue 1"
     })
     .then((responseJson) => {
         const action = {
-            type: "IS_L1", value: responseJson.data.matchs
+            type: "IS_L1", value: responseJson.data.data.matchs || []
         }
         return action;
     })
     .catch(err => {
-        console.log('Erreur lors de la tentative de récupération des matchs de la semaine Ligue 1 (get) : ', err);
+        console.log('Erreur lors de la tentative de récupération des matchs de la semaine Ligue 1 (post) : ', err);
     });
 }
 
 export const requestPremierLeagueMatchs = () => {
-    return axios.get('http://' + domain + ':3000/api/matchsChampionnat', {
-        params: {
-            championnat: 'Premier League'
-        }
+    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+        championnat: 'Premier League'
     })
     .then((responseJson) => {
         const action = {
-            type: "IS_PL", value: responseJson.data.matchs
+            type: "IS_PL", value: responseJson.data.data.matchs || []
         }
         return action;
     })
@@ -36,14 +32,12 @@ export const requestPremierLeagueMatchs = () => {
 }
 
 export const requestLaLigaMatchs = () => {
-    return axios.get('http://' + domain + ':3000/api/matchsChampionnat', {
-        params: {
-            championnat: 'La Liga'
-        }
+    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+        championnat: 'La Liga'
     })
     .then((responseJson) => {
         const action = {
-            type: "IS_LL", value: responseJson.data.matchs
+            type: "IS_LL", value: responseJson.data.data.matchs || []
         }
         return action;
     })
@@ -53,15 +47,12 @@ export const requestLaLigaMatchs = () => {
 }
 
 export const requestSerieAMatchs = () => {
-    return axios.get('http://' + domain + ':3000/api/matchsChampionnat', {
-        params: {
-            championnat: 'Serie A'
-        }
+    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+        championnat: 'Serie A'
     })
     .then((responseJson) => {
-        console.log('#######    #######  : ', responseJson.data)
         const action = {
-            type: "IS_SA", value: responseJson.data.matchs
+            type: "IS_SA", value: responseJson.data.data.matchs || []
         }
         return action;
     })
@@ -71,14 +62,12 @@ export const requestSerieAMatchs = () => {
 }
 
 export const requestBundesligaMatchs = () => {
-    return axios.get('http://' + domain + ':3000/api/matchsChampionnat', {
-        params: {
-            championnat: 'Bundesliga'
-        }
+    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+        championnat: 'Bundesliga'
     })
     .then((responseJson) => {
         const action = {
-            type: "IS_BU", value: responseJson.data.matchs
+            type: "IS_BU", value: responseJson.data.data.matchs || []
         }
         return action;
     })
@@ -87,15 +76,13 @@ export const requestBundesligaMatchs = () => {
     });
 }
 
-export const requestLigueDesChampionsMatchs = (championnat) => {
-    return axios.get('http://' + domain + ':3000/api/matchsChampionnat', {
-        params: {
-            championnat: championnat
-        }
+export const requestLigueDesChampionsMatchs = () => {
+    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+        championnat: "Ligue des Champions"
     })
     .then((responseJson) => {
         const action = {
-            type: "IS_LDC", value: responseJson.data.matchs || []
+            type: "IS_LDC", value: responseJson.data.data.matchs || []
         }
         return action;
     })

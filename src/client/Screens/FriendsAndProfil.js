@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 
 import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
@@ -8,7 +8,7 @@ class FriendsAndProfil extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            indexScreen: 0
         }
     }
 
@@ -22,17 +22,23 @@ class FriendsAndProfil extends Component {
         }).then(() => this.props.navigation.navigate('Connexion'))
         .catch((err) => reject('Erreur lors de la déconnexion : ', err));
     }
+
+    handleSwipeScreen = (index) => {
+        this.setState({indexScreen: index})
+    }
     
     render() {
         return (
             <View style={styles.wrapperSlider}>
-                <Swiper style={styles.wrapper}>
-                    <View style={styles.friendsSlide}>
-                        <Text style={styles.title}>Friends screen</Text>
-                    </View>
+                <Swiper index={this.state.indexScreen} style={styles.wrapper}>
                     <View style={styles.profilSlide}>
+                        <TouchableOpacity onPress={() => this.handleSwipeScreen(0)} style={styles.buttonFriends}><Image style={styles.pictoFriends} source={require('../Images/profil_friends/network.png')}/></TouchableOpacity>
                         <Text style={styles.title}>Profil Screen</Text>
                         <TouchableOpacity style={styles.buttonDisconnect} onPress={this.disconnect}><Text style={styles.textDisconnect}>Se déconnecter</Text></TouchableOpacity>
+                    </View>
+                    <View style={styles.friendsSlide}>
+                        <Text style={styles.title}>Friends screen</Text>
+                        <TouchableOpacity onPress={() => this.handleSwipeScreen(1)} style={styles.buttonDisconnect}><Text style={styles.textDisconnect}>To friends</Text></TouchableOpacity>
                     </View>
                 </Swiper>
             </View>
@@ -66,6 +72,15 @@ const styles = StyleSheet.create({
     textDisconnect: {
         alignSelf: 'center',
         fontSize: 16
+    },
+    buttonFriends: {
+        alignSelf: 'flex-end',
+        marginTop: 8,
+        marginRight: 8
+    },
+    pictoFriends: {
+        width: 40,
+        height: 40
     }
 })
 

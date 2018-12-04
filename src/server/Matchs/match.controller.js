@@ -4,7 +4,7 @@ Import
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 const MatchModel = require('../Models/match.model');
-const collectionMatch = db.collection('matchs');
+const collectionMatch = db.collection('matches');
 const moment = require('moment');
 const fetch = require("node-fetch");
 //
@@ -22,6 +22,11 @@ const championnats = {
 /*
 Functions
 */
+// Fonction de tri récupérer sur StackOverflow 
+sortByDateAsc = function (lhs, rhs) {
+    return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
+}
+
 const fetchMatchs = body => {
     // Search for user
     return new Promise( (resolve, reject) => {

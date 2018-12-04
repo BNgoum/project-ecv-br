@@ -3,7 +3,6 @@ require('dotenv').config();
 const port = process.env.PORT;
 
 // Import des routes
-const routes = require('./Routes/routes')
 const AuthRouterClass = require('./Auth/auth.routes');
 const MatchRouterClass = require('./Matchs/match.routes');
 
@@ -32,7 +31,6 @@ app.use(bodyParser.json());
 const authRouter = new AuthRouterClass();
 const matchRouter = new MatchRouterClass();
 
-// app.use('/api', routes);
 app.use('/api', matchRouter.init());
 app.use('/api/auth', authRouter.init());
 
