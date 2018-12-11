@@ -3,7 +3,7 @@ Imports
 */
     const express = require('express');
     const authRouter = express.Router({ mergeParams: true });
-    const { register, login } = require('./auth.controller');
+    const { register, login, getUser } = require('./auth.controller');
     const mongoose = require('mongoose');
 
     // INNER
@@ -19,9 +19,18 @@ Routes definition
 */
     class AuthRouterClass {
         routes(){
-            // HATEOAS
-            authRouter.get('/', (req, res) => {
-                res.json('HATEOAS for auth');
+            // User
+            authRouter.post('/user', (req, res) => {
+                // Check for mandatories
+                const { miss, extra, ok } = checkFields(['email'], req.body);
+
+                // Check oppropriated values
+                if( !ok ){ sendFieldsError( res, 'Bad fields provided', miss, extra ) }
+
+                // Use controller function
+                getUser(req.body)
+                .then( apiRes =>  sendApiSuccessResponse(res, 'User information', apiRes) )
+                .catch( apiErr => sendApiErrorResponse(res, 'User information not exist', apiErr) )
             });
             
             // Register

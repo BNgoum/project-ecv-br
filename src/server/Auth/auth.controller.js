@@ -67,6 +67,19 @@ Functions
             })
         })
     };
+
+    const getUser = body => {
+        return new Promise( (resolve, reject ) => {
+
+            UserModel.findOne( { email: body.email }, (error, user) => {
+                if(error) reject(error)
+                else if( !user ) reject('User not found')
+                else {
+                    resolve({ user: user })
+                }
+            })
+        })
+    };
 //
 
 /*
@@ -74,6 +87,7 @@ Export
 */
     module.exports = {
         register,
-        login
+        login,
+        getUser
     }
 //

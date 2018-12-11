@@ -8,9 +8,8 @@ import { connect } from 'react-redux';
 class Navigation extends Component {
     
     render() {
-        // console.log(this.props)
-        // return ( this.props.AuthenticationReducer.isLogin !== null ? <TabBarNavigation /> : <Authentification /> )
-        return ( <TabBarNavigation /> )
+        return ( this.props.AuthenticationReducer.isLogin !== null ? <TabBarNavigation /> : <Authentification /> )
+        // return ( <TabBarNavigation /> )
     }
 }
 

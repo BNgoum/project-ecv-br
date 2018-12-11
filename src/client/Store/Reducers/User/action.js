@@ -49,12 +49,24 @@ export const requestLogin = (email, password) => {
             }
         } else {
             const action = {
-                type: "IS_LOGIN", value: responseJson.data.token
+                type: "IS_LOGIN", value: responseJson.data.data.token
             }
             return action;
         }
     })
     .catch(err => {
         console.log('Erreur lors de la connexion du user : ', err);
+    });
+}
+
+export const requestUserInformation = (email) => {
+    return axios.post('http://' + domain + ':3000/api/auth/user', {
+        email: email
+    })
+    .then((responseJson) => {
+        return responseJson.data.data.user
+    })
+    .catch(err => {
+        console.log('Erreur lors de la récupération des informations du user : ', err);
     });
 }

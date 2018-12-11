@@ -1,5 +1,3 @@
-import React, { Component } from 'react';
-
 import { createStackNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation'
 
 import Inscription from '../Screens/Authentification/Inscription';
@@ -23,8 +21,6 @@ const InscriptionStack = createStackNavigator({
         }
     }
 })
-
-const AppContainer = createAppContainer({ConnexionStack, InscriptionStack});
 
 export default createAppContainer(createSwitchNavigator(
     {
