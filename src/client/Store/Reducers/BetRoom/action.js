@@ -1,8 +1,10 @@
 const axios = require('axios');
 const domain = '192.168.1.81';
+// const domain = '10.10.2.9';
+// const domain = '192.168.0.25';
 
 export const requestLigue1Matchs = () => {
-    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+    return axios.post('http://' + domain + ':3000/api/match/matchsChampionnat', {
         championnat: "Ligue 1"
     })
     .then((responseJson) => {
@@ -17,7 +19,7 @@ export const requestLigue1Matchs = () => {
 }
 
 export const requestPremierLeagueMatchs = () => {
-    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+    return axios.post('http://' + domain + ':3000/api/match/matchsChampionnat', {
         championnat: 'Premier League'
     })
     .then((responseJson) => {
@@ -32,7 +34,7 @@ export const requestPremierLeagueMatchs = () => {
 }
 
 export const requestLaLigaMatchs = () => {
-    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+    return axios.post('http://' + domain + ':3000/api/match/matchsChampionnat', {
         championnat: 'La Liga'
     })
     .then((responseJson) => {
@@ -47,7 +49,7 @@ export const requestLaLigaMatchs = () => {
 }
 
 export const requestSerieAMatchs = () => {
-    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+    return axios.post('http://' + domain + ':3000/api/match/matchsChampionnat', {
         championnat: 'Serie A'
     })
     .then((responseJson) => {
@@ -62,7 +64,7 @@ export const requestSerieAMatchs = () => {
 }
 
 export const requestBundesligaMatchs = () => {
-    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+    return axios.post('http://' + domain + ':3000/api/match/matchsChampionnat', {
         championnat: 'Bundesliga'
     })
     .then((responseJson) => {
@@ -77,7 +79,7 @@ export const requestBundesligaMatchs = () => {
 }
 
 export const requestLigueDesChampionsMatchs = () => {
-    return axios.post('http://' + domain + ':3000/api/matchsChampionnat', {
+    return axios.post('http://' + domain + ':3000/api/match/matchsChampionnat', {
         championnat: "Ligue des Champions"
     })
     .then((responseJson) => {
@@ -92,11 +94,11 @@ export const requestLigueDesChampionsMatchs = () => {
 }
 
 export const requestFetchMatchs = (today, nextWeek) => {
-    return axios.post('http://' + domain + ':3000/api/matchs', {
+    return axios.post('http://' + domain + ':3000/api/match/matchs', {
         dateFrom: today,
         dateTo: nextWeek
     })
     .catch(err => {
-        console.log('Erreur lors de la tentative de récupération des matchs de la semaine (fetch : action.js) : ', err);
+        console.log('Erreur lors de la tentative de récupération des matchs de la semaine (Axios : action.js) : ', err);
     });
 }

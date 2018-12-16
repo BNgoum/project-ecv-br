@@ -11,10 +11,16 @@ const jwt = require('jsonwebtoken');
 Model definition
 */
 const userSchema = new Schema({
+    pseudo: String,
     first_name: String,
     last_name: String,
     email: String,
     password: String,
+    friends: [{ 
+        accepted: [{ type: Schema.Types.ObjectId }],
+        pending: [{ type: Schema.Types.ObjectId }],
+        recipient: [{ type: Schema.Types.ObjectId }]
+    }]
 })
 //
 

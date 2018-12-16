@@ -7,6 +7,7 @@ class FormSignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            pseudo: "",
             firstName: "",
             lastName: "",
             email: "",
@@ -25,13 +26,13 @@ class FormSignUp extends Component {
             this.setState({ isEmpty: false })
             
             return new Promise((resolve, reject) => {
-                resolve(requestRegister(this.state.firstName, this.state.lastName, this.state.email, this.state.password))
+                resolve(requestRegister(this.state.pseudo, this.state.firstName, this.state.lastName, this.state.email, this.state.password))
             })
             .then((action) => { this.props.dispatch(action) })
             .then(() => {
                 // TODO: Check email confirmed
                 const action = {
-                    type: "IS_LOGIN", value: "Connecté sans token."
+                    type: "IS_LOGIN", value: null
                 }
                 this.props.dispatch(action);
             })
@@ -45,6 +46,11 @@ class FormSignUp extends Component {
                 <Text style={ styles.title }>Inscription</Text>
 
                 { this.props.state.AuthenticationReducer.auth_inscription_not_validated === "" ? null : <Text style={styles.textSignUpSuccess}>{this.props.state.AuthenticationReducer.auth_inscription_not_validated}</Text> }
+
+                <TextInput 
+                    style={styles.inputText}
+                    onChangeText={(pseudo) => { this.setState({pseudo: pseudo}); }}
+                    placeholder="Saisissez votre pseudo..."/>
 
                 <TextInput 
                     style={styles.inputText}

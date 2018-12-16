@@ -13,6 +13,7 @@ class Profil extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            userPseudo: "",
             userLastName: "",
             userFirstName: ""
         }
@@ -32,6 +33,7 @@ class Profil extends Component {
         })
         .then((data) => {
             this.setState({
+                userPseudo: data.pseudo,
                 userFirstName: data.first_name,
                 userLastName: data.last_name,
             })
@@ -44,6 +46,7 @@ class Profil extends Component {
         return (
             <View style={styles.wrapperMatch}>
                 <Text style={styles.title} >Mon Profil</Text>
+                <Text style={styles.title} >{this.state.userPseudo}</Text>
                 <Text style={styles.title} >{this.state.userLastName} {this.state.userFirstName}</Text>
                 <Disconnect />
             </View>

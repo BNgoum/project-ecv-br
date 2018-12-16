@@ -17,30 +17,41 @@ Functions
                     return reject(error)
                 }
                 else if(user){ // User already exist
-                    return reject(user)
+                    return reject('L\'adresse email existe déjà : ', user)
                 }
-                else{ // Register new user
-                    // Crypt password
-                    bcrypt.hash(body.password, 10)
-                    .then( hashedPassword => {
-                        console.log(hashedPassword)
-                        // Replace clear password
-                        body.password = hashedPassword;
+                else{
+                    UserModel.findOne({ pseudo: body.pseudo }, (error, user) => {
+                        if(error){ // Mongo Error
+                            return reject(error)
+                        }
+                        else if(user){ // User already exist
+                            return reject('Le pseudo est déjà utilisé : ', user)
+                        }
+                        else {
+                            // Register new user
+                            // Crypt password
+                            bcrypt.hash(body.password, 10)
+                            .then( hashedPassword => {
+                                
+                                // Replace clear password
+                                body.password = hashedPassword;
 
-                        // Save user
-                        UserModel.create(body, (error, newUser) => {
-                            if(error){ // Mongo error
-                                return reject(error)
-                            }
-                            else{ // User registrated
-                                return resolve(newUser);
-                            };
-                        });
-                    })
-                    .catch( hashError => {
-                        console.log('error', hashError)
-                        return reject(hashError);
-                    });
+                                // Save user
+                                UserModel.create(body, (error, newUser) => {
+                                    if(error){ // Mongo error
+                                        return reject(error)
+                                    }
+                                    else{ // User registrated
+                                        return resolve(newUser);
+                                    };
+                                });
+                            })
+                            .catch( hashError => {
+                                console.log('error', hashError)
+                                return reject(hashError);
+                            });
+                        }
+                    }) 
                 };
             });
         });
@@ -80,6 +91,32 @@ Functions
             })
         })
     };
+
+    const getUserById = body => {
+        return new Promise( (resolve, reject ) => {
+
+            UserModel.findOne( { _id: body.id }, (error, user) => {
+                if(error) reject(error)
+                else if( !user ) reject('User not found')
+                else {
+                    resolve({ user: user })
+                }
+            })
+        })
+    };
+
+    const getUserByPseudo = body => {
+        return new Promise( (resolve, reject ) => {
+
+            UserModel.findOne( { pseudo: body.pseudo }, (error, user) => {
+                if(error) reject(error)
+                else if( !user ) reject('User not found')
+                else {
+                    resolve({ user: user })
+                }
+            })
+        })
+    };
 //
 
 /*
@@ -88,6 +125,8 @@ Export
     module.exports = {
         register,
         login,
-        getUser
+        getUser,
+        getUserById,
+        getUserByPseudo
     }
 //
