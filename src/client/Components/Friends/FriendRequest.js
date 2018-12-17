@@ -27,6 +27,9 @@ class FriendRequest extends Component {
                 const action = { type: "FOUND_USER_BY_PSEUDO", value: "" }
                 this.props.dispatch(action);
 
+                const action2 = { type: "ADD_PENDING", value: data.pseudo }
+                this.props.dispatch(action2);
+
                 this.setState({ idUserB: data._id })
             }
         })

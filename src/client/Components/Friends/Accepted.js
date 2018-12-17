@@ -56,8 +56,8 @@ class Accepted extends Component {
         })
         .then(() => {
             const { idsAccepted } = this.state;
-            idsAccepted.forEach( (id) => {
-                this.getPseudo(id);
+            idsAccepted.map( (id) => {
+                return this.getPseudo(id);
             })
         })
         .catch((error) => console.log('Erreur lors de l\'affichage des amis : ', error))

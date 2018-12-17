@@ -11,7 +11,8 @@ class FriendRecipient extends Component {
         super(props);
         this.state = {
             idUserA: "",
-            iduserB: ""
+            iduserB: "",
+            isAccepted: false
         }
     }
 
@@ -41,23 +42,27 @@ class FriendRecipient extends Component {
         })
         .then( action => {
             this.props.dispatch(action);
+
+            this.setState({isAccepted: true})
         })
         .catch((error => console.log('Erreur lors de la requete d\'ajout d\'amis : ', error)))
     }
 
     render() {
         return (
-            <View styles={styles.wrapperRecipientFriend}>
-                <Text style={styles.pseudo} >{this.props.data}</Text>
-                <TouchableOpacity 
-                    style={styles.button}
-                    onPress={this.acceptedRequest}
-                >
-                    <Image
-                        style={styles.icon}
-                        source={require('../../Images/friends/check.png')}
-                    />
-                </TouchableOpacity>
+            <View>
+                {
+                    this.state.isAccepted ?
+                    null
+                    :
+                    <View styles={styles.wrapperRecipientFriend}>
+                        <Text style={styles.pseudo} >{this.props.data}</Text>
+                        <TouchableOpacity style={styles.button} onPress={this.acceptedRequest}>
+                            <Image style={styles.icon} source={require('../../Images/friends/check.png')} />
+                        </TouchableOpacity>
+                    </View>
+                }
+                
             </View>
         )
     }

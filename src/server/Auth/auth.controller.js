@@ -36,6 +36,17 @@ Functions
                                 // Replace clear password
                                 body.password = hashedPassword;
 
+                                const friends = [];
+                                const contentFriends = {
+                                    accepted: [],
+                                    pending: [],
+                                    recipient: []
+                                }
+
+                                friends.push(contentFriends);
+
+                                body.friends = friends;
+
                                 // Save user
                                 UserModel.create(body, (error, newUser) => {
                                     if(error){ // Mongo error
