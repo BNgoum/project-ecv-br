@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 //const domain = '10.10.2.9';
-// const domain = '10.10.2.9';
+// const domain = '10.1.240.158';
 const domain = '192.168.1.81';
 // const domain = '192.168.0.25';
 

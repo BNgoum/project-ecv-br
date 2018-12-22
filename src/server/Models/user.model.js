@@ -16,11 +16,11 @@ const userSchema = new Schema({
     last_name: String,
     email: String,
     password: String,
-    friends: [{ 
+    friends: {
         accepted: [{ type: Schema.Types.ObjectId }],
         pending: [{ type: Schema.Types.ObjectId }],
         recipient: [{ type: Schema.Types.ObjectId }]
-    }]
+    }
 })
 //
 

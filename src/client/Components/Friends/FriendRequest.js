@@ -11,45 +11,41 @@ class FriendRequest extends Component {
         super(props);
         this.state = {
             pseudo: "",
-            idUserA: "",
-            idUserB: ""
+            idRecipient: ""
         }
     }
 
     sendRequest = () => {
         return new Promise((resolve, reject) => {
+            if (this.state.pseudo === "" || this.state.pseudo === undefined) { reject((error) => console.log('Erreur le champs est vide de la saisie du pseudo : ', error)) }
+
             resolve(requestUserInformationByPseudo(this.state.pseudo));
         })
         .then(data => {
-            if (data.type) {
-                this.props.dispatch(data);
-            } else {
-                const action = { type: "FOUND_USER_BY_PSEUDO", value: "" }
-                this.props.dispatch(action);
+            if (data.type) { this.props.dispatch(data); } 
+            else {
+                return new Promise((resolve, reject) => {
+                    this.setState({idRecipient: data._id})
+                    // On donne en paramètre l'id du user qui emet la demande et en 2nd paramètres l'id du user qui reçoit la demande
+                    resolve(friendRequest(this.props.user._id, data._id))
+                })
+                .then((action) => {
+                    // On dispatch l'affichage du message de succès
+                    this.props.dispatch(action)
 
-                const action2 = { type: "ADD_PENDING", value: data.pseudo }
-                this.props.dispatch(action2);
+                    // On remet à vide le state contenant un message d'erreur
+                    const action2 = { type: "FOUND_USER_BY_PSEUDO", value: "" }
+                    this.props.dispatch(action2);
 
-                this.setState({ idUserB: data._id })
+                    // On ajoute le user recipient à la liste de pending
+                    const actionAddPending = { type: "ADD_PENDING", value: data }
+                    this.props.dispatch(actionAddPending);
+
+                })
+                .catch((error) => { console.log('Erreur lors du dispatch de la friendRequest : ', error)})
             }
         })
-        .then( () => {
-            const token = this.props.state.AuthenticationReducer.isLogin;
-            const decoded = jwtDecode(token);
-            return requestUserInformation(decoded.email)
-        })
-        .then(data => {
-            this.setState({ idUserA: data._id })
-        })
-        .then(() => {
-            const { idUserA, idUserB } = this.state;
-
-            return friendRequest(idUserA, idUserB)
-        })
-        .then( action => {
-            this.props.dispatch(action);
-        })
-        .catch((error) => console.log('Erreur lors de la requête d\'amis (FriendRequest) : ', error))
+        .catch((error) => console.log('Erreur lors de la requête d\'amis (FriendRequest.js) : ', error))
     }
 
     render() {
