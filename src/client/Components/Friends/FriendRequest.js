@@ -21,7 +21,7 @@ class FriendRequest extends Component {
 
             resolve(requestUserInformationByPseudo(this.state.pseudo));
         })
-        .then(data => {
+        .then( data => {
             if (data.type) { this.props.dispatch(data); } 
             else {
                 return new Promise((resolve, reject) => {
@@ -41,6 +41,8 @@ class FriendRequest extends Component {
                     const actionAddPending = { type: "ADD_PENDING", value: data }
                     this.props.dispatch(actionAddPending);
 
+                    // On clear l'input text
+                    this.setState({ pseudo: '' })
                 })
                 .catch((error) => { console.log('Erreur lors du dispatch de la friendRequest : ', error)})
             }
@@ -54,6 +56,7 @@ class FriendRequest extends Component {
                 <TextInput
                     placeholder="Entrez le pseudo de votre ami..."
                     onChangeText={(pseudo) => this.setState({pseudo})}
+                    value={this.state.pseudo}
                     style={styles.inputPseudo} />
 
                 { this.props.state.AuthenticationReducer.found_user_by_pseudo !== "" ?

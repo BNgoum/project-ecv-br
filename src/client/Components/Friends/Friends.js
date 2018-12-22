@@ -100,13 +100,14 @@ class Friends extends Component {
     }
 
     render() {
+        const { accepted, recipient, pending } = this.props.state.FriendReducer
         return (
             <View>
                 <FriendRequest user={this.state.user} />
                 <Text style={styles.title} >Mes amis</Text>
-                <Accepted friends={this.props.state.FriendReducer.accepted} />
-                <Recipient friends={this.props.state.FriendReducer.recipient} />
-                <Pending friends={this.props.state.FriendReducer.pending} />
+                { accepted.length > 0 ? <Accepted friends={accepted} /> : <Text>Aucun amis</Text> }
+                { recipient.length > 0 ? <Recipient friends={recipient} /> : <Text>Aucun demande d'amis</Text> }
+                { pending.length > 0 ? <Pending friends={pending} /> : <Text>Aucune demande en attente</Text> }
             </View>
         )
     }
