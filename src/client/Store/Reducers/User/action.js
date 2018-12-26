@@ -1,12 +1,7 @@
 import axios from 'axios';
 
-//const domain = '10.10.2.9';
-// const domain = '10.1.240.158';
-const domain = '192.168.1.81';
-// const domain = '192.168.0.25';
-
 export const requestRegister = (pseudo, firstName, lastName, email, password) => {
-    return axios.post('http://' + domain + ':3000/api/auth/register', {
+    return axios.post('https://betroom-api.herokuapp.com/api/auth/register', {
         pseudo,
         first_name: firstName,
         last_name: lastName,
@@ -38,7 +33,7 @@ export const requestRegister = (pseudo, firstName, lastName, email, password) =>
 }
 
 export const requestLogin = (email, password) => {
-    return axios.post('http://' + domain + ':3000/api/auth/login', {
+    return axios.post('https://betroom-api.herokuapp.com/api/auth/login', {
         email: email,
         password: password
     })
@@ -68,7 +63,7 @@ export const requestLogin = (email, password) => {
 }
 
 export const requestUserInformation = (email) => {
-    return axios.post('http://' + domain + ':3000/api/auth/user', {
+    return axios.post('https://betroom-api.herokuapp.com/api/auth/user', {
         email: email
     })
     .then((responseJson) => {
@@ -80,7 +75,7 @@ export const requestUserInformation = (email) => {
 }
 
 export const requestUserInformationById = (id) => {
-    return axios.post('http://' + domain + ':3000/api/auth/userId', {
+    return axios.post('https://betroom-api.herokuapp.com/api/auth/userId', {
         id: id
     })
     .then((responseJson) => {
@@ -92,7 +87,7 @@ export const requestUserInformationById = (id) => {
 }
 
 export const requestUserInformationByPseudo = (pseudo) => {
-    return axios.post('http://' + domain + ':3000/api/auth/userPseudo', {
+    return axios.post('https://betroom-api.herokuapp.com/api/auth/userPseudo', {
         pseudo
     })
     .then((responseJson) => {
