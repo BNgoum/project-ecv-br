@@ -3,31 +3,19 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-nativ
 
 import { connect } from 'react-redux';
 
-import RewardsComponent from '../../Components/BetRoom/Rewards';
+import ListMatchs from '../../Components/Match/ListMatchs';
+import MatchsSelected from '../../Components/BetRoom/MatchsSelected';
 
 class Matchs extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: ""
-        }
-    }
-    
     render() {
+        const numberBets = this.props.state.BetRoomReducer.numberBets;
         return (
-            <View style={styles.wrapperRewards}>
-                <Text>Matchs à choisir</Text>
-            </View>
+           <ListMatchs />
         )
     }
 }
 
 const styles = StyleSheet.create({
-    wrapperButton: {
-        alignSelf: 'center',
-        backgroundColor: '#f7f7f7',
-        padding: 16
-    }
 })
 
 const mapStateToProps = (state) => { 

@@ -48,7 +48,7 @@ const CreateBetRoomStack = createStackNavigator({
             title: 'Choix des participants'
         }
     },
-    Matchs: {
+    MatchsBR: {
         screen: MatchsBetRoom,
         navigationOptions: {
             title: 'Choix des matchs'

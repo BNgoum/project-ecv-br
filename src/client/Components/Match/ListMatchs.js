@@ -6,6 +6,8 @@ import TabButtons from './TabButtons';
 import {requestLigue1Matchs, requestPremierLeagueMatchs, requestBundesligaMatchs, requestSerieAMatchs, requestLigueDesChampionsMatchs, requestLaLigaMatchs, requestFetchMatchs} from '../../Store/Reducers/Match/action'
 const moment = require('moment');
 
+import MatchsSelected from '../../Components/BetRoom/MatchsSelected';
+
 class ListMatchs extends Component {
     constructor(props) {
         super(props);
@@ -50,8 +52,9 @@ class ListMatchs extends Component {
     }
 
     render() {
+        const numberBets = this.props.state.BetRoomReducer.numberBets;
         return (
-            <View>
+            <View style={styles.wrapperContent}>
                 <View>
                     <TabButtons />
                 </View>
@@ -168,12 +171,16 @@ class ListMatchs extends Component {
                             null
                     }
                 </ScrollView>
+                { numberBets > 0 ? <MatchsSelected /> : null }
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    wrapperContent: {
+        flex: 1
+    },
     buttonLoad: {
         alignSelf: 'flex-end',
         padding: 16,
@@ -205,7 +212,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => { 
-    return {state: state};
+    return {state};
 }
 
 const mapDispatchToProps = (dispatch) => {

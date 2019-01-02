@@ -2,7 +2,9 @@ const initialState = {
     name: "",
     reward: "",
     owner: "",
-    participants: []
+    participants: [],
+    numberBets: 0,
+    matchs: []
 }
 
 function betroom(state = initialState, action) {
@@ -32,6 +34,26 @@ function betroom(state = initialState, action) {
         case 'DELETE_PARTICIPANT':
             nextState = {
                 ...state, participants: action.value
+            }
+            return nextState;
+        case 'ADD_NUMBER_BETS':
+            nextState = {
+                ...state, numberBets: action.value
+            }
+            return nextState;
+        case 'DELETE_NUMBER_BETS':
+            nextState = {
+                ...state, numberBets: action.value
+            }
+            return nextState;
+        case 'ADD_MATCH':
+            nextState = {
+                ...state, matchs: action.value
+            }
+            return nextState;
+        case 'DELETE_MATCH':
+            nextState = {
+                ...state, matchs: action.value
             }
             return nextState;
         default:

@@ -40,9 +40,7 @@ class Friends extends Component {
             const action = { type: "SET_OWNER", value: data._id }
             this.props.dispatch(action);
 
-            this.props.navigation.navigate('Matchs');
-
-            console.log(this.props.state)
+            this.props.navigation.navigate('MatchsBR');
         })
         .catch((error) => console.log('Erreur lors du handleValidate Friends.js component : ', error))
     }
