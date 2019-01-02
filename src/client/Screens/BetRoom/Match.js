@@ -4,13 +4,11 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { connect } from 'react-redux';
 
 import ListMatchs from '../../Components/Match/ListMatchs';
-import MatchsSelected from '../../Components/BetRoom/MatchsSelected';
 
 class Matchs extends Component {
     render() {
-        const numberBets = this.props.state.BetRoomReducer.numberBets;
         return (
-           <ListMatchs />
+           <ListMatchs navigation={this.props.navigation}/>
         )
     }
 }

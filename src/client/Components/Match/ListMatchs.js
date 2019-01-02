@@ -171,7 +171,7 @@ class ListMatchs extends Component {
                             null
                     }
                 </ScrollView>
-                { numberBets > 0 ? <MatchsSelected /> : null }
+                { numberBets > 0 ? <MatchsSelected navigation={this.props.navigation} /> : null }
             </View>
         )
     }
