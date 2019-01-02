@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => { 
-    return {state: state};
+    return {state};
 }
 
 const mapDispatchToProps = (dispatch) => {

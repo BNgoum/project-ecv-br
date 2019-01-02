@@ -4,7 +4,10 @@ import { StyleSheet, Image } from 'react-native'
 
 import Home from '../Screens/Home'
 import MatchsInComing from '../Screens/MatchsInComing'
-import NewBetRoom from '../Screens/NewBetRoom'
+import NewBetRoom from '../Screens/BetRoom/NewBetRoom'
+import Rewards from '../Screens/BetRoom/Rewards'
+import FriendsBetRoom from '../Screens/BetRoom/Friends'
+import MatchsBetRoom from '../Screens/BetRoom/Match'
 import Classement from '../Screens/Classement'
 import FriendsAndProfil from '../Screens/FriendsAndProfil'
 
@@ -30,7 +33,25 @@ const CreateBetRoomStack = createStackNavigator({
     NewBetRoom : {
         screen: NewBetRoom,
         navigationOptions: {
-            title: 'Création d\'une Bet Room'
+            title: 'Créer une Bet Room'
+        }
+    },
+    Rewards: {
+        screen: Rewards,
+        navigationOptions: {
+            title: 'Choix de la récompense'
+        }
+    },
+    Friends: {
+        screen: FriendsBetRoom,
+        navigationOptions: {
+            title: 'Choix des participants'
+        }
+    },
+    Matchs: {
+        screen: MatchsBetRoom,
+        navigationOptions: {
+            title: 'Choix des matchs'
         }
     }
 })

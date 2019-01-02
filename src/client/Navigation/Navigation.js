@@ -9,7 +9,6 @@ class Navigation extends Component {
     
     render() {
         return ( this.props.AuthenticationReducer.isLogin !== null ? <TabBarNavigation /> : <Authentification /> )
-        // return ( <TabBarNavigation /> )
     }
 }
 

@@ -1,46 +1,37 @@
 const initialState = { 
-    Ligue1: [],
-    PremierLeague: [],
-    LaLiga: [],
-    Bundesliga: [],
-    SerieA: [],
-    LigueDesChampions: [],
-    auth_message_error: "",
-    auth_inscription_not_validated: ""
+    name: "",
+    reward: "",
+    owner: "",
+    participants: []
 }
 
 function betroom(state = initialState, action) {
     let nextState;
 
     switch (action.type) {
-        case 'IS_L1':
+        case 'SET_NAME':
             nextState = {
-                ...state, Ligue1: action.value
+                ...state, name: action.value
             }
             return nextState;
-        case 'IS_PL':
+        case 'SET_REWARD':
             nextState = {
-                ...state, PremierLeague: action.value
+                ...state, reward: action.value
             }
             return nextState;
-        case 'IS_BU':
+        case 'SET_OWNER':
             nextState = {
-                ...state, Bundesliga: action.value
+                ...state, owner: action.value
             }
             return nextState;
-        case 'IS_SA':
+        case 'ADD_PARTICIPANT':
             nextState = {
-                ...state, SerieA: action.value
+                ...state, participants: action.value
             }
             return nextState;
-        case 'IS_LL':
+        case 'DELETE_PARTICIPANT':
             nextState = {
-                ...state, LaLiga: action.value
-            }
-            return nextState;
-        case 'IS_LDC':
-            nextState = {
-                ...state, LigueDesChampions: action.value
+                ...state, participants: action.value
             }
             return nextState;
         default:

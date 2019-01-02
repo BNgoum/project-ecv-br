@@ -3,10 +3,6 @@ import { StyleSheet, View, Text } from 'react-native';
 
 
 export default class Match extends Component {
-    constructor(props) {
-        super(props);
-        
-    }
 
     render() {
         return (
@@ -35,7 +31,7 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         paddingRight: 8,
         paddingLeft: 8,
-        height: 120,
+        height: 100,
         borderRadius: 15,
         backgroundColor: '#fff',
         shadowColor: "#000",

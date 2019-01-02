@@ -6,9 +6,6 @@ const jwtDecode = require('jwt-decode');
 import { requestUserInformation } from '../../Store/Reducers/User/action';
 import Disconnect from './Disconnect';
 
-import axios from 'axios';
-const domain = '192.168.1.81';
-
 class Profil extends Component {
     constructor(props) {
         super(props);

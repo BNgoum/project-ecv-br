@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import Match from './Match'
-import {requestLigue1Matchs, requestPremierLeagueMatchs, requestBundesligaMatchs, requestSerieAMatchs, requestLigueDesChampionsMatchs, requestLaLigaMatchs, requestFetchMatchs} from '../../Store/Reducers/BetRoom/action'
+import Match from './Match';
+import TabButtons from './TabButtons';
+import {requestLigue1Matchs, requestPremierLeagueMatchs, requestBundesligaMatchs, requestSerieAMatchs, requestLigueDesChampionsMatchs, requestLaLigaMatchs, requestFetchMatchs} from '../../Store/Reducers/Match/action'
 const moment = require('moment');
 
 class ListMatchs extends Component {
@@ -50,119 +51,124 @@ class ListMatchs extends Component {
 
     render() {
         return (
-            <ScrollView>
-                <TouchableOpacity
-                    onPress={this.fetchMatchs}
-                    style={styles.buttonLoad}>
-                    <Image style={styles.icon} source={require('../../Images/matchs/refresh.png')}/>
-                </TouchableOpacity>
+            <View>
+                <View>
+                    <TabButtons />
+                </View>
+                <ScrollView>
+                    <TouchableOpacity
+                        onPress={this.fetchMatchs}
+                        style={styles.buttonLoad}>
+                        <Image style={styles.icon} source={require('../../Images/matchs/refresh.png')}/>
+                    </TouchableOpacity>
 
-                { this.props.state.BetRoomReducer.LigueDesChampions.length > 0 ? 
-                    <View style={styles.wrapperLeague}>
-                        <View style={styles.wrapperLeagueHeader}>
-                            <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_des_champions.png')}/>
-                            <Text style={styles.titreLeague}>Ligue des Champions</Text>
-                        </View>
-
-                        <FlatList
-                            data={this.props.state.BetRoomReducer.LigueDesChampions}
-                            keyExtractor={(item) => item._id.toString()}
-                            renderItem={({item}) => <Match matchs={item} />}
-                        />
-                    </View>
-                :
-                    null
-                }
-
-                {
-                    this.props.state.BetRoomReducer.Ligue1.length > 0 ?
+                    { this.props.state.MatchReducer.isActive === "LDC" ? 
                         <View style={styles.wrapperLeague}>
                             <View style={styles.wrapperLeagueHeader}>
-                                <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_1.png')}/>
-                                <Text style={styles.titreLeague}>Ligue 1</Text>
+                                <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_des_champions.png')}/>
+                                <Text style={styles.titreLeague}>Ligue des Champions</Text>
                             </View>
-                            
+
                             <FlatList
-                                data={this.props.state.BetRoomReducer.Ligue1}
+                                data={this.props.state.MatchReducer.LigueDesChampions}
                                 keyExtractor={(item) => item._id.toString()}
                                 renderItem={({item}) => <Match matchs={item} />}
                             />
                         </View>
                     :
                         null
-                }
-                
-                {   
-                    this.props.state.BetRoomReducer.LaLiga.length > 0 ?
-                        <View style={styles.wrapperLeague}>
-                            <View style={styles.wrapperLeagueHeader}>
-                                <Image style={styles.pictoLeague} source={require('../../Images/leagues/la_liga.png')}/>
-                                <Text style={styles.titreLeague}>La Liga</Text>
+                    }
+
+                    {
+                        this.props.state.MatchReducer.isActive === "Ligue1" ?
+                            <View style={styles.wrapperLeague}>
+                                <View style={styles.wrapperLeagueHeader}>
+                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_1.png')}/>
+                                    <Text style={styles.titreLeague}>Ligue 1</Text>
+                                </View>
+                                
+                                <FlatList
+                                    data={this.props.state.MatchReducer.Ligue1}
+                                    keyExtractor={(item) => item._id.toString()}
+                                    renderItem={({item}) => <Match matchs={item} />}
+                                />
                             </View>
-                            <FlatList
-                                data={this.props.state.BetRoomReducer.LaLiga}
-                                keyExtractor={(item) => item._id.toString()}
-                                renderItem={({item}) => <Match matchs={item} />}
-                            />
-                        </View>
-                    :
-                        null
-                }
-                
-                {
-                    this.props.state.BetRoomReducer.PremierLeague.length > 0 ?
-                        <View style={styles.wrapperLeague}>
-                            <View style={styles.wrapperLeagueHeader}>
-                                <Image style={styles.pictoLeague} source={require('../../Images/leagues/premier_league.png')}/>
-                                <Text style={styles.titreLeague}>Premier League</Text>
+                        :
+                            null
+                    }
+                    
+                    {   
+                        this.props.state.MatchReducer.isActive === "LaLiga" ?
+                            <View style={styles.wrapperLeague}>
+                                <View style={styles.wrapperLeagueHeader}>
+                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/la_liga.png')}/>
+                                    <Text style={styles.titreLeague}>La Liga</Text>
+                                </View>
+                                <FlatList
+                                    data={this.props.state.MatchReducer.LaLiga}
+                                    keyExtractor={(item) => item._id.toString()}
+                                    renderItem={({item}) => <Match matchs={item} />}
+                                />
                             </View>
+                        :
+                            null
+                    }
+                    
+                    {
+                        this.props.state.MatchReducer.isActive === "PremierLeague" ?
+                            <View style={styles.wrapperLeague}>
+                                <View style={styles.wrapperLeagueHeader}>
+                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/premier_league.png')}/>
+                                    <Text style={styles.titreLeague}>Premier League</Text>
+                                </View>
 
-                            <FlatList
-                                data={this.props.state.BetRoomReducer.PremierLeague}
-                                keyExtractor={(item) => item._id.toString()}
-                                renderItem={({item}) => <Match matchs={item} />}
-                            />
-                        </View>
-                    :
-                        null
-                }
-
-                {
-                    this.props.state.BetRoomReducer.SerieA.length > 0 ?
-                        <View style={styles.wrapperLeague}>
-                            <View style={styles.wrapperLeagueHeader}>
-                                <Image style={styles.pictoLeague} source={require('../../Images/leagues/serie_a.png')}/>
-                                <Text style={styles.titreLeague}>Serie A</Text>
+                                <FlatList
+                                    data={this.props.state.MatchReducer.PremierLeague}
+                                    keyExtractor={(item) => item._id.toString()}
+                                    renderItem={({item}) => <Match matchs={item} />}
+                                />
                             </View>
+                        :
+                            null
+                    }
 
-                            <FlatList
-                                data={this.props.state.BetRoomReducer.SerieA}
-                                keyExtractor={(item) => item._id.toString()}
-                                renderItem={({item}) => <Match matchs={item} />}
-                            />
-                        </View>
-                    :
-                        null
-                }
+                    {
+                        this.props.state.MatchReducer.isActive === "SerieA" ?
+                            <View style={styles.wrapperLeague}>
+                                <View style={styles.wrapperLeagueHeader}>
+                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/serie_a.png')}/>
+                                    <Text style={styles.titreLeague}>Serie A</Text>
+                                </View>
 
-                {
-                    this.props.state.BetRoomReducer.Bundesliga.length > 0 ?
-                        <View style={styles.wrapperLeague}>
-                            <View style={styles.wrapperLeagueHeader}>
-                                <Image style={styles.pictoLeague} source={require('../../Images/leagues/bundesliga.png')}/>
-                                <Text style={styles.titreLeague}>Bundesliga</Text>
+                                <FlatList
+                                    data={this.props.state.MatchReducer.SerieA}
+                                    keyExtractor={(item) => item._id.toString()}
+                                    renderItem={({item}) => <Match matchs={item} />}
+                                />
                             </View>
+                        :
+                            null
+                    }
 
-                            <FlatList
-                                data={this.props.state.BetRoomReducer.Bundesliga}
-                                keyExtractor={(item) => item._id.toString()}
-                                renderItem={({item}) => <Match matchs={item} />}
-                            />
-                        </View>
-                    :
-                        null
-                }
-            </ScrollView>
+                    {
+                        this.props.state.MatchReducer.isActive === "Bundesliga" ?
+                            <View style={styles.wrapperLeague}>
+                                <View style={styles.wrapperLeagueHeader}>
+                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/bundesliga.png')}/>
+                                    <Text style={styles.titreLeague}>Bundesliga</Text>
+                                </View>
+
+                                <FlatList
+                                    data={this.props.state.MatchReducer.Bundesliga}
+                                    keyExtractor={(item) => item._id.toString()}
+                                    renderItem={({item}) => <Match matchs={item} />}
+                                />
+                            </View>
+                        :
+                            null
+                    }
+                </ScrollView>
+            </View>
         )
     }
 }
