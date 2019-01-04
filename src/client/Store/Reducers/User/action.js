@@ -51,10 +51,7 @@ export const requestLogin = (email, password) => {
                 return action;
             }
         } else {
-            const action = {
-                type: "IS_LOGIN", value: responseJson.data.data.token
-            }
-            return action;
+            return responseJson.data.data;
         }
     })
     .catch(err => {

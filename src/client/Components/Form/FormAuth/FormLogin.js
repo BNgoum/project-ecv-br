@@ -24,7 +24,18 @@ class FormLogin extends Component {
         else if ( this.state.password === "" ) { this.setState({ isPasswordBlank: true }) }
         else {
             return new Promise((resolve, reject) => { resolve(requestLogin(this.state.email, this.state.password)) })
-            .then((action) => { this.props.dispatch(action); })
+            .then((data) => {
+                const actionToken = {
+                    type: "IS_LOGIN", value: data.token
+                }
+                this.props.dispatch(actionToken);
+                
+                const actionUser = {
+                    type: "SET_USER_INFO", value: data.user
+                }
+                this.props.dispatch(actionUser);
+                
+            })
             .catch((error) => { console.log('Erreur lors de la connexion : ', error); });
         }
     }

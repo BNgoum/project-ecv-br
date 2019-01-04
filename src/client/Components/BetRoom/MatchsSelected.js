@@ -3,7 +3,8 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import { connect } from 'react-redux';
 
-import { requestCreateBetRoom } from '../../Store/Reducers/BetRoom/action';
+import { requestCreateBetRoom, requestAddOwner, requestAddParticipant } from '../../Store/Reducers/BetRoom/action';
+
 
 class MatchsSelected extends Component {
 
@@ -12,6 +13,17 @@ class MatchsSelected extends Component {
 
         return new Promise((resolve, reject) => {
             resolve(requestCreateBetRoom(betRoom.name, betRoom.owner, betRoom.participants, betRoom.reward, betRoom.matchs, betRoom.numberBets))
+        })
+        .then(response => {
+            const idOwner = response.data.data.owner;
+            const idBetRoom = response.data.data._id;
+            const idsParticipants = response.data.data.participants;
+
+            requestAddOwner(idOwner, idBetRoom);
+
+            idsParticipants.forEach(idParticipant => {
+                requestAddParticipant(idParticipant, idBetRoom)
+            });
         })
         .then(() => this.props.navigation.navigate('Accueil'))
         .catch((error) => console.log('Erreur lors du handleOnPress MatchsSelected : ', error))
@@ -37,6 +49,10 @@ const styles = StyleSheet.create({
     wrapperContent: {
         backgroundColor: '#f7f7f7',
         padding: 16,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     label: {
         fontSize: 18,
