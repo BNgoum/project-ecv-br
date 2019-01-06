@@ -76,7 +76,6 @@ class Home extends Component {
     }
 
     render() {
-        
         const betroom = this.props.state.AuthenticationReducer;
         return (
             <View style={styles.wrapperContent}>
@@ -88,7 +87,7 @@ class Home extends Component {
                         <FlatList
                             data={ betroom.betRoomOwner }
                             keyExtractor={ (item) => item._id.toString() }
-                            renderItem={ ({item}) => <BetRoom data={item} /> }
+                            renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} /> }
                         /> : null
                 }
 

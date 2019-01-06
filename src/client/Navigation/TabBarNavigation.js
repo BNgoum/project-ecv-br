@@ -3,6 +3,7 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 import { StyleSheet, Image } from 'react-native'
 
 import Home from '../Screens/Home'
+import BetRoomDetails from '../Screens/BetRoom/BetRoomDetails'
 import MatchsInComing from '../Screens/MatchsInComing'
 import NewBetRoom from '../Screens/BetRoom/NewBetRoom'
 import Rewards from '../Screens/BetRoom/Rewards'
@@ -16,6 +17,12 @@ const HomeStack = createStackNavigator({
         screen: Home,
         navigationOptions: {
             title: 'Accueil'
+        }
+    },
+    BetRoomDetails : {
+        screen: BetRoomDetails,
+        navigationOptions: {
+            title: 'Détails de la Bet Room'
         }
     }
 })
