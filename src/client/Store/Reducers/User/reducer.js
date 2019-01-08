@@ -6,7 +6,8 @@ const initialState = {
     betRoomOwner: [],
     betRoomParticipant: [],
     currentBetRoom: [],
-    userInfo: null
+    userInfo: null,
+    typeParticipant: ""
 }
 
 function authentication(state = initialState, action) {
@@ -51,6 +52,11 @@ function authentication(state = initialState, action) {
         case 'SET_CURRENT_BET_ROOM':
             nextState = {
                 ...state, currentBetRoom: action.value
+            }
+            return nextState;
+        case 'SET_TYPE_PARTICIPANT':
+            nextState = {
+                ...state, typeParticipant: action.value
             }
             return nextState;
         default:

@@ -1,30 +1,51 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
+import { requestSetScore } from '../../Store/Reducers/BetRoom/action';
+
 export default class Match extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            scoreHomeTeam: 0,
-            scoreAwayTeam: 0,
+            scoreHomeTeam: this.props.data.scoreHomeTeamInputUser,
+            scoreAwayTeam: this.props.data.scoreAwayTeamInputUser,
+            isDisabled : true
         }
     }
 
     handleOnPressScore = (type, team) => {
         if ( type === "plus" && team === "scoreHomeTeam" ) {
-            this.setState({ scoreHomeTeam: this.state.scoreHomeTeam + 1 })
+            this.setState({ scoreHomeTeam: this.state.scoreHomeTeam + 1, isDisabled: false })
         } else if ( type === "plus" && team === "scoreAwayTeam" ) {
-            this.setState({ scoreAwayTeam: this.state.scoreAwayTeam + 1 })
+            this.setState({ scoreAwayTeam: this.state.scoreAwayTeam + 1, isDisabled: false })
         } else if ( type === "moins" && team === "scoreAwayTeam" ) {
             if ( this.state.scoreAwayTeam > 0 )
-                this.setState({ scoreAwayTeam: this.state.scoreAwayTeam - 1 })
+                this.setState({ scoreAwayTeam: this.state.scoreAwayTeam - 1, isDisabled: false })
         } else {
             if ( this.state.scoreHomeTeam > 0 )
-                this.setState({ scoreHomeTeam: this.state.scoreHomeTeam - 1 })
+                this.setState({ scoreHomeTeam: this.state.scoreHomeTeam - 1, isDisabled: false })
         }
     }
 
+    handleOnPressValidate = () => {
+        return new Promise((resolve, reject) => {
+            const userId = this.props.userId;
+            const typeParticipant = this.props.typeParticipant;
+            const betRoomId = this.props.betRoom._id;
+            const matchId = this.props.data._id;
+            const homeTeamScore = this.state.scoreHomeTeam;
+            const awayTeamScore = this.state.scoreAwayTeam;
+
+            resolve(requestSetScore(userId, typeParticipant, betRoomId, matchId, homeTeamScore, awayTeamScore))
+        })
+        .then(() => this.setState({ isDisabled: true }))
+        .catch((error) => console.log('Erreur de la promise handleOnPressValidate (Match.js) : ', error))
+        
+    }
+
     render() {
+        // console.log('Props : ', this.props.data, '\n\n')
+        //console.log('Props : ', this.props.state.AuthenticationReducer, '\n\n')
         return (
             <View style={styles.wrapperMatch}>
                 <View style={styles.wrapperDate}>
@@ -39,7 +60,9 @@ export default class Match extends Component {
                 <View style={styles.wrapperScore}>
                     <View style={styles.wrapperTeamScore}>
                         <TouchableOpacity onPress={ () => this.handleOnPressScore("moins", "scoreHomeTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>-</Text></TouchableOpacity>
+
                         <Text style={styles.teamScore}>{this.state.scoreHomeTeam}</Text>
+
                         <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreHomeTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>+</Text></TouchableOpacity>
                     </View>
 
@@ -47,10 +70,13 @@ export default class Match extends Component {
 
                     <View style={styles.wrapperTeamScore}>
                         <TouchableOpacity onPress={ () => this.handleOnPressScore("moins", "scoreAwayTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>-</Text></TouchableOpacity>
+
                         <Text style={styles.teamScore}>{this.state.scoreAwayTeam}</Text>
+                        
                         <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreAwayTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>+</Text></TouchableOpacity>
                     </View>
                 </View>
+                <TouchableOpacity onPress={this.handleOnPressValidate} style={[styles.buttonValidatePronostic, this.state.isDisabled ? styles.isDisabled : null]} disabled={this.state.isDisabled}><Text>Valider le pronostic</Text></TouchableOpacity>
             </View>
         )
     }
@@ -64,7 +90,6 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         paddingRight: 8,
         paddingLeft: 8,
-        height: 150,
         borderRadius: 15,
         backgroundColor: '#fff',
         shadowColor: "#000",
@@ -107,7 +132,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: "center",
         alignItems: 'center',
-        marginTop: 16
+        marginTop: 16,
+        marginBottom: 16,
     },
     wrapperTeamScore: {
         textAlign: 'center',
@@ -130,5 +156,13 @@ const styles = StyleSheet.create({
     },
     wrapperButtonScore: {
         borderWidth: 1,
+    },
+    buttonValidatePronostic: {
+        alignSelf: 'center',
+        backgroundColor: '#ccc',
+        padding: 8
+    },
+    isDisabled: {
+        opacity: 0.4
     }
 })

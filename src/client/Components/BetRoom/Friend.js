@@ -42,8 +42,8 @@ class Friend extends Component {
             <View>
                 <TouchableOpacity 
                     onPress={() => this.handleOnPress()} 
-                    style={ this.state.active ? styles.buttonFriendSelected : styles.buttonFriend }>
-                    <Text>{friend.pseudo}</Text>
+                    style={ [styles.wrapperButtonFriend, this.state.active ? styles.wrapperButtonFriendSelected : null] }>
+                    <Text style={ styles.friendsName }>{friend.pseudo}</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -54,12 +54,24 @@ const styles = StyleSheet.create({
     buttonFriend: {
         backgroundColor: '#FFF',
         padding: 16,
-        marginTop: 32
+        marginTop: 16
     },
     buttonFriendSelected: {
-        backgroundColor: '#0F0',
+        backgroundColor: '#ccc',
         padding: 16,
-        marginTop: 32
+        marginTop: 16
+    },
+    wrapperButtonFriend: {
+        margin: 16
+    },
+    wrapperButtonFriendSelected: {
+        backgroundColor: '#ccc',
+    },
+    friendsName: {
+        fontSize: 20,
+        borderWidth: 1,
+        padding: 16,
+        borderColor: '#ccc'
     }
 })
 

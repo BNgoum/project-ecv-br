@@ -16,14 +16,20 @@ class MatchsSelected extends Component {
         })
         .then(response => {
             const idOwner = response.data.data.owner;
-            const idBetRoom = response.data.data._id;
+            const betRoom = response.data.data;
             const idsParticipants = response.data.data.participants;
 
-            requestAddOwner(idOwner, idBetRoom);
+            requestAddOwner(idOwner, betRoom);
 
             idsParticipants.forEach(idParticipant => {
-                requestAddParticipant(idParticipant, idBetRoom)
+                requestAddParticipant(idParticipant, betRoom)
             });
+
+            let currentBetRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
+            currentBetRoomOwner.push(response.data.data);
+
+            const action = { type: "ADD_OWNER_BET_ROOM", value: currentBetRoomOwner }
+            this.props.dispatch(action);
         })
         .then(() => this.props.navigation.navigate('Accueil'))
         .catch((error) => console.log('Erreur lors du handleOnPress MatchsSelected : ', error))

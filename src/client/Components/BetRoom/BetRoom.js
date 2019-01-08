@@ -9,7 +9,12 @@ class BetRoom extends Component {
             const action = { type: "SET_CURRENT_BET_ROOM", value: this.props.data }
             resolve(this.props.dispatch(action));
         })
-        .then( () => this.props.navigation.navigate('BetRoomDetails') )
+        .then( () => {
+            const action = { type: "SET_TYPE_PARTICIPANT", value: this.props.typeParticipant }
+            this.props.dispatch(action);
+
+            this.props.navigation.navigate('BetRoomDetails');
+        })
         .catch((error) => console.log('Erreur lors du handleOnPress (BetRoom.js) : ', error))
     }
 
@@ -24,11 +29,7 @@ class BetRoom extends Component {
                 }
                 <Text>{ this.props.data.participants.length + 1 } participants</Text>
                 <Text>Récompense : { this.props.data.reward }</Text>
-                { 
-                    this.props.data.isBegin ? 
-                    <Text>Statut: A débuté</Text> : 
-                    <Text>Statut: Pas encore débuté</Text>
-                }
+                <Text>Statut: { this.props.data.statut }</Text>
             </TouchableOpacity>
         )
     }

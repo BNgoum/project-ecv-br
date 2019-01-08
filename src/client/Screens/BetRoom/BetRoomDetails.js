@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import BetRoomDetailsComponent from '../../Components/BetRoom/BetRoomDetails';
 

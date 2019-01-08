@@ -41,22 +41,36 @@ export const requestGetAllIdsBetRoomParticipant = (_id) => {
     });
 }
 
-export const requestAddOwner = (idOwner, idBetRoom) => {
+export const requestAddOwner = (idOwner, betRoom) => {
     return axios.put('https://betroom-api.herokuapp.com/api/betroom/put/addOwner', {
         idOwner,
-        idBetRoom
+        betRoom
     })
     .catch(err => {
         console.log('Erreur lors de la tentative d\'ajout de propriétaire de bet room : ', err);
     });
 }
 
-export const requestAddParticipant = (idParticipant, idBetRoom) => {
+export const requestAddParticipant = (idParticipant, betRoom) => {
     return axios.put('https://betroom-api.herokuapp.com/api/betroom/put/addParticipant', {
         idParticipant,
-        idBetRoom
+        betRoom
     })
     .catch(err => {
         console.log('Erreur lors de la tentative d\'ajout de participant à une bet room : ', err);
+    });
+}
+
+export const requestSetScore = (_id, typeParticipant, idBetRoom, idMatch, scoreHomeTeam, scoreAwayTeam) => {
+    return axios.put('https://betroom-api.herokuapp.com/api/betroom/put/teamScore', {
+        _id,
+        typeParticipant,
+        idBetRoom,
+        idMatch,
+        scoreHomeTeam,
+        scoreAwayTeam
+    })
+    .catch(err => {
+        console.log('Erreur lors de la tentative de modification de score : ', err);
     });
 }

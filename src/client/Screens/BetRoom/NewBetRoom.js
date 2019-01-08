@@ -21,7 +21,6 @@ class NewBetRoom extends Component {
     render() {
         return (
             <View style={styles.wrapperHome}>
-                <Text>Create a new Bet Room Screen.</Text>
 
                 <TextInput
                     onChangeText={(name) => this.setState({name})}
@@ -30,7 +29,7 @@ class NewBetRoom extends Component {
                 />
 
                 <TouchableOpacity style={styles.wrapperButton} onPress={ () => this.handleOnPress(this.state.name) }>
-                    <Text>Valider</Text>
+                    <Text style={ styles.textValidate }>Valider</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -55,8 +54,11 @@ const styles = StyleSheet.create({
     },
     wrapperButton: {
         alignSelf: 'center',
-        backgroundColor: '#f7f7f7',
+        backgroundColor: '#ccc',
         padding: 16
+    },
+    textValidate: {
+        fontSize: 18
     }
 })
 

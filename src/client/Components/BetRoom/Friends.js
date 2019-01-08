@@ -64,8 +64,8 @@ class Friends extends Component {
                     }
                 />
 
-                <TouchableOpacity onPress={() => this.handleValidate()}>
-                    <Text>Valider</Text>
+                <TouchableOpacity onPress={() => this.handleValidate()} style={ styles.buttonValidate }>
+                    <Text style={ styles.textValidate }>Valider</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -101,6 +101,15 @@ const styles = StyleSheet.create({
     },
     buttonFriendSelected: {
         borderColor: '#F00'
+    },
+    buttonValidate: {
+        alignSelf: 'center',
+        backgroundColor: '#ccc',
+        padding: 12,
+        marginTop: 16
+    },
+    textValidate: {
+        fontSize: 18
     }
 })
 

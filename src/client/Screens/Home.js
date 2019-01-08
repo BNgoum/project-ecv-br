@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
-const jwtDecode = require('jwt-decode');
+import jwt_decode from 'jwt-decode';
 import { requestUserInformation } from '../Store/Reducers/User/action';
 
 import BetRoom from '../Components/BetRoom/BetRoom';
-import { requestGetBetRoom } from '../Store/Reducers/BetRoom/action';
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            idsBetRoomOwner: [],
             betRoomOwner: [],
-            idsBetRoomParticipant: [],
             betRoomParticipant: [],
         }
     }
@@ -26,15 +23,15 @@ class Home extends Component {
     getInformationsUser = () => {
         const token = this.props.state.AuthenticationReducer.isLogin;
 
-        const decoded = jwtDecode(token);
+        const decoded = jwt_decode(token);
 
         return new Promise((resolve, reject) => {
             resolve(requestUserInformation(decoded.email))
         })
         .then((data) => {
             this.setState({
-                idsBetRoomOwner: data.bet_room.owner,
-                idsBetRoomParticipant: data.bet_room.participant
+                betRoomOwner: data.bet_room.owner,
+                betRoomParticipant: data.bet_room.participant
             })
         })
         .catch((error) => console.log('Erreur lors de la récupération des informations du user (Home.js) : ', error))
@@ -45,31 +42,21 @@ class Home extends Component {
             resolve(this.getInformationsUser());
         })
         .then(() => {
-            this.state.idsBetRoomOwner.map(idBetRoom => {
-                return new Promise((resolve, reject) => {
-                    resolve(requestGetBetRoom(idBetRoom));
-                })
-                .then(data => {
-                    let currentBetRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
-                    currentBetRoomOwner.push(data.data.data);
+            this.state.betRoomOwner.map(betRoom => {
+                let currentBetRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
+                currentBetRoomOwner.push(betRoom);
 
-                    const action = { type: "ADD_OWNER_BET_ROOM", value: currentBetRoomOwner }
-                    this.props.dispatch(action);
-                })
+                const action = { type: "ADD_OWNER_BET_ROOM", value: currentBetRoomOwner }
+                this.props.dispatch(action);
             });
         })
         .then(() => {
-            this.state.idsBetRoomParticipant.map(idBetRoom => {
-                return new Promise((resolve, reject) => {
-                    resolve(requestGetBetRoom(idBetRoom));
-                })
-                .then(data => {
-                    let currentBetRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
-                    currentBetRoomParticipant.push(data.data.data);
+            this.state.betRoomParticipant.map(betRoom => {
+                let currentBetRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
+                currentBetRoomParticipant.push(betRoom);
 
-                    const action = { type: "ADD_PARTICIPANT_BET_ROOM", value: currentBetRoomParticipant }
-                    this.props.dispatch(action);
-                })
+                const action = { type: "ADD_PARTICIPANT_BET_ROOM", value: currentBetRoomParticipant }
+                this.props.dispatch(action);
             });
         })
         .catch((error) => console.log('Erreur lors de la récupération des bet room owner : ', error))
@@ -80,26 +67,35 @@ class Home extends Component {
         return (
             <View style={styles.wrapperContent}>
                 <Text style={styles.title}>Bet Room en cours</Text>
-                <Text style={styles.title}>Bet Room Admin :</Text>
                 
                 {
                     betroom.betRoomOwner.length > 0 ? 
-                        <FlatList
-                            data={ betroom.betRoomOwner }
-                            keyExtractor={ (item) => item._id.toString() }
-                            renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} /> }
-                        /> : null
+                        <View>
+                            <Text style={styles.title}>Bet Room Admin :</Text>
+                            <ScrollView style={ styles.wrapperBetRoom }>
+                                <FlatList
+                                    data={ betroom.betRoomOwner }
+                                    keyExtractor={ (item) => item._id.toString() }
+                                    renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="owner" /> }
+                                /> 
+                            </ScrollView>
+                        </View>
+                        : null
                 }
-
-                <Text style={styles.title}>Bet Room Participant :</Text>
 
                 {
                     betroom.betRoomParticipant.length > 0 ?
-                        <FlatList
-                            data={ betroom.betRoomParticipant }
-                            keyExtractor={ (item) => item._id.toString() }
-                            renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} /> }
-                        /> : null
+                    <View>
+                        <Text style={styles.title}>Bet Room Participant :</Text>
+                        <ScrollView style={ styles.wrapperBetRoom }>
+                            <FlatList
+                                data={ betroom.betRoomParticipant }
+                                keyExtractor={ (item) => item._id.toString() }
+                                renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="participant" /> }
+                            />
+                        </ScrollView>
+                    </View> 
+                    : null
                 }
             </View>
         )
@@ -113,6 +109,9 @@ const styles = StyleSheet.create({
     title: {
         margin: 16,
         fontSize: 18
+    },
+    wrapperBetRoom: {
+        maxHeight: 270
     }
 })
 

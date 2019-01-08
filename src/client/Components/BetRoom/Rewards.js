@@ -17,35 +17,35 @@ class Rewards extends Component {
             <View>
                 <TouchableOpacity
                     onPress={() => this.handleOnPress("Restaurant")}
-                    style={reward === "Restaurant" ? styles.buttonSelect : null}
+                    style={[styles.wrapperButtonReward, reward === "Restaurant" ? styles.buttonSelect : null]}
                 >
                     <Text style={styles.rewardSelect}>Restaurant</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.handleOnPress("Un verre")}
-                    style={reward === "Un verre" ? styles.buttonSelect : null}
+                    style={[styles.wrapperButtonReward, reward === "Un verre" ? styles.buttonSelect : null]}
                 >
                     <Text style={styles.rewardSelect}>Un verre</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.handleOnPress("Double les points")}
-                    style={reward === "Double les points" ? styles.buttonSelect : null}
+                    style={[styles.wrapperButtonReward, reward === "Double les points" ? styles.buttonSelect : null]}
                 >
                     <Text style={styles.rewardSelect}>Double les points</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.handleOnPress("Bonus")}
-                    style={reward === "Bonus" ? styles.buttonSelect : null}
+                    style={[styles.wrapperButtonReward, reward === "Bonus" ? styles.buttonSelect : null]}
                 >
                     <Text style={styles.rewardSelect}>Bonus</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.handleOnPress("Gage")}
-                    style={reward === "Gage" ? styles.buttonSelect : null}
+                    style={[styles.wrapperButtonReward, reward === "Gage" ? styles.buttonSelect : null]}
                 >
                     <Text style={styles.rewardSelect}>Gage</Text>
                 </TouchableOpacity>
@@ -66,14 +66,17 @@ const styles = StyleSheet.create({
         marginTop: 16,
         marginBottom: 32,
     },
+    wrapperButtonReward: {
+        margin: 16
+    },
     buttonSelect: {
-        backgroundColor: '#00F'
+        backgroundColor: '#ccc',
     },
     rewardSelect: {
         fontSize: 20,
         borderWidth: 1,
-        margin: 16,
-        borderColor: '#00F'
+        padding: 16,
+        borderColor: '#ccc'
     }
 })
 

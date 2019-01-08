@@ -18,8 +18,8 @@ class Rewards extends Component {
             <View style={styles.wrapperRewards}>
                 <RewardsComponent />
 
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Friends') }>
-                    <Text>Valider</Text>
+                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Friends')} style={ styles.buttonValidate }>
+                    <Text style={ styles.textValidate }>Valider</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -27,13 +27,14 @@ class Rewards extends Component {
 }
 
 const styles = StyleSheet.create({
-    wrapperRewards: {
-
-    },
-    wrapperButton: {
+    buttonValidate: {
         alignSelf: 'center',
-        backgroundColor: '#f7f7f7',
-        padding: 16
+        backgroundColor: '#ccc',
+        padding: 12,
+        marginTop: 16
+    },
+    textValidate: {
+        fontSize: 18
     }
 })
 

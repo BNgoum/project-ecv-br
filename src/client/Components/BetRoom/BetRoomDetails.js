@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native';
 
 import { connect } from 'react-redux';
 
@@ -19,10 +19,6 @@ class BetRoomDetails extends Component {
     }
 
     setParticipantsName = () => {
-        // return new Promise((resolve, reject) => {
-        // })
-        // .catch((error) => console.log('Erreur lors de la récupération des noms de participants (betRoomDetails.js) : ', error))
-
         const participants = this.props.state.AuthenticationReducer.currentBetRoom.participants;
 
         participants.map(participant => {
@@ -40,7 +36,9 @@ class BetRoomDetails extends Component {
 
     render() {
         const betRoomDetails = this.props.state.AuthenticationReducer.currentBetRoom;
-        console.log('Current : ', betRoomDetails)
+        const userId = this.props.state.AuthenticationReducer.userInfo._id;
+        const typeParticipant = this.props.state.AuthenticationReducer.typeParticipant;
+
         return (
             <View style={styles.wrapperContent}>
                 <Text style={ styles.title }>{ betRoomDetails.name }</Text>
@@ -71,13 +69,15 @@ class BetRoomDetails extends Component {
                 </View>
                 
 
-                <View>
+                <View style={ styles.wrapperMatchs }>
                     <Text>Les matchs</Text>
-                    <FlatList
-                        data={ betRoomDetails.matchs }
-                        keyExtractor={ (item) => item._id.toString() }
-                        renderItem={ ({item}) => <Match data={item} /> }
-                    /> 
+                    <ScrollView>
+                        <FlatList
+                            data={ betRoomDetails.matchs }
+                            keyExtractor={ (item) => item._id.toString() }
+                            renderItem={ ({item}) => <Match data={item} betRoom={betRoomDetails} userId={userId} typeParticipant={typeParticipant} /> }
+                        />
+                    </ScrollView>
                 </View>
             </View>
         )
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ccc',
         padding: 16,
         margin: 8,
+        flex: 1
     },
     title: {
         fontSize: 20,
@@ -109,6 +110,9 @@ const styles = StyleSheet.create({
     wrapperParticipants: {
         marginTop: 8,
         marginBottom: 8,
+    },
+    wrapperMatchs: {
+        flex: 2
     }
 })
 
