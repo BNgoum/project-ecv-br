@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 export default class Friend extends Component {
     render() {
         return (
-            <View>
+            <View style={ styles.wrapperPseudo }>
                 <Text style={styles.pseudo} >{ this.props.data }</Text>
             </View>
         )
@@ -12,8 +12,14 @@ export default class Friend extends Component {
 }
 
 const styles = StyleSheet.create({
+    wrapperPseudo: {
+        borderWidth: 1,
+        marginBottom: 8,
+        backgroundColor: '#fff'
+    },
     pseudo: {
         alignSelf: 'center',
-        fontSize: 14
+        fontSize: 16,
+        padding: 8,
     }
 })

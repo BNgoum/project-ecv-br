@@ -102,21 +102,35 @@ class Friends extends Component {
     render() {
         const { accepted, recipient, pending } = this.props.state.FriendReducer
         return (
-            <View>
+            <View style={ styles.wrapperContent } >
+                <Text style={styles.title} >Ajouter un ami</Text>
                 <FriendRequest user={this.state.user} />
+
                 <Text style={styles.title} >Mes amis</Text>
-                { accepted.length > 0 ? <Accepted friends={accepted} /> : <Text>Aucun amis</Text> }
-                { recipient.length > 0 ? <Recipient friends={recipient} /> : <Text>Aucun demande d'amis</Text> }
-                { pending.length > 0 ? <Pending friends={pending} /> : <Text>Aucune demande en attente</Text> }
+                { accepted.length > 0 ? <Accepted friends={accepted} /> : <View><Text style={ styles.subTitle }>Acceptés</Text><Text style={ styles.empty }>Aucun amis</Text></View> }
+                { recipient.length > 0 ? <Recipient friends={recipient} /> : <View><Text style={ styles.subTitle }>Demande reçues</Text><Text style={ styles.empty }>Aucun demande d'amis</Text></View> }
+                { pending.length > 0 ? <Pending friends={pending} /> : <View><Text style={ styles.subTitle }>En attente</Text><Text style={ styles.empty }>Aucune demande en attente</Text></View> }
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    wrapperContent: {
+        padding: 16
+    },
     title: {
         alignSelf: 'center',
-        fontSize: 22
+        fontSize: 24,
+        marginTop: 16,
+        marginBottom: 16
+    },
+    subTitle: {
+        fontSize: 22,
+        marginBottom: 8
+    },
+    empty: {
+        marginBottom: 16
     }
 })
 

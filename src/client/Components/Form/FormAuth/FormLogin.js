@@ -34,7 +34,6 @@ class FormLogin extends Component {
                     type: "SET_USER_INFO", value: data.user
                 }
                 this.props.dispatch(actionUser);
-                
             })
             .catch((error) => { console.log('Erreur lors de la connexion : ', error); });
         }
@@ -44,7 +43,6 @@ class FormLogin extends Component {
         return (
             <View style={styles.wrapperInscription}>
                 <Text style={ styles.title }>Connexion</Text>
-
                 <TextInput
                     style={styles.inputText}
                     onChangeText={(email) => { this.setState({email: email, isEmailBlank: false}); }}

@@ -12,6 +12,10 @@ import MatchsBetRoom from '../Screens/BetRoom/Match'
 import Classement from '../Screens/Classement'
 import FriendsAndProfil from '../Screens/FriendsAndProfil'
 
+import Icon from 'react-native-vector-icons/AntDesign';
+import IconAwesome from 'react-native-vector-icons/FontAwesome';
+import IconEntypo from 'react-native-vector-icons/Entypo';
+
 const HomeStack = createStackNavigator({
     Home : {
         screen: Home,
@@ -85,48 +89,56 @@ const TabBarNavigator = createBottomTabNavigator({
     Accueil: {
         screen: HomeStack,
         navigationOptions: {
-            tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/tab_bar/home.png')}/>
-            }
+            tabBarIcon: ({ focused }) =>  (
+                focused
+                ? <IconEntypo name="home" size={33} color="#000"></IconEntypo>
+                : <Image style={styles.icon} source={require('../Images/tab_bar/home.png')}/>
+            )
         }
     },
     Matchs: {
         screen: MatchsInComingStack,
         navigationOptions: {
-            tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/tab_bar/football.png')}/>
-            }
+            tabBarIcon: ({ focused }) =>  (
+                focused
+                ? <Image style={styles.icon} source={require('../Images/tab_bar/football_focused.png')}/>
+                : <Image style={styles.icon} source={require('../Images/tab_bar/football.png')}/>
+            )
         }
     },
     NewBR: {
         screen: CreateBetRoomStack,
         navigationOptions: {
-            tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/tab_bar/plus.png')}/>
-            }
+            tabBarIcon: ({ focused }) =>  (
+                focused
+                ? <Icon name="pluscircle" size={30} color="#000"></Icon>
+                : <Icon name="pluscircleo" size={30} color="#000"></Icon>
+            )
         }
     },
     Classement: {
         screen: ClassementStack,
         navigationOptions: {
-            tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/tab_bar/classement.png')}/>
-            }
+            tabBarIcon: ({ focused }) =>  (
+                focused
+                ? <Icon name="star" size={30} color="#000"></Icon>
+                : <Icon name="staro" size={30} color="#000"></Icon>
+            )
         }
     },
     FriendsAndProfil: {
         screen: FriendsAndProfilStack,
         navigationOptions: {
-            tabBarIcon: () => {
-                return <Image style={styles.icon} source={require('../Images/tab_bar/profile.png')}/>
-            }
+            tabBarIcon: ({ focused }) =>  (
+                focused
+                ? <IconAwesome name="user" size={30} color="#000"></IconAwesome>
+                : <IconAwesome name="user-o" size={30} color="#000"></IconAwesome>
+            )
         }
     }
     },
     {
         tabBarOptions : {
-            activeBackgroundColor: '#DDD',
-            inactiveBackgroundColor: '#FFF',
             showLabel: false,
             showIcon: true
         }

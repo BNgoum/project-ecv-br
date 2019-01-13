@@ -34,8 +34,8 @@ export const requestRegister = (pseudo, firstName, lastName, email, password) =>
 
 export const requestLogin = (email, password) => {
     return axios.post('https://betroom-api.herokuapp.com/api/auth/login', {
-        email: email,
-        password: password
+        email,
+        password
     })
     .then((responseJson) => {
         if ( responseJson.data.data === null && responseJson.data.error !== "" ) {

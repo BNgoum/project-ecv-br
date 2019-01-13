@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-import { requestSetScore } from '../../Store/Reducers/BetRoom/action';
+import { requestSetScore, requestUpdateMatch } from '../../Store/Reducers/BetRoom/action';
 
 export default class Match extends Component {
     constructor(props) {
@@ -11,6 +11,24 @@ export default class Match extends Component {
             scoreAwayTeam: this.props.data.scoreAwayTeamInputUser,
             isDisabled : true
         }
+    }
+    componentWillMount() {
+        this.updateMatch();
+    }
+
+    updateMatch = () => {
+        return new Promise((resolve, reject) => {
+            const userId = this.props.userId;
+            const typeParticipant = this.props.typeParticipant;
+            const betRoomId = this.props.betRoom._id;
+            const matchId = this.props.data._id;
+            const homeTeamScore = this.props.data.scoreHomeTeam;
+            const awayTeamScore = this.props.data.scoreAwayTeam;
+            const statut = this.props.status;
+
+            resolve(requestUpdateMatch(userId, typeParticipant, betRoomId, matchId, homeTeamScore, awayTeamScore, statut))
+        })
+        .catch((error) => console.log('Erreur de la promise updateMatch (Match.js) : ', error))
     }
 
     handleOnPressScore = (type, team) => {
@@ -40,12 +58,9 @@ export default class Match extends Component {
         })
         .then(() => this.setState({ isDisabled: true }))
         .catch((error) => console.log('Erreur de la promise handleOnPressValidate (Match.js) : ', error))
-        
     }
 
     render() {
-        // console.log('Props : ', this.props.data, '\n\n')
-        //console.log('Props : ', this.props.state.AuthenticationReducer, '\n\n')
         return (
             <View style={styles.wrapperMatch}>
                 <View style={styles.wrapperDate}>

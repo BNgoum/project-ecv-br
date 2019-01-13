@@ -11,15 +11,19 @@ class FriendRequest extends Component {
         super(props);
         this.state = {
             pseudo: "",
-            idRecipient: ""
+            idRecipient: "",
+            isEmpty: false
         }
     }
 
     sendRequest = () => {
         return new Promise((resolve, reject) => {
-            if (this.state.pseudo === "" || this.state.pseudo === undefined) { reject((error) => console.log('Erreur le champs est vide de la saisie du pseudo : ', error)) }
-
-            resolve(requestUserInformationByPseudo(this.state.pseudo));
+            if (this.state.pseudo === "" || this.state.pseudo === undefined) { 
+                this.setState({ isEmpty: true })
+                reject((error) => console.log('Erreur le champs est vide de la saisie du pseudo : ', error)) }
+            else {
+                resolve(requestUserInformationByPseudo(this.state.pseudo));
+            }
         })
         .then( data => {
             if (data.type) { this.props.dispatch(data); } 
@@ -52,29 +56,41 @@ class FriendRequest extends Component {
 
     render() {
         return (
-            <View styles={styles.wrapperRecipientFriend}>
-                <TextInput
-                    placeholder="Entrez le pseudo de votre ami..."
-                    onChangeText={(pseudo) => this.setState({pseudo})}
-                    value={this.state.pseudo}
-                    style={styles.inputPseudo} />
+            <View styles={styles.wrapperRequestFriend}>
+                <View style={ styles.wrapperInput } >
+                    <TextInput
+                        placeholder="Entrez le pseudo de votre ami..."
+                        onChangeText={(pseudo) => {
+                            this.setState({pseudo, isEmpty: false});
+                            const action = { type: "FOUND_USER_BY_PSEUDO", value: "" }
+                            this.props.dispatch(action);
+                        }}
+                        value={this.state.pseudo}
+                        style={styles.inputPseudo} />
 
-                { this.props.state.AuthenticationReducer.found_user_by_pseudo !== "" ?
-                    <Text>{this.props.state.AuthenticationReducer.found_user_by_pseudo}</Text>
-                  :
-                    null
-                }
+                    { this.props.state.AuthenticationReducer.found_user_by_pseudo !== "" ?
+                        <Text>{this.props.state.AuthenticationReducer.found_user_by_pseudo}</Text>
+                    :
+                        null
+                    }
 
-                { this.props.state.FriendReducer.friend_request !== "" ?
-                    <Text>{this.props.state.FriendReducer.friend_request}</Text>
-                  :
-                    null
-                }
+                    { this.props.state.FriendReducer.friend_request !== "" ?
+                        <Text>{this.props.state.FriendReducer.friend_request}</Text>
+                    :
+                        null
+                    }
+
+                    { this.state.isEmpty ?
+                        <Text>Le champs de saisi est vide.</Text>
+                    :
+                        null
+                    }
+                </View>
 
                 <TouchableOpacity
                     style={styles.button}
                     onPress={this.sendRequest}>
-                    <Text>Envoyer</Text>
+                    <Text style={ styles.textButton }>Envoyer</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -82,32 +98,27 @@ class FriendRequest extends Component {
 }
 
 const styles = StyleSheet.create({
-    wrapperRecipientFriend: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'flex-start',
+    wrapperInput: {
+        alignSelf: 'center'
     },
     inputPseudo: {
-        display: 'flex',
-        alignSelf: 'center',
         fontSize: 14,
         color: '#000',
         backgroundColor: '#fff',
         padding: 8,
-        width: 250
+        width: 270,
+        marginBottom: 6
     },
     button: {
-        display: 'flex',
         backgroundColor: '#fff',
-        alignSelf: 'center',
         padding: 8,
-        marginTop: 16
+        marginTop: 16,
+        width: 80,
+        display: 'flex',
+        alignSelf: 'center'
     },
-    icon: {
-        width: 32,
-        height: 32,
+    textButton: {
+        textAlign: 'center'
     }
 })
 

@@ -22,7 +22,6 @@ class Home extends Component {
 
     getInformationsUser = () => {
         const token = this.props.state.AuthenticationReducer.isLogin;
-
         const decoded = jwt_decode(token);
 
         return new Promise((resolve, reject) => {

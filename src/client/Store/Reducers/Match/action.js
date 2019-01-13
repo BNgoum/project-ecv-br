@@ -99,3 +99,12 @@ export const requestFetchMatchs = (today, nextWeek) => {
         console.log('Erreur lors de la tentative de récupération des matchs de la semaine (Axios : action.js) : ', err);
     });
 }
+
+export const requestGetMatch = (_id) => {
+    return axios.post('https://betroom-api.herokuapp.com/api/match/match', {
+        _id
+    })
+    .catch(err => {
+        console.log('Erreur lors de la tentative de récupération d\'un match (Axios : action.js) : ', err);
+    });
+}

@@ -39,7 +39,6 @@ class Profil extends Component {
     }
 
     render() {
-        // console.log(this.props.state.AuthenticationReducer)
         return (
             <View style={styles.wrapperMatch}>
                 <Text style={styles.title} >Mon Profil</Text>

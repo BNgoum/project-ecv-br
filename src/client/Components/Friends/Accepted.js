@@ -25,7 +25,7 @@ export default class Accepted extends Component {
 
 const styles = StyleSheet.create({
     title: {
-        alignSelf: 'center',
-        fontSize: 22
+        fontSize: 22,
+        marginBottom: 8
     }
 })
