@@ -76,7 +76,7 @@ export const requestSetScore = (_id, typeParticipant, idBetRoom, idMatch, scoreH
 }
 
 export const requestUpdateMatch = (_id, typeParticipant, idBetRoom, idMatch, scoreHomeTeam, scoreAwayTeam, status) => {
-    return axios.put('https://betroom-api.herokuapp.com/api/betroom/put/teamScore', {
+    return axios.put('https://betroom-api.herokuapp.com/api/betroom/put/matchUpdated', {
         _id,
         typeParticipant,
         idBetRoom,

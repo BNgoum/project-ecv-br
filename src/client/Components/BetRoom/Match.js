@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import { requestSetScore, requestUpdateMatch } from '../../Store/Reducers/BetRoom/action';
+import { requestGetMatch } from '../../Store/Reducers/Match/action';
 
 export default class Match extends Component {
     constructor(props) {
@@ -9,27 +10,44 @@ export default class Match extends Component {
         this.state = {
             scoreHomeTeam: this.props.data.scoreHomeTeamInputUser,
             scoreAwayTeam: this.props.data.scoreAwayTeamInputUser,
-            isDisabled : true
+            isDisabled : true,
+            isBegin: false,
+            statut: "Pas débuté"
         }
     }
-    componentWillMount() {
-        this.updateMatch();
+
+    componentDidMount() {
+        const statut = this.props.data.statut;
+        if ( statut === "IN_PLAY" || statut === "LIVE" || statut === "PAUSED") {
+            this.setState({isBegin: true, statut: "En cours"})
+        } else if (statut === "FINISHED") {
+            this.setState({isBegin: true, statut: "Terminée"})
+        }
     }
 
-    updateMatch = () => {
-        return new Promise((resolve, reject) => {
-            const userId = this.props.userId;
-            const typeParticipant = this.props.typeParticipant;
-            const betRoomId = this.props.betRoom._id;
-            const matchId = this.props.data._id;
-            const homeTeamScore = this.props.data.scoreHomeTeam;
-            const awayTeamScore = this.props.data.scoreAwayTeam;
-            const statut = this.props.status;
+    // updateMatch = () => {
+    //     return new Promise((resolve, reject) => {
+    //         const matchId = this.props.data._id;
+    //         resolve(requestGetMatch(matchId))
+    //     })
+    //     .then(data => {
+    //         const match = data.data.data;
+    //         const userId = this.props.userId;
+    //         const typeParticipant = this.props.typeParticipant;
+    //         const betRoomId = this.props.betRoom._id;
+    //         const matchId = this.props.data._id;
+    //         const homeTeamScore = match.score.fullTime.homeTeam;
+    //         const awayTeamScore = match.score.fullTime.homeTeam;
+    //         const statut = match.status;
 
-            resolve(requestUpdateMatch(userId, typeParticipant, betRoomId, matchId, homeTeamScore, awayTeamScore, statut))
-        })
-        .catch((error) => console.log('Erreur de la promise updateMatch (Match.js) : ', error))
-    }
+    //         if ( statut === "IN_PLAY" || statut === "LIVE" || statut === "PAUSED" || statut === "FINISHED") {
+    //             this.setState({isBegin: true})
+    //         }
+
+    //         return requestUpdateMatch(userId, typeParticipant, betRoomId, matchId, homeTeamScore, awayTeamScore, statut)
+    //     })
+    //     .catch((error) => console.log('Erreur de la promise updateMatch (BetRoom/Match.js) : ', error))
+    // }
 
     handleOnPressScore = (type, team) => {
         if ( type === "plus" && team === "scoreHomeTeam" ) {
@@ -74,21 +92,38 @@ export default class Match extends Component {
                 </View>
                 <View style={styles.wrapperScore}>
                     <View style={styles.wrapperTeamScore}>
-                        <TouchableOpacity onPress={ () => this.handleOnPressScore("moins", "scoreHomeTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>-</Text></TouchableOpacity>
+                        {
+                            this.state.isBegin ? null : 
+                            <TouchableOpacity onPress={ () => this.handleOnPressScore("moins", "scoreHomeTeam") } style={ styles.wrapperButtonScore }>
+                                <Text style={styles.buttonScore}>-</Text>
+                            </TouchableOpacity>
+                        }
 
                         <Text style={styles.teamScore}>{this.state.scoreHomeTeam}</Text>
 
-                        <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreHomeTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>+</Text></TouchableOpacity>
+                        {
+                            this.state.isBegin ? null : 
+                            <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreHomeTeam") } style={ styles.wrapperButtonScore }>
+                                <Text style={styles.buttonScore}>+</Text>
+                            </TouchableOpacity>
+                        }
+                        
                     </View>
 
                     <Text style={styles.versusText}>|</Text>
 
                     <View style={styles.wrapperTeamScore}>
-                        <TouchableOpacity onPress={ () => this.handleOnPressScore("moins", "scoreAwayTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>-</Text></TouchableOpacity>
+                        {
+                            this.state.isBegin ? null : 
+                            <TouchableOpacity onPress={ () => this.handleOnPressScore("moins", "scoreAwayTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>-</Text></TouchableOpacity>
+                        }
 
                         <Text style={styles.teamScore}>{this.state.scoreAwayTeam}</Text>
                         
-                        <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreAwayTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>+</Text></TouchableOpacity>
+                        {
+                            this.state.isBegin ? null : 
+                            <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreAwayTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>+</Text></TouchableOpacity>
+                        }
                     </View>
                 </View>
                 <TouchableOpacity onPress={this.handleOnPressValidate} style={[styles.buttonValidatePronostic, this.state.isDisabled ? styles.isDisabled : null]} disabled={this.state.isDisabled}><Text>Valider le pronostic</Text></TouchableOpacity>

@@ -101,3 +101,20 @@ export const requestUserInformationByPseudo = (pseudo) => {
         console.log('Erreur lors de la récupération des informations du user (by pseudo): ', err);
     });
 }
+
+export const requestGetLastCallApi = (id) => {
+    return axios.get('https://betroom-api.herokuapp.com/api/auth/lastCallApi' + id)
+    .catch(err => {
+        console.log('Erreur lors de la récupération de la date" du dernier appel : ', err);
+    });
+}
+
+export const requestSetLastCallApi = (id, date) => {
+    return axios.put('https://betroom-api.herokuapp.com/api/auth/lastCallApi', {
+        id,
+        date
+    })
+    .catch(err => {
+        console.log('Erreur lors de la mise à jour du lastCallApi : ', err);
+    });
+}

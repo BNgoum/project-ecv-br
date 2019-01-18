@@ -53,7 +53,7 @@ class MatchsSelected extends Component {
 
 const styles = StyleSheet.create({
     wrapperContent: {
-        backgroundColor: '#f7f7f7',
+        backgroundColor: '#ccc',
         padding: 16,
         display: 'flex',
         flexDirection: 'row',

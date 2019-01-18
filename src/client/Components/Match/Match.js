@@ -3,13 +3,36 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import { connect } from 'react-redux';
 
+import { requestGetMatch } from '../../Store/Reducers/Match/action';
+
+
 class Match extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isActive: false
+            isActive: false,
+            isBegin: false
         }
+    }
+
+    // componentDidMount() {
+    //     this.updateMatch();
+    // }
+
+    updateMatch = () => {
+        return new Promise((resolve, reject) => {
+            const matchId = this.props.matchs._id;
+            resolve(requestGetMatch(matchId))
+        })
+        .then(data => {
+            const statut = data.data.data.status;
+
+            if ( statut === "IN_PLAY" || statut === "LIVE" || statut === "PAUSED" || statut === "FINISHED") {
+                this.setState({isBegin: true})
+            }
+        })
+        .catch((error) => console.log('Erreur de la promise updateMatch (Match/Match.js) : ', error))
     }
 
     handleOnPress = () => {
@@ -49,7 +72,7 @@ class Match extends Component {
 
     render() {
         return (
-            <TouchableOpacity style={[styles.wrapperMatch, this.state.isActive ? styles.isActive : null]} onPress={this.handleOnPress}>
+            <TouchableOpacity style={[styles.wrapperMatch, this.state.isActive ? styles.isActive : null, this.state.isBegin ? styles.isBegin : null]} onPress={this.handleOnPress} disabled={this.state.isFinished}>
                 <View style={styles.wrapperDate}>
                     <Text style={styles.dateMatch}>{this.props.matchs.dateMatch}</Text>
                     <Text style={styles.heureMatch}>{this.props.matchs.heureMatch}</Text>
@@ -112,6 +135,9 @@ const styles = StyleSheet.create({
     },
     isActive: {
         backgroundColor: "#ccc"
+    },
+    isBegin: {
+        opacity: 0.4
     }
 })
 

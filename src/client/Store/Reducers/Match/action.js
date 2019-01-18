@@ -1,4 +1,5 @@
 const axios = require('axios');
+const apiHeaders = { 'X-Auth-Token': '74a86b94a67541189f94e8266901f6e4' }
 
 export const requestLigue1Matchs = () => {
     return axios.post('https://betroom-api.herokuapp.com/api/match/matchsChampionnat', {
@@ -100,9 +101,10 @@ export const requestFetchMatchs = (today, nextWeek) => {
     });
 }
 
-export const requestGetMatch = (_id) => {
-    return axios.post('https://betroom-api.herokuapp.com/api/match/match', {
-        _id
+export const requestGetMatch = (id) => {
+    return axios.get('https://betroom-api.herokuapp.com/api/match/match/' + id)
+    .then(data => {
+        return data.data.data
     })
     .catch(err => {
         console.log('Erreur lors de la tentative de récupération d\'un match (Axios : action.js) : ', err);

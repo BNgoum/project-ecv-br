@@ -4,6 +4,32 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 class BetRoom extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            statut: "Pas débuté",
+            arrayStatut: []
+        }
+    }
+
+    componentWillMount() {
+        // On récupère tous les status des matchs de cette Bet Room et on les stock dans le state
+        const matchs = this.props.data.matchs;
+        let promiseMatchs = matchs.map( match => {
+            this.setState(prevState => ({
+                arrayStatut: [...prevState.arrayStatut, match.statut]
+            }))
+        })
+
+        // On vérifie le contenu du state et on modifie le statut en fonction de cela
+        Promise.all(promiseMatchs).then(() => {
+            if (this.state.arrayStatut.every( val => val === "FINISHED" ) )
+                { this.setState({statut: "Terminée"}) }
+            else if (this.state.arrayStatut.includes("IN_PLAY") || this.state.arrayStatut.includes("FINISHED")) { this.setState({statut: "En cours"} )}
+            else { this.setState({statut: "Pas débuté"}) }
+        });
+    }
+
     handleOnPress = () => {
         return new Promise((resolve, reject) => {
             const action = { type: "SET_CURRENT_BET_ROOM", value: this.props.data }
@@ -20,7 +46,10 @@ class BetRoom extends Component {
 
     render() {
         return (
-            <TouchableOpacity onPress={ this.handleOnPress } style={styles.wrapperContent}>
+            <TouchableOpacity onPress={ this.handleOnPress } 
+                style={[styles.wrapperContent, 
+                    this.state.statut === "Terminée" ? styles.isFinished : null,
+                    this.state.statut === "En cours" ? styles.isInLive : null]}>
                 <Text style={styles.title}>{ this.props.data.name }</Text>
                 { 
                     this.props.data.betsNumber > 1 ? 
@@ -29,7 +58,7 @@ class BetRoom extends Component {
                 }
                 <Text>{ this.props.data.participants.length + 1 } participants</Text>
                 <Text>Récompense : { this.props.data.reward }</Text>
-                <Text>Statut: { this.props.data.statut }</Text>
+                <Text>Statut: { this.state.statut }</Text>
             </TouchableOpacity>
         )
     }
@@ -43,6 +72,12 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18
+    },
+    isFinished: {
+        backgroundColor: '#F00'
+    },
+    isInLive: {
+        backgroundColor: '#0F0'
     }
 })
 

@@ -24,12 +24,12 @@ class FormLogin extends Component {
         else if ( this.state.password === "" ) { this.setState({ isPasswordBlank: true }) }
         else {
             return new Promise((resolve, reject) => { resolve(requestLogin(this.state.email, this.state.password)) })
-            .then((data) => {
+            .then(data => {
                 const actionToken = {
                     type: "IS_LOGIN", value: data.token
                 }
                 this.props.dispatch(actionToken);
-                
+
                 const actionUser = {
                     type: "SET_USER_INFO", value: data.user
                 }
