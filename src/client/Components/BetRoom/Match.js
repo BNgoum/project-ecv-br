@@ -25,6 +25,28 @@ export default class Match extends Component {
         }
     }
 
+    // On calcul le total des points gagné en fonction du pari
+    calculPoints = () => {
+        const scoreHTBet = this.props.data.scoreHomeTeamInputUser;
+        const scoreATBet = this.props.data.scoreAwayTeamInputUser;
+        const scoreHTFinal = this.props.data.scoreHomeTeam;
+        const scoreATFinal = this.props.data.scoreAwayTeam;
+        const gagnant = this.props.data.gagnant;
+
+        // Si le score parié est égale au score final = 3 points
+        if (scoreHTBet === scoreHTFinal && scoreATBet === scoreATFinal) {
+
+        } else if ( scoreATBet === scoreHTBet && gagnant === "DRAW") {
+            // En cas de match nul = 1 points
+        } else if ( scoreATBet > scoreHTBet && gagnant === "AWAY_TEAM") {
+            // Si l'équipe à l'extérieur est gagnante = 1 point
+
+        } else if ( scoreATBet < scoreHTBet && gagnant === "HOME_TEAM") {
+            // Si l'équipe à domicile est gagnante = 1 point
+
+        }
+    }
+
     // updateMatch = () => {
     //     return new Promise((resolve, reject) => {
     //         const matchId = this.props.data._id;
@@ -126,7 +148,24 @@ export default class Match extends Component {
                         }
                     </View>
                 </View>
-                <TouchableOpacity onPress={this.handleOnPressValidate} style={[styles.buttonValidatePronostic, this.state.isDisabled ? styles.isDisabled : null]} disabled={this.state.isDisabled}><Text>Valider le pronostic</Text></TouchableOpacity>
+
+                {
+                    this.state.statut === "Terminée" && 
+                    <View>
+                        <Text style={ styles.titleScoreFinal }>Score final</Text>
+                        <View style={ styles.wrapperScoreFinal }>
+                            <Text style={styles.teamScore}>{this.props.data.scoreHomeTeam}</Text>
+                            <Text>|</Text>
+                            <Text style={styles.teamScore}>{this.props.data.scoreAwayTeam}</Text>
+                        </View>
+                    </View>
+                }
+                
+                {
+                    !this.state.isBegin && 
+                    <TouchableOpacity onPress={this.handleOnPressValidate} style={[styles.buttonValidatePronostic, this.state.isDisabled ? styles.isDisabled : null]} disabled={this.state.isDisabled}><Text>Valider le pronostic</Text></TouchableOpacity>
+                }
+                
             </View>
         )
     }
@@ -214,5 +253,15 @@ const styles = StyleSheet.create({
     },
     isDisabled: {
         opacity: 0.4
+    },
+    wrapperScoreFinal: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    titleScoreFinal: {
+        fontSize: 14,
+        alignSelf: 'center'
     }
 })

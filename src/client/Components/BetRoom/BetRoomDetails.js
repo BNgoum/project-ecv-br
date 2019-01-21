@@ -10,12 +10,33 @@ class BetRoomDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            participants: []
+            participants: [],
+            statut: "Pas débuté"
         }
     }
 
     componentDidMount() {
         this.setParticipantsName();
+        this.getStatusMatch();
+    }
+
+    getStatusMatch = () => {
+        // On récupère tous les status des matchs de cette Bet Room et on les stock dans le state
+        
+        const matchs = this.props.state.AuthenticationReducer.currentBetRoom.matchs;
+        let arrayStatus = [];
+
+        matchs.map( match => {
+            arrayStatus.push(match.statut)
+        })
+
+        // On vérifie le contenu du state et on modifie le statut en fonction de cela
+        if (arrayStatus.every( val => val === "FINISHED" ) )
+            { this.setState({statut: "Terminée"}) }
+        else if (arrayStatus.includes("IN_PLAY") || arrayStatus.includes("FINISHED"))
+            { this.setState({statut: "En cours"} )}
+        else
+            { this.setState({statut: "Pas débuté"}) }
     }
 
     setParticipantsName = () => {
@@ -38,7 +59,6 @@ class BetRoomDetails extends Component {
         const betRoomDetails = this.props.state.AuthenticationReducer.currentBetRoom;
         const userId = this.props.state.AuthenticationReducer.userInfo._id;
         const typeParticipant = this.props.state.AuthenticationReducer.typeParticipant;
-
         return (
             <View style={styles.wrapperContent}>
                 <Text style={ styles.title }>{ betRoomDetails.name }</Text>
@@ -52,7 +72,7 @@ class BetRoomDetails extends Component {
                 </View>
                 
                 <View style={ styles.wrapperIsBegin }>
-                    <Text>Statut: { betRoomDetails.statut }</Text>
+                    <Text>Statut: { this.state.statut }</Text>
                 </View>
 
                 <View style={ styles.wrapperParticipants }>
@@ -67,7 +87,6 @@ class BetRoomDetails extends Component {
                         null
                     }
                 </View>
-                
 
                 <View style={ styles.wrapperMatchs }>
                     <Text>Les matchs</Text>

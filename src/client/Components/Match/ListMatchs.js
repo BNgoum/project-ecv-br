@@ -3,8 +3,8 @@ import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, FlatList }
 import { connect } from 'react-redux';
 import Match from './Match';
 import TabButtons from './TabButtons';
-import {requestLigue1Matchs, requestPremierLeagueMatchs, requestBundesligaMatchs, requestSerieAMatchs, requestLigueDesChampionsMatchs, requestLaLigaMatchs, requestFetchMatchs} from '../../Store/Reducers/Match/action'
-const moment = require('moment');
+import {requestMatchs, requestLigue1Matchs, requestPremierLeagueMatchs, requestBundesligaMatchs, requestSerieAMatchs, requestLigueDesChampionsMatchs, requestLaLigaMatchs, requestFetchMatchs} from '../../Store/Reducers/Match/action'
+import moment from 'moment';
 
 import MatchsSelected from '../../Components/BetRoom/MatchsSelected';
 
@@ -28,26 +28,38 @@ class ListMatchs extends Component {
     }
 
     getMatchs = () => {
-        return new Promise ((resolve, reject) => { resolve(requestLigueDesChampionsMatchs()) })
-        .then((action) => {this.props.dispatch(action)})
-        .then(() => requestLigue1Matchs() )
-        .then((action) => {this.props.dispatch(action)})
-        .then(() => requestLaLigaMatchs() )
-        .then((action) => {this.props.dispatch(action)})
-        .then(() => requestPremierLeagueMatchs() )
-        .then((action) => {this.props.dispatch(action)})
-        .then(() => requestBundesligaMatchs() )
-        .then((action) => {this.props.dispatch(action)})
-        .then(() => requestSerieAMatchs() )
-        .then((action) => {this.props.dispatch(action)})
-        .catch((error) => console.log('Erreur lors de l\'affichage des matchs de la semaine', error))
+        // return new Promise ((resolve, reject) => { resolve(requestLigueDesChampionsMatchs()) })
+        // .then((action) => {this.props.dispatch(action)})
+        // .then(() => requestLigue1Matchs() )
+        // .then((action) => {this.props.dispatch(action)})
+        // .then(() => requestLaLigaMatchs() )
+        // .then((action) => {this.props.dispatch(action)})
+        // .then(() => requestPremierLeagueMatchs() )
+        // .then((action) => {this.props.dispatch(action)})
+        // .then(() => requestBundesligaMatchs() )
+        // .then((action) => {this.props.dispatch(action)})
+        // .then(() => requestSerieAMatchs() )
+        // .then((action) => {this.props.dispatch(action)})
+        // .catch((error) => console.log('Erreur lors de l\'affichage des matchs de la semaine', error))
+        const championnats = ["Serie A", "Primera Division", "Ligue 1", "Bundesliga"];
+
+        championnats.map(championnat => {
+            return new Promise ((resolve, reject) => {
+                resolve(requestMatchs(championnat));
+            })
+            .then( action => {
+                this.props.dispatch(action);
+            })
+            .catch(error => console.log('Erreur lors de la promise requestMatchs : ', error))
+            
+        })
     }
 
     fetchMatchs = () => {
         let today = moment().format('YYYY-MM-DD');
         let nextWeek = moment(today).add(7, 'days').format('YYYY-MM-DD');
         return new Promise ((resolve, reject) => { resolve(requestFetchMatchs(today, nextWeek)) })
-        .then(() => { this.getMatchs() })
+        .then((data) => { this.getMatchs() })
         .catch((error) => console.log('Erreur lors du fetch des matchs dans le composant ListMatchs : ', error))
     }
 

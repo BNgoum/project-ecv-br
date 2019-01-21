@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import { requestGetMatch } from '../../Store/Reducers/Match/action';
+import moment from 'moment';
 
 
 class Match extends Component {

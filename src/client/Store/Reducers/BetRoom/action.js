@@ -75,7 +75,7 @@ export const requestSetScore = (_id, typeParticipant, idBetRoom, idMatch, scoreH
     });
 }
 
-export const requestUpdateMatch = (_id, typeParticipant, idBetRoom, idMatch, scoreHomeTeam, scoreAwayTeam, status) => {
+export const requestUpdateMatch = (_id, typeParticipant, idBetRoom, idMatch, scoreHomeTeam, scoreAwayTeam, status, gagnant) => {
     return axios.put('https://betroom-api.herokuapp.com/api/betroom/put/matchUpdated', {
         _id,
         typeParticipant,
@@ -83,9 +83,10 @@ export const requestUpdateMatch = (_id, typeParticipant, idBetRoom, idMatch, sco
         idMatch,
         scoreHomeTeam,
         scoreAwayTeam,
-        status
+        status,
+        gagnant
     })
     .catch(err => {
-        console.log('Erreur lors de la mise à jour du match : ', err);
+        console.log('Erreur lors de la mise à jour du match (BetRoom/action.js) : ', err);
     });
 }

@@ -33,6 +33,7 @@ class BetRoom extends Component {
     handleOnPress = () => {
         return new Promise((resolve, reject) => {
             const action = { type: "SET_CURRENT_BET_ROOM", value: this.props.data }
+            //console.log('In BetRoom.js before dispatch current BR : ', this.props.data)
             resolve(this.props.dispatch(action));
         })
         .then( () => {

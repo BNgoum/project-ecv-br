@@ -31,6 +31,9 @@ class MatchsSelected extends Component {
             const action = { type: "ADD_OWNER_BET_ROOM", value: currentBetRoomOwner }
             this.props.dispatch(action);
         })
+        .then(() => {
+            console.log('Props in matchselected : ', this.props.state.AuthenticationReducer.betRoomOwner)
+        })
         .then(() => this.props.navigation.navigate('Accueil'))
         .catch((error) => console.log('Erreur lors du handleOnPress MatchsSelected : ', error))
     }
