@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
-import { requestSetScore, requestUpdateMatch } from '../../Store/Reducers/BetRoom/action';
+import { requestSetScore, requestUpdateMatch, requestPoints } from '../../Store/Reducers/BetRoom/action';
 import { requestGetMatch } from '../../Store/Reducers/Match/action';
 
 export default class Match extends Component {
@@ -22,29 +22,36 @@ export default class Match extends Component {
             this.setState({isBegin: true, statut: "En cours"})
         } else if (statut === "FINISHED") {
             this.setState({isBegin: true, statut: "Terminée"})
+            this.calculPoints();
         }
     }
 
     // On calcul le total des points gagné en fonction du pari
     calculPoints = () => {
+        const userId = this.props.userId;
+        const typeParticipant = this.props.typeParticipant;
+        const idBetRoom = this.props.betRoom._id;
+        const matchId = this.props.data._id;
         const scoreHTBet = this.props.data.scoreHomeTeamInputUser;
         const scoreATBet = this.props.data.scoreAwayTeamInputUser;
         const scoreHTFinal = this.props.data.scoreHomeTeam;
         const scoreATFinal = this.props.data.scoreAwayTeam;
         const gagnant = this.props.data.gagnant;
 
+        let points = null;
+
         // Si le score parié est égale au score final = 3 points
-        if (scoreHTBet === scoreHTFinal && scoreATBet === scoreATFinal) {
+        // En cas de match nul / pronostic gagnant réussi = 1 points
+        if (scoreHTBet === scoreHTFinal && scoreATBet === scoreATFinal) { points = 3 }
+        else if ( 
+            scoreATBet === scoreHTBet && gagnant === "DRAW" ||
+            scoreATBet > scoreHTBet && gagnant === "AWAY_TEAM" ||
+            scoreATBet < scoreHTBet && gagnant === "HOME_TEAM"
+        ) { points = 1 }
+        else { points = 0 }
 
-        } else if ( scoreATBet === scoreHTBet && gagnant === "DRAW") {
-            // En cas de match nul = 1 points
-        } else if ( scoreATBet > scoreHTBet && gagnant === "AWAY_TEAM") {
-            // Si l'équipe à l'extérieur est gagnante = 1 point
-
-        } else if ( scoreATBet < scoreHTBet && gagnant === "HOME_TEAM") {
-            // Si l'équipe à domicile est gagnante = 1 point
-
-        }
+        // Appel à la fonction 
+        return requestPoints(userId, typeParticipant, idBetRoom, matchId, points);
     }
 
     // updateMatch = () => {

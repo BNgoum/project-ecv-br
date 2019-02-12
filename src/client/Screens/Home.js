@@ -256,8 +256,8 @@ class Home extends Component {
         const betRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
         const betRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
 
-        console.log('Call in Home.js : ', betRoomOwner)
-        console.log('Call in Home.js : ', betRoomParticipant)
+        // console.log('Call in Home.js : ', betRoomOwner)
+        // console.log('Call in Home.js : ', betRoomParticipant)
         return (
             <View style={styles.wrapperContent}>
                 <Text style={styles.title}>Bet Room en cours</Text>

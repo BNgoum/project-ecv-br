@@ -49,10 +49,10 @@ class BetRoom extends Component {
         return (
             <TouchableOpacity onPress={ this.handleOnPress } 
                 style={[styles.wrapperContent, 
-                    this.state.statut === "Terminée" ? styles.isFinished : null,
-                    this.state.statut === "En cours" ? styles.isInLive : null]}>
+                    this.state.statut === "Terminée" && styles.isFinished,
+                    this.state.statut === "En cours" && styles.isInLive]}>
                 <Text style={styles.title}>{ this.props.data.name }</Text>
-                { 
+                {
                     this.props.data.betsNumber > 1 ? 
                     <Text>{ this.props.data.betsNumber } paris</Text> :
                     <Text>{ this.props.data.betsNumber } pari</Text>

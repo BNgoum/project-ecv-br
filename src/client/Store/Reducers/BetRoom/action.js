@@ -90,3 +90,16 @@ export const requestUpdateMatch = (_id, typeParticipant, idBetRoom, idMatch, sco
         console.log('Erreur lors de la mise à jour du match (BetRoom/action.js) : ', err);
     });
 }
+
+export const requestPoints = (_id, typeParticipant, idBetRoom, idMatch, points) => {
+    return axios.put('https://betroom-api.herokuapp.com/api/betroom/put/pointsUpdated', {
+        _id,
+        typeParticipant,
+        idBetRoom,
+        idMatch,
+        points,
+    })
+    .catch(err => {
+        console.log('Erreur lors de la mise à jour des points (BetRoom/action.js) : ', err);
+    });
+}

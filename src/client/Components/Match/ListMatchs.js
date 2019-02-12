@@ -41,7 +41,7 @@ class ListMatchs extends Component {
         // .then(() => requestSerieAMatchs() )
         // .then((action) => {this.props.dispatch(action)})
         // .catch((error) => console.log('Erreur lors de l\'affichage des matchs de la semaine', error))
-        const championnats = ["Serie A", "Primera Division", "Ligue 1", "Bundesliga"];
+        const championnats = ["Serie A", "Primera Division", "Ligue 1", "Bundesliga", "Ligue des champions", "Premier League"];
 
         championnats.map(championnat => {
             return new Promise ((resolve, reject) => {
@@ -59,7 +59,7 @@ class ListMatchs extends Component {
         let today = moment().format('YYYY-MM-DD');
         let nextWeek = moment(today).add(7, 'days').format('YYYY-MM-DD');
         return new Promise ((resolve, reject) => { resolve(requestFetchMatchs(today, nextWeek)) })
-        .then((data) => { this.getMatchs() })
+        .then(() => { this.getMatchs() })
         .catch((error) => console.log('Erreur lors du fetch des matchs dans le composant ListMatchs : ', error))
     }
 
