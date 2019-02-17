@@ -4,7 +4,6 @@ const apiHeaders = { 'X-Auth-Token': '74a86b94a67541189f94e8266901f6e4' }
 export const requestMatchs = id => {
     return axios.get('https://betroom-api.herokuapp.com/api/match/matchsChampionnat/' + id)
     .then((responseJson) => {
-        //console.log('ResponseJson : ', responseJson.data.data.matchs)
         let type = "";
         switch (id) {
             case 'Ligue 1':
@@ -19,7 +18,7 @@ export const requestMatchs = id => {
             case 'Bundesliga':
                 type = "IS_BU";
                 break;
-            case 'Ligue des champions':
+            case 'UEFA Champions League':
                 type = "IS_LDC";
                 break;
             case 'Primera Division':

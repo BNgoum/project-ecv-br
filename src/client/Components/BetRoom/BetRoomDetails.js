@@ -17,6 +17,7 @@ class BetRoomDetails extends Component {
 
     componentDidMount() {
         this.setParticipantsName();
+
         this.getStatusMatch();
     }
 
@@ -32,7 +33,10 @@ class BetRoomDetails extends Component {
 
         // On vérifie le contenu du state et on modifie le statut en fonction de cela
         if (arrayStatus.every( val => val === "FINISHED" ) )
-            { this.setState({statut: "Terminée"}) }
+            {
+                this.setState({statut: "Terminée"});
+                this.calculTotalPoints();
+            }
         else if (arrayStatus.includes("IN_PLAY") || arrayStatus.includes("FINISHED"))
             { this.setState({statut: "En cours"} )}
         else
@@ -42,7 +46,7 @@ class BetRoomDetails extends Component {
     setParticipantsName = () => {
         const participants = this.props.state.AuthenticationReducer.currentBetRoom.participants;
 
-        participants.map(participant => {
+            participants.map(participant => {
             return new Promise((resolve, reject) => {
                 resolve(requestUserInformationById(participant));
             })
@@ -52,13 +56,26 @@ class BetRoomDetails extends Component {
                 }))
             })
             .catch((error) => console.log('Erreur du map de la fonction setParticipantsName (BetRoomDetails.js) : ', error))
+            })
+        }
+
+
+    calculTotalPoints = () => {
+        const betRoomDetails = this.props.state.AuthenticationReducer.currentBetRoom.matchs;
+        let totalPoints = 0;
+
+
+        betRoomDetails.map(match => {
+            totalPoints += parseInt(match.points);
         })
+
     }
 
     render() {
         const betRoomDetails = this.props.state.AuthenticationReducer.currentBetRoom;
         const userId = this.props.state.AuthenticationReducer.userInfo._id;
         const typeParticipant = this.props.state.AuthenticationReducer.typeParticipant;
+        //console.log('Parti : ', this.state.participants)
         return (
             <View style={styles.wrapperContent}>
                 <Text style={ styles.title }>{ betRoomDetails.name }</Text>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ListMatchs from '../Components/Match/ListMatchs';
+import ListMatchsInComing from '../Components/Match/ListMatchsInComing';
 
 export default class MatchsInComing extends Component {
-    render() { return ( <ListMatchs /> ) }
+    render() { return ( <ListMatchsInComing /> ) }
 }

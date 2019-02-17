@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, ScrollView, Image, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import Match from './Match';
+import MatchInComing from './MatchInComing';
 import TabButtons from './TabButtons';
 import {requestMatchs} from '../../Store/Reducers/Match/action'
 
-import MatchsSelected from '../../Components/BetRoom/MatchsSelected';
-
-class ListMatchs extends Component {
+class ListMatchsInComing extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,7 +53,6 @@ class ListMatchs extends Component {
     }
 
     render() {
-        const numberBets = this.props.state.BetRoomReducer.numberBets;
         return (
             <View style={styles.wrapperContent}>
                 <View>
@@ -73,7 +70,7 @@ class ListMatchs extends Component {
                             <FlatList
                                 data={this.state.liguedesChampions}
                                 keyExtractor={(item) => item._id.toString()}
-                                renderItem={({item}) => <Match matchs={item} />}
+                                renderItem={({item}) => <MatchInComing matchs={item} />}
                             />
                         </View>
                     }
@@ -89,7 +86,7 @@ class ListMatchs extends Component {
                                 <FlatList
                                     data={this.props.state.MatchReducer.Ligue1}
                                     keyExtractor={(item) => item._id.toString()}
-                                    renderItem={({item}) => <Match matchs={item} />}
+                                    renderItem={({item}) => <MatchInComing matchs={item} />}
                                 />
                             </View>
                     }
@@ -104,7 +101,7 @@ class ListMatchs extends Component {
                                 <FlatList
                                     data={this.props.state.MatchReducer.LaLiga}
                                     keyExtractor={(item) => item._id.toString()}
-                                    renderItem={({item}) => <Match matchs={item} />}
+                                    renderItem={({item}) => <MatchInComing matchs={item} />}
                                 />
                             </View>
                     }
@@ -120,7 +117,7 @@ class ListMatchs extends Component {
                                 <FlatList
                                     data={this.props.state.MatchReducer.PremierLeague}
                                     keyExtractor={(item) => item._id.toString()}
-                                    renderItem={({item}) => <Match matchs={item} />}
+                                    renderItem={({item}) => <MatchInComing matchs={item} />}
                                 />
                             </View>
                     }
@@ -136,7 +133,7 @@ class ListMatchs extends Component {
                                 <FlatList
                                     data={this.props.state.MatchReducer.SerieA}
                                     keyExtractor={(item) => item._id.toString()}
-                                    renderItem={({item}) => <Match matchs={item} />}
+                                    renderItem={({item}) => <MatchInComing matchs={item} />}
                                 />
                             </View>
                     }
@@ -152,12 +149,11 @@ class ListMatchs extends Component {
                                 <FlatList
                                     data={this.props.state.MatchReducer.Bundesliga}
                                     keyExtractor={(item) => item._id.toString()}
-                                    renderItem={({item}) => <Match matchs={item} />}
+                                    renderItem={({item}) => <MatchInComing matchs={item} />}
                                 />
                             </View>
                     }
                 </ScrollView>
-                { numberBets > 0 ? <MatchsSelected navigation={this.props.navigation} /> : null }
             </View>
         )
     }
@@ -207,4 +203,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListMatchs)
+export default connect(mapStateToProps, mapDispatchToProps)(ListMatchsInComing)

@@ -28,72 +28,6 @@ class Home extends Component {
         this.getBetRoom();
     }
 
-    // On récupère la date la plus tôt et la plus tard des matches de toutes les BR
-    getFirstAndLastDate = () => {
-        let firstDate = this.state.betRoomOwner[0].matchs[0].dateHeureMatch;
-        let lastDate = this.state.betRoomOwner[0].matchs[0].dateHeureMatch;
-
-        this.state.betRoomOwner.map(betroom => {
-            betroom.matchs.map(match => {
-                if (moment(match.dateHeureMatch).isAfter(firstDate)) {
-                    lastDate = match.dateHeureMatch;
-                }
-
-                if ((moment(match.dateHeureMatch).isBefore(firstDate))) {
-                    firstDate = match.dateHeureMatch;
-                }
-            })
-        })
-
-        this.setState({ firstDate, lastDate});
-    }
-
-    // On récupère tous les championnats des Bet Room
-    getLeagues = () => {
-        let listLeagues = [];
-        let listLeaguesByNumber = [];
-        const championnats = {
-            "Ligue 1": 2015,
-            "Premier League": 2021,
-            "Bundesliga": 2002,
-            "Serie A": 2019,
-            "La Liga": 2014,
-            "Ligue des Champions": 2001
-        }
-
-        // On parcours toutes les BR owner et on ajoute les championnats dans un array
-        this.state.betRoomOwner.map(betroom => {
-            betroom.matchs.map(match => {
-                if ( !listLeagues.includes(match.championnat) ) {
-                    listLeagues.push(match.championnat)
-                }
-            })
-        })
-
-        // On parcours toutes les BR participant et on ajoute les championnats dans un array
-        this.state.betRoomParticipant.map(betroom => {
-            betroom.matchs.map(match => {
-                if ( !listLeagues.includes(match.championnat) ) {
-                    listLeagues.push(match.championnat)
-                }
-            })
-        })
-
-        // On parcours la liste des championnats et on ajoute leur correspondance en nombre (ligue 1 = 2015)
-        listLeagues.map(league => {
-            for (const key in championnats) {
-                if (championnats.hasOwnProperty(key)) {
-                    const element = championnats[key];
-                    if ( key == league) {
-                        listLeaguesByNumber.push(element)
-                    }
-                }
-            }
-        })
-
-        this.setState({leagues: listLeaguesByNumber})
-    }
-
     getInformationsUser = () => {
         const token = this.props.state.AuthenticationReducer.isLogin;
         const decoded = jwt_decode(token);
@@ -176,110 +110,20 @@ class Home extends Component {
         .catch((error) => console.log('Erreur lors de la récupération des Bet Room (Home.js) : ', error))
     }
 
-    getBetRoomWithAPIFootball = () => {
-        // On récupère les Bet Room Owner et participant du user et on les ajoute dans le state
-        return new Promise((resolve, reject) => {
-            resolve(this.getInformationsUser());
-        })
-        .then(() => {
-            const idUser = this.props.state.AuthenticationReducer.userInfo._id;
-            const now = moment().tz("Europe/Paris").format();
-
-            this.getFirstAndLastDate();
-            this.getLeagues();
-
-            requestSetLastCallApi(idUser, now);
-
-            return requestGetMatchsBetweenIntervalAndCompetitions(this.state.leagues, moment(this.state.firstDate).format("YYYY-MM-DD"), moment(this.state.lastDate).format("YYYY-MM-DD"))
-        })
-        .then(matches => {
-            // Matches contient tous les matchs de l'intervalle définit dans le requête au dessus
-            // On le parcours et on compare chaque id match avec les id match du state
-
-            const userId = this.props.state.AuthenticationReducer.userInfo._id;
-            
-            this.state.betRoomOwner.map(betRoom => {
-                betRoom.matchs.map(match => {
-                    matches.map(reqMatch => {
-                        if ( reqMatch.id == match._id ) {
-                            const scoreHomeTeam = reqMatch.score.fullTime.homeTeam;
-                            const scoreAwayTeam = reqMatch.score.fullTime.awayTeam;
-                            //console.log('Match pour : ', reqMatch)
-
-                            return requestUpdateMatch(userId, "owner", betRoom._id, match._id, scoreHomeTeam, scoreAwayTeam, reqMatch.status, reqMatch.score.winner);
-                        }
-                    })
-                })
-            })
-            
-            this.state.betRoomParticipant.map(betRoom => {
-                betRoom.matchs.map(match => {
-                    matches.map(reqMatch => {
-                        if ( reqMatch.id == match._id ) {
-                            const scoreHomeTeam = reqMatch.score.fullTime.homeTeam;
-                            const scoreAwayTeam = reqMatch.score.fullTime.awayTeam;
-    
-                            return requestUpdateMatch(userId, "participant", betRoom._id, match._id, scoreHomeTeam, scoreAwayTeam, reqMatch.status, reqMatch.score.winner);
-                        }
-                    })
-                })
-            })
-        })
-        .then(() => {
-            this.getInformationsUser();
-        })
-        .then(() => {
-            console.log('In home js function')
-            //console.log('After request state : ', this.state.betRoomOwner)
-            // On ajoute chaque BR owner au state Redux
-            this.state.betRoomOwner.map(betRoom => {
-                let currentBetRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
-                currentBetRoomOwner.push(betRoom);
-
-                const action = { type: "ADD_OWNER_BET_ROOM", value: currentBetRoomOwner }
-                this.props.dispatch(action);
-            })
-
-            // On ajoute chaque BR participant au state Redux
-            this.state.betRoomParticipant.map(betRoom => {
-                let currentBetRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
-                currentBetRoomParticipant.push(betRoom);
-
-                const action = { type: "ADD_PARTICIPANT_BET_ROOM", value: currentBetRoomParticipant }
-                this.props.dispatch(action);
-            })
-        })          
-        .catch((error) => console.log('Erreur lors de la récupération des bet room sur le home page : ', error))
-    }
-
     render() {
         const betRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
         const betRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
-
-        // console.log('Call in Home.js : ', betRoomOwner)
-        // console.log('Call in Home.js : ', betRoomParticipant)
         return (
             <View style={styles.wrapperContent}>
                 <Text style={styles.title}>Bet Room en cours</Text>
-                
-                {/* <View>
-                    <Text style={styles.title}>Bet Room Admin :</Text>
-                    <ScrollView style={ styles.wrapperBetRoom }>
-                        <FlatList
-                            data={ betRoomOwner }
-                            keyExtractor={ (item) => item._id.toString() }
-                            renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="owner" /> }
-                        />
-                    </ScrollView>
-                </View> */}
       
                  {
-                    this.props.state.AuthenticationReducer.betRoomOwner.length > 0 && 
+                    betRoomOwner.length > 0 && 
                     <View>
                         <Text style={styles.title}>Bet Room Admin :</Text>
                         <ScrollView style={ styles.wrapperBetRoom }>
                             <FlatList
-                                data={ this.props.state.AuthenticationReducer.betRoomOwner }
+                                data={ betRoomOwner }
                                 keyExtractor={ (item) => item._id.toString() }
                                 renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="owner" /> }
                             />
@@ -288,7 +132,7 @@ class Home extends Component {
                 }
 
                 {
-                    this.props.state.AuthenticationReducer.betRoomParticipant.length > 0 ?
+                    betRoomParticipant.length > 0 &&
                     <View>
                         <Text style={styles.title}>Bet Room Participant :</Text>
                         <ScrollView style={ styles.wrapperBetRoom }>
@@ -298,8 +142,7 @@ class Home extends Component {
                                 renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="participant" /> }
                             />
                         </ScrollView>
-                    </View> 
-                    : null
+                    </View>
                 }
             </View>
         )
