@@ -23,9 +23,7 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        // Checker l'heure du dernier appel si > 1min, on appelle la fonction getBetRoomWithAPIFootball
-        // Si < 1min, on appelle la fonction getBetRoom sans l'appel API Football
-        this.getBetRoom();
+        this.getBetRoom()
     }
 
     getInformationsUser = () => {

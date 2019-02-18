@@ -3,6 +3,8 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { connect } from 'react-redux';
 
+import { requestPointsBR } from '../../Store/Reducers/BetRoom/action';
+
 class BetRoom extends Component {
     constructor(props) {
         super(props);
@@ -13,6 +15,31 @@ class BetRoom extends Component {
     }
 
     componentWillMount() {
+        return new Promise((resolve, reject) => {
+            resolve(this.checkStatut())
+        })
+        .then(() => {
+            if (this.state.statut === "Terminée") {
+                let points = 0;
+
+                this.props.data.matchs.map(match => {
+                    points += match.points
+                })
+
+                const idUser = this.props.state.AuthenticationReducer.userInfo._id;
+                const typeParticipant = this.props.typeParticipant;
+                const idBetRoom = this.props.data._id;
+
+                return new Promise((resolve, reject) => {
+                    resolve(requestPointsBR(idUser, typeParticipant, idBetRoom, points))
+                })
+                // console.log('Total : ', points)
+            }
+
+        })
+    }
+
+    checkStatut = () => {
         // On récupère tous les status des matchs de cette Bet Room et on les stock dans le state
         const matchs = this.props.data.matchs;
         let promiseMatchs = matchs.map( match => {
@@ -25,7 +52,7 @@ class BetRoom extends Component {
         Promise.all(promiseMatchs).then(() => {
             if (this.state.arrayStatut.every( val => val === "FINISHED" ) )
                 { this.setState({statut: "Terminée"}) }
-            else if (this.state.arrayStatut.includes("IN_PLAY") || this.state.arrayStatut.includes("FINISHED")) { this.setState({statut: "En cours"} )}
+            else if (this.state.arrayStatut.includes("IN_PLAY") || this.state.arrayStatut.includes("PAUSED") || this.state.arrayStatut.includes("FINISHED")) { this.setState({statut: "En cours"} )}
             else { this.setState({statut: "Pas débuté"}) }
         });
     }

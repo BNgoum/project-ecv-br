@@ -35,7 +35,7 @@ class BetRoomDetails extends Component {
         if (arrayStatus.every( val => val === "FINISHED" ) )
             {
                 this.setState({statut: "Terminée"});
-                this.calculTotalPoints();
+                //this.calculTotalPoints();
             }
         else if (arrayStatus.includes("IN_PLAY") || arrayStatus.includes("FINISHED"))
             { this.setState({statut: "En cours"} )}
@@ -73,6 +73,7 @@ class BetRoomDetails extends Component {
 
     render() {
         const betRoomDetails = this.props.state.AuthenticationReducer.currentBetRoom;
+        //console.log('Props : ', betRoomDetails)
         const userId = this.props.state.AuthenticationReducer.userInfo._id;
         const typeParticipant = this.props.state.AuthenticationReducer.typeParticipant;
         //console.log('Parti : ', this.state.participants)
