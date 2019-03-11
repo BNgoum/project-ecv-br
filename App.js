@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Font } from 'expo';
+import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 
 import Store from './src/client/Store/configureStore'
@@ -12,14 +13,25 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthenticated: false
+      isAuthenticated: false,
+      fontLoaded: false
     }
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'pt-regular': require('./assets/fonts/PT_Sans-Web-Regular.ttf'),
+      'pt-bold': require('./assets/fonts/PT_Sans-Web-Bold.ttf'),
+    });
+
+    this.setState({ fontLoaded: true });
   }
 
   render() {
     return (
+      this.state.fontLoaded &&
       <Provider store={Store}>
-        <Navigation />
+        <Navigation style={ styles.container} />
       </Provider>
     )
   }
@@ -27,9 +39,6 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#151830'
   },
 });

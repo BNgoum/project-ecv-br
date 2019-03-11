@@ -3,6 +3,14 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Button } from 'rea
 import { connect } from 'react-redux';
 import {requestLogin} from '../../../Store/Reducers/User/action';
 
+import TextBold from '../../Style/TextBold';
+import ButtonPrimary from '../../Style/ButtonPrimary';
+import ButtonPrimaryText from '../../Style/ButtonPrimaryText';
+import Link from '../../Style/Link';
+import LinkText from '../../Style/LinkText';
+
+import InputText from '../InputText';
+
 class FormLogin extends Component {
     constructor(props) {
         super(props);
@@ -39,33 +47,56 @@ class FormLogin extends Component {
         }
     }
 
+    handleOnChangeText = (type, value) => {
+        if ( type === "email") {
+            this.setState({ email: value, isEmailBlank: false })
+        } else {
+            this.setState({ password: value, isPasswordBlank: false })
+        }
+    }
+
     render() {
         return (
             <View style={styles.wrapperInscription}>
-                <Text style={ styles.title }>Connexion</Text>
-                <TextInput
+                <TextBold style={ styles.title }>Connexion</TextBold>
+                {/* <TextInput
                     style={styles.inputText}
                     onChangeText={(email) => { this.setState({email: email, isEmailBlank: false}); }}
-                    placeholder="Saisissez votre adresse email..."/>
+                    placeholder="Saisissez votre adresse email..."/> */}
 
                 { this.state.isEmailBlank ? <Text style={styles.textError}>Vous devez saisir votre email.</Text> : null }
 
-                <TextInput 
+                <InputText 
+                    placeholder="E-mail"
+                    sendPropsToParent={ this.handleOnChangeText }
+                    typeOfInput="email"
+                />
+                
+                <InputText 
+                    placeholder="Mot de passe"
+                    sendPropsToParent={ this.handleOnChangeText }
+                    isPassword={true}
+                    typeOfInput="password"
+                />
+
+                {/* <TextInput
                     style={styles.inputText}
                     onChangeText={(password) => { this.setState({password: password, isPasswordBlank: false}); }}
                     placeholder="Saisissez votre mot de passe..."
-                    secureTextEntry={this.state.isSecureTextEntry}/>
+                    secureTextEntry={this.state.isSecureTextEntry}/> */}
 
                 { this.props.state.AuthenticationReducer.auth_message_error !== "" ? <Text style={styles.textError}>{this.props.state.AuthenticationReducer.auth_message_error}</Text> : null }
 
                 { this.state.isFound ? null : <Text style={styles.textError}>Email ou mot de passe incorrect.</Text> }
                 { this.state.isPasswordBlank ? <Text style={styles.textError}>Vous devez saisir votre mot de passe.</Text> : null }
 
-                <TouchableOpacity onPress={this.checkInputNotBlank} style={styles.buttonValidate} title="Valider"><Text style={styles.textValidate}>Valider</Text></TouchableOpacity>
+                <ButtonPrimary onPress={this.checkInputNotBlank} style={styles.buttonValidate}>
+                    <ButtonPrimaryText>Se connecter</ButtonPrimaryText>
+                </ButtonPrimary>
 
-                <View style={ styles.bar }></View>
-
-                <Button title="Pas encore membre ?" style={ styles.link } onPress={() => this.props.navigation.navigate('Inscription')} />
+                <Link style={ styles.link } onPress={() => this.props.navigation.navigate('Inscription')}>
+                    <LinkText style={ styles.linkText }>Pas encore membre ?</LinkText>
+                </Link>
             </View>
         )
     }
@@ -80,8 +111,7 @@ const styles = StyleSheet.create({
         paddingRight: 32,
     },
     title: {
-        fontSize: 28,
-        fontWeight: 'bold',
+        fontSize: 23,
         alignSelf: 'center',
         marginBottom: 32
     },
@@ -95,24 +125,11 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         marginTop: 20
     },
-    bar: {
-        borderBottomWidth: 2,
-        borderBottomColor: '#ccc',
-        marginTop: 16,
-        marginBottom: 32,
-        marginLeft: 32,
-        marginRight: 32,
-    },
     buttonValidate: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
         marginTop: 32,
-        padding: 16,
-        backgroundColor: "#DDD",
-    },
-    textValidate: {
-        fontSize: 18,
+        marginBottom: 20,
+        width: 156,
+        alignSelf: 'center'
     },
     textError: {
         display: 'flex',
@@ -122,8 +139,12 @@ const styles = StyleSheet.create({
         color: '#f10505'
     },
     link: {
-        color: '#0000AA',
         alignSelf: 'center'
+    },
+    linkText: {
+        fontSize: 14,
+        color: '#8e8e8e',
+        paddingBottom: 5
     }
 })
 

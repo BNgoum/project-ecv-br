@@ -3,62 +3,128 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-nativ
 
 import { connect } from 'react-redux';
 
+import ButtonPrimary from '../../Components/Style/ButtonPrimary';
+import ButtonPrimaryText from '../../Components/Style/ButtonPrimaryText';
+import InputText from '../../Components/Form/InputText';
+import TextBold from '../../Components/Style/TextBold';
+import StepNumber from '../../Components/Style/StepNumber';
+import StepNumberContainer from '../../Components/Style/StepNumberContainer';
+import PaginationPoints from '../../Components/Style/PaginationPoints';
+
 class NewBetRoom extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: ""
+            name: "",
+            isSplashScreen: true
         }
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({isSplashScreen: false})
+        }, 500);
     }
 
     handleOnPress = (name) => {
         const action = { type: "SET_NAME", value: name }
         this.props.dispatch(action);
 
-        this.props.navigation.navigate('Rewards')
+        this.props.navigation.navigate('Rewards');
+    }
+
+    displaySplashScreen = () => {
+        return <View style={ styles.containerSplashScreen }>
+            <View style={ styles.backgroundSplashScreen }></View>
+            <TextBold style={ styles.titleSplashScreen }>C'est parti pour créer{"\n"}une nouvelle Bet Room</TextBold>
+        </View>
+    }
+
+    handleOnChangeText = (type, value) => {
+        this.setState({ name: value })
     }
     
     render() {
         return (
-            <View style={styles.wrapperHome}>
-
-                <TextInput
+            this.state.isSplashScreen ?
+            this.displaySplashScreen() :
+            <View style={styles.container}>
+                {/* <TextInput
                     onChangeText={(name) => this.setState({name})}
                     placeholder="Saisissez un nom pour votre Bet Room..." 
                     style={styles.inputName}
+                /> */}
+
+                <StepNumberContainer><StepNumber>1</StepNumber></StepNumberContainer>
+                <TextBold style={ styles.title }>Donne lui un nom</TextBold>
+
+                <InputText 
+                    placeholder="Nom de ma Bet Room"
+                    sendPropsToParent={ this.handleOnChangeText }
+                    typeOfInput="email"
+                    style={ styles.inputTextStyle }
                 />
 
-                <TouchableOpacity style={styles.wrapperButton} onPress={ () => this.handleOnPress(this.state.name) }>
+                {/* <TouchableOpacity style={styles.wrapperButton} onPress={ () => this.handleOnPress(this.state.name) }>
                     <Text style={ styles.textValidate }>Valider</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
+                <ButtonPrimary onPress={ () => this.handleOnPress(this.state.name) } style={styles.buttonValidate}>
+                    <ButtonPrimaryText>Suivant</ButtonPrimaryText>
+                </ButtonPrimary>
+
+                <PaginationPoints style={ styles.paginationStyle } isActive={1} />
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    wrapperHome: {
-
+    containerSplashScreen: {
+        flex: 1,
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    inputName: {
-        borderBottomColor: '#333',
-        borderBottomWidth: 2,
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingRight: 8,
-        paddingLeft: 8,
-        marginTop: 32,
-        marginBottom: 32,
-        marginLeft: 32,
-        marginRight: 32,
+    container: {
+        flex: 1,
+        position: 'relative',
+        padding: 40,
+        display: 'flex',
+        justifyContent: 'center',
     },
-    wrapperButton: {
-        alignSelf: 'center',
-        backgroundColor: '#ccc',
-        padding: 16
+    backgroundSplashScreen: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: [{ translateX: -100}, { translateY: -100}],
+        borderRadius: 100,
+        width: 200,
+        height: 200,
+        backgroundColor: '#282a4e',
     },
-    textValidate: {
-        fontSize: 18
+    titleSplashScreen: {
+        fontSize: 23,
+        textAlign: 'center'
+    },
+    buttonValidate: {
+        width: 156,
+        alignSelf: 'center'
+    },
+    title: {
+        fontSize: 18,
+        marginBottom: 60,
+        marginTop: 4,
+        textAlign: 'center'
+    },
+    inputTextStyle: {
+        width: '100%'
+    },
+    paginationStyle: {
+        alignSelf: 'flex-end',
+        position: 'absolute',
+        bottom: -50
     }
 })
 

@@ -4,39 +4,145 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import { requestPointsBR } from '../../Store/Reducers/BetRoom/action';
+import { requestUserInformationById } from '../../Store/Reducers/User/action';
+
 
 class BetRoom extends Component {
     constructor(props) {
         super(props);
         this.state = {
             statut: "Pas débuté",
-            arrayStatut: []
+            arrayStatut: [],
+            participants: [],
+            ranking: {}
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        const idUser = this.props.state.AuthenticationReducer.userInfo._id;
+
         return new Promise((resolve, reject) => {
             resolve(this.checkStatut())
         })
         .then(() => {
             if (this.state.statut === "Terminée") {
-                let points = 0;
+                let points = this.calculPointsMatch();
 
-                this.props.data.matchs.map(match => {
-                    points += match.points
-                })
+                // this.props.data.matchs.map(match => {
+                //     points += match.points
+                // })
 
-                const idUser = this.props.state.AuthenticationReducer.userInfo._id;
+                
                 const typeParticipant = this.props.typeParticipant;
                 const idBetRoom = this.props.data._id;
 
                 return new Promise((resolve, reject) => {
                     resolve(requestPointsBR(idUser, typeParticipant, idBetRoom, points))
                 })
-                // console.log('Total : ', points)
-            }
 
+            }
         })
+        .then(() => {
+            this.setParticipantsName();
+        })
+    }
+
+    setParticipantsName = () => {
+        const idUser = this.props.state.AuthenticationReducer.userInfo._id;
+        // On récupère tous les participant de la bet room courante et les ajoutent dans le state participants
+        let promiseParticipants = this.props.data.participants.map(participant => {
+            return new Promise((resolve, reject) => {
+                resolve(requestUserInformationById(participant));
+            })
+            .then(data => {
+                this.setState(prevState => ({
+                    participants: [...prevState.participants, data]
+                }))
+            })
+            .catch((error) => console.log('Erreur du map de la fonction setParticipantsName (BetRoomDetails.js) : ', error))
+        })
+
+        // Une fois qu'on a récupéré tous les participants de la bet room, on calcul les points gagné
+        Promise.all(promiseParticipants).then(() => {
+            const idCurrentBetRoom = this.props.data._id;
+
+            this.state.participants.map(participant => {
+                let totalPoints = 0;
+                
+                // Si le participant est l'owner de la Bet Room
+                if ( this.props.data.owner === participant._id) {
+                    participant.bet_room.owner.map(betroom => {
+                        if ( idCurrentBetRoom == betroom._id) {
+                            console.log('ça match !')
+                        }
+                    })
+                } else {
+                    participant.bet_room.participant.map(betroom => {
+                        // Si la bet room mapper correspond à la bet room actuelle, on calcul les points gagnés
+                        if ( idCurrentBetRoom === betroom._id) {
+                            const pointsRecup = this.calculPointsMatchGenerique(betroom.matchs);
+                            
+                            totalPoints += pointsRecup;
+                            this.setState({
+                                ranking: { [participant.pseudo]: pointsRecup }
+                            })
+                        }
+                    })
+                }
+                // console.log('Ranking : ', this.state.ranking)
+                // console.log('Points total pour le participant : ', participant.pseudo, ', il a eu : ', totalPoints, ', dans la bet room : ', idCurrentBetRoom)
+            })
+        });
+    }
+
+    calculPointsMatchGenerique = (matchs) => {
+        let points = 0;
+
+        matchs.map(match => {
+            // console.log('Un match : ', match)
+            const scoreHTBet = match.scoreHomeTeamInputUser;
+            const scoreATBet = match.scoreAwayTeamInputUser;
+            const scoreHTFinal = match.scoreHomeTeam;
+            const scoreATFinal = match.scoreAwayTeam;
+            const gagnant = match.gagnant;
+
+
+            // Si le score parié est égale au score final = 3 points
+            // En cas de match nul / pronostic gagnant réussi = 1 points
+            if (scoreHTBet === scoreHTFinal && scoreATBet === scoreATFinal) { points += 3 }
+            else if (
+                scoreATBet === scoreHTBet && gagnant === "DRAW" ||
+                scoreATBet > scoreHTBet && gagnant === "AWAY_TEAM" ||
+                scoreATBet < scoreHTBet && gagnant === "HOME_TEAM"
+            ) { points += 1 }
+            else { points += 0 }
+        })
+
+        return points;
+    }
+
+    calculPointsMatch = () => {
+        let points = 0;
+
+        this.props.data.matchs.map(match => {
+            const scoreHTBet = match.scoreHomeTeamInputUser;
+            const scoreATBet = match.scoreAwayTeamInputUser;
+            const scoreHTFinal = match.scoreHomeTeam;
+            const scoreATFinal = match.scoreAwayTeam;
+            const gagnant = match.gagnant;
+
+            // Si le score parié est égale au score final = 3 points
+            // En cas de match nul / pronostic gagnant réussi = 1 points
+            if (scoreHTBet === scoreHTFinal && scoreATBet === scoreATFinal) { points += 3 }
+            else if (
+                scoreATBet === scoreHTBet && gagnant === "DRAW" ||
+                scoreATBet > scoreHTBet && gagnant === "AWAY_TEAM" ||
+                scoreATBet < scoreHTBet && gagnant === "HOME_TEAM"
+            ) { points += 1 }
+            else { points += 0 }
+        })
+
+        return points;
     }
 
     checkStatut = () => {

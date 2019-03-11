@@ -99,6 +99,9 @@ export const requestPoints = (_id, typeParticipant, idBetRoom, idMatch, points) 
         idMatch,
         points,
     })
+    .then(res => {
+        console.log('Call success : ', res.data.data)
+    })
     .catch(err => {
         console.log('Erreur lors de la mise à jour des points (BetRoom/action.js) : ', err);
     });

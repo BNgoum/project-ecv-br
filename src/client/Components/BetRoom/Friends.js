@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         marginTop: 32
     },
     buttonAllFriendsSelected: {
-        backgroundColor: '#OFO',
+        backgroundColor: '#0F0',
         padding: 16,
         marginTop: 32
     },

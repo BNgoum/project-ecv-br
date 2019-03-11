@@ -18,64 +18,44 @@ export default class Match extends Component {
 
     componentDidMount() {
         const statut = this.props.data.statut;
+
         if ( statut === "IN_PLAY" || statut === "LIVE" || statut === "PAUSED") {
             this.setState({isBegin: true, statut: "En cours"})
         } else if (statut === "FINISHED") {
             this.setState({isBegin: true, statut: "Terminée"})
-            this.calculPoints();
+            //this.calculPoints();
         }
     }
 
     // On calcul le total des points gagné en fonction du pari
-    calculPoints = () => {
-        const userId = this.props.userId;
-        const typeParticipant = this.props.typeParticipant;
-        const idBetRoom = this.props.betRoom._id;
-        const matchId = this.props.data._id;
-        const scoreHTBet = this.props.data.scoreHomeTeamInputUser;
-        const scoreATBet = this.props.data.scoreAwayTeamInputUser;
-        const scoreHTFinal = this.props.data.scoreHomeTeam;
-        const scoreATFinal = this.props.data.scoreAwayTeam;
-        const gagnant = this.props.data.gagnant;
+    // calculPoints = () => {
+    //     const userId = this.props.userId;
+    //     const typeParticipant = this.props.typeParticipant;
+    //     const idBetRoom = this.props.betRoom._id;
+    //     const matchId = this.props.data._id;
+    //     const scoreHTBet = this.props.data.scoreHomeTeamInputUser;
+    //     const scoreATBet = this.props.data.scoreAwayTeamInputUser;
+    //     const scoreHTFinal = this.props.data.scoreHomeTeam;
+    //     const scoreATFinal = this.props.data.scoreAwayTeam;
+    //     const gagnant = this.props.data.gagnant;
 
-        let points = null;
+    //     let points = 0;
 
-        // Si le score parié est égale au score final = 3 points
-        // En cas de match nul / pronostic gagnant réussi = 1 points
-        if (scoreHTBet === scoreHTFinal && scoreATBet === scoreATFinal) { points = 3 }
-        else if ( 
-            scoreATBet === scoreHTBet && gagnant === "DRAW" ||
-            scoreATBet > scoreHTBet && gagnant === "AWAY_TEAM" ||
-            scoreATBet < scoreHTBet && gagnant === "HOME_TEAM"
-        ) { points = 1 }
-        else { points = 0 }
+    //     // Si le score parié est égale au score final = 3 points
+    //     // En cas de match nul / pronostic gagnant réussi = 1 points
+    //     if (scoreHTBet === scoreHTFinal && scoreATBet === scoreATFinal) { points = 3 }
+    //     else if ( 
+    //         scoreATBet === scoreHTBet && gagnant === "DRAW" ||
+    //         scoreATBet > scoreHTBet && gagnant === "AWAY_TEAM" ||
+    //         scoreATBet < scoreHTBet && gagnant === "HOME_TEAM"
+    //     ) { points = 1 }
+    //     else { points = 0 }
 
-        // Appel à la fonction 
-        return requestPoints(userId, typeParticipant, idBetRoom, matchId, points);
-    }
+    //     console.log('Points pour le match ', this.props.data.homeTeam, this.props.data.awayTeam, ', point gagnés : ', points)
+    //     console.log('Details pour le match : ', userId, ', ', idBetRoom, ', ', matchId)
 
-    // updateMatch = () => {
-    //     return new Promise((resolve, reject) => {
-    //         const matchId = this.props.data._id;
-    //         resolve(requestGetMatch(matchId))
-    //     })
-    //     .then(data => {
-    //         const match = data.data.data;
-    //         const userId = this.props.userId;
-    //         const typeParticipant = this.props.typeParticipant;
-    //         const betRoomId = this.props.betRoom._id;
-    //         const matchId = this.props.data._id;
-    //         const homeTeamScore = match.score.fullTime.homeTeam;
-    //         const awayTeamScore = match.score.fullTime.homeTeam;
-    //         const statut = match.status;
-
-    //         if ( statut === "IN_PLAY" || statut === "LIVE" || statut === "PAUSED" || statut === "FINISHED") {
-    //             this.setState({isBegin: true})
-    //         }
-
-    //         return requestUpdateMatch(userId, typeParticipant, betRoomId, matchId, homeTeamScore, awayTeamScore, statut)
-    //     })
-    //     .catch((error) => console.log('Erreur de la promise updateMatch (BetRoom/Match.js) : ', error))
+    //     // Appel à la fonction 
+    //     return requestPoints(userId, typeParticipant, idBetRoom, matchId, points);
     // }
 
     handleOnPressScore = (type, team) => {
@@ -108,6 +88,7 @@ export default class Match extends Component {
     }
 
     render() {
+        console.log('### In Render pour ', this.props.data.homeTeam);
         return (
             <View style={styles.wrapperMatch}>
                 <View style={styles.wrapperDate}>

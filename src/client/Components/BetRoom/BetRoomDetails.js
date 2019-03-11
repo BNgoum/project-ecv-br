@@ -47,29 +47,23 @@ class BetRoomDetails extends Component {
         const participants = this.props.state.AuthenticationReducer.currentBetRoom.participants;
 
             participants.map(participant => {
-            return new Promise((resolve, reject) => {
-                resolve(requestUserInformationById(participant));
-            })
-            .then(data => {
-                this.setState(prevState => ({
-                    participants: [...prevState.participants, data]
-                }))
-            })
-            .catch((error) => console.log('Erreur du map de la fonction setParticipantsName (BetRoomDetails.js) : ', error))
+                return new Promise((resolve, reject) => {
+                    resolve(requestUserInformationById(participant));
+                })
+                .then(data => {
+                    this.setState(prevState => ({
+                        participants: [...prevState.participants, data]
+                    }))
+                })
+                .catch((error) => console.log('Erreur du map de la fonction setParticipantsName (BetRoomDetails.js) : ', error))
             })
         }
 
 
-    calculTotalPoints = () => {
-        const betRoomDetails = this.props.state.AuthenticationReducer.currentBetRoom.matchs;
-        let totalPoints = 0;
 
 
-        betRoomDetails.map(match => {
-            totalPoints += parseInt(match.points);
-        })
+        // Faire ici le calcul des points des matchs
 
-    }
 
     render() {
         const betRoomDetails = this.props.state.AuthenticationReducer.currentBetRoom;

@@ -7,19 +7,42 @@ const ConnexionStack = createStackNavigator({
     Connexion: {
         screen: Connexion,
         navigationOptions: {
-            title: 'Connexion'
+            title: 'BET ROOM',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+             headerStyle: {
+                backgroundColor: '#151830'
+            },
+             headerTintColor: {
+                color: '#fff'
+            }
         }
-    },
-    
+    }    
+},
+{
+    cardStyle: { backgroundColor: '#151830' }
 })
 
 const InscriptionStack = createStackNavigator({
     Inscription: {
         screen: Inscription,
         navigationOptions: {
-            title: 'Inscription'
+            title: 'BET ROOM',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+             headerStyle: {
+                backgroundColor: '#151830'
+            },
+             headerTintColor: {
+                color: '#fff'
+            }
         }
     }
+},
+{
+    cardStyle: { backgroundColor: '#151830' }
 })
 
 export default createAppContainer(createSwitchNavigator(

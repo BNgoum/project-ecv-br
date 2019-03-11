@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Button } from 'react-native';
 import { connect } from 'react-redux';
 import {requestRegister} from '../../../Store/Reducers/User/action';
+import InputText from '../InputText';
+
+import TextBold from '../../Style/TextBold';
+import ButtonPrimary from '../../Style/ButtonPrimary';
+import ButtonPrimaryText from '../../Style/ButtonPrimaryText';
+import Link from '../../Style/Link';
+import LinkText from '../../Style/LinkText';
 
 class FormSignUp extends Component {
     constructor(props) {
@@ -40,38 +47,62 @@ class FormSignUp extends Component {
         }
     }
 
+    handleOnChangeText = (type, value) => {
+        switch (type) {
+            case 'pseudo':
+                this.setState({ pseudo: value })
+                break;
+            case 'email':
+                this.setState({ email: value })
+                break;
+            case 'prenom':
+                this.setState({ prenom: value })
+                break;
+            case 'nom':
+                this.setState({ nom: value })
+                break;
+            case 'password':
+                this.setState({ password: value })
+                break;
+        }
+    }
+
     render() {
         return (
             <View style={ styles.wrapperInscription }>
-                <Text style={ styles.title }>Inscription</Text>
+                <TextBold style={ styles.title }>Inscription</TextBold>
 
                 { this.props.state.AuthenticationReducer.auth_inscription_not_validated === "" ? null : <Text style={styles.textSignUpSuccess}>{this.props.state.AuthenticationReducer.auth_inscription_not_validated}</Text> }
 
-                <TextInput 
-                    style={styles.inputText}
-                    onChangeText={(pseudo) => { this.setState({pseudo: pseudo}); }}
-                    placeholder="Saisissez votre pseudo..."/>
+                <InputText 
+                    placeholder="Pseudo"
+                    sendPropsToParent={ this.handleOnChangeText }
+                    typeOfInput="pseudo"
+                />
 
-                <TextInput 
-                    style={styles.inputText}
-                    onChangeText={(firstName) => { this.setState({firstName: firstName}); }}
-                    placeholder="Saisissez votre prénom..."/>
+                <InputText 
+                    placeholder="Prénom"
+                    sendPropsToParent={ this.handleOnChangeText }
+                    typeOfInput="prenom"
+                />
 
-                <TextInput 
-                    style={styles.inputText}
-                    onChangeText={(lastName) => { this.setState({lastName: lastName}); }}
-                    placeholder="Saisissez votre nom..."/>
+                <InputText 
+                    placeholder="Nom"
+                    sendPropsToParent={ this.handleOnChangeText }
+                    typeOfInput="nom"
+                />
 
-                <TextInput 
-                    style={styles.inputText}
-                    onChangeText={(email) => { this.setState({email: email}); }}
-                    placeholder="Saisissez votre adresse email..."/>
+                <InputText 
+                    placeholder="E-mail"
+                    sendPropsToParent={ this.handleOnChangeText }
+                    typeOfInput="email"
+                />
 
-                <TextInput 
-                    style={styles.inputText}
-                    onChangeText={(password) => { this.setState({password: password}); }}
-                    placeholder="Saisissez votre mot de passe..."
-                    secureTextEntry={this.state.isSecureTextEntry}/>
+                <InputText 
+                    placeholder="Mot de passe"
+                    sendPropsToParent={ this.handleOnChangeText }
+                    typeOfInput="password"
+                />
 
                 { this.state.isEmpty ? <Text>Tous les champs doivent être remplis.</Text> : null }
                 { this.props.state.AuthenticationReducer.auth_message_error
@@ -81,11 +112,13 @@ class FormSignUp extends Component {
                         null
                 }
 
-                <TouchableOpacity onPress={this.checkInputNotBlank} style={styles.buttonValidate} title="Valider"><Text style={styles.textValidate}>Valider</Text></TouchableOpacity>
+                <ButtonPrimary onPress={this.checkInputNotBlank} style={styles.buttonValidate}>
+                    <ButtonPrimaryText>S'inscrire</ButtonPrimaryText>
+                </ButtonPrimary>
 
-                <View style={ styles.bar }></View>
-
-                <Button title="Déjà inscrit ?" style={ styles.link } onPress={() => this.props.navigation.navigate('Connexion')} />
+                <Link style={ styles.link } onPress={() => this.props.navigation.navigate('Connexion')}>
+                    <LinkText style={ styles.linkText }>Déjà inscrit ?</LinkText>
+                </Link>
             </View>
         )
     }
@@ -100,8 +133,7 @@ const styles = StyleSheet.create({
         paddingRight: 32,
     },
     title: {
-        fontSize: 28,
-        fontWeight: 'bold',
+        fontSize: 23,
         alignSelf: 'center',
         marginBottom: 32
     },
@@ -115,25 +147,19 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         marginBottom: 20
     },
-    bar: {
-        borderBottomWidth: 2,
-        borderBottomColor: '#ccc',
-        marginTop: 16,
-        marginBottom: 32,
-        marginLeft: 32,
-        marginRight: 32,
-    },
     link: {
-        color: '#0000AA',
         alignSelf: 'center'
     },
+    linkText: {
+        fontSize: 14,
+        color: '#8e8e8e',
+        paddingBottom: 5
+    },
     buttonValidate: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 32,
-        padding: 16,
-        backgroundColor: "#DDD",
+        marginTop: 16,
+        marginBottom: 20,
+        width: 156,
+        alignSelf: 'center'
     },
     textValidate: {
         fontSize: 18,
