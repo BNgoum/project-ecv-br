@@ -59,10 +59,6 @@ class FormLogin extends Component {
         return (
             <View style={styles.wrapperInscription}>
                 <TextBold style={ styles.title }>Connexion</TextBold>
-                {/* <TextInput
-                    style={styles.inputText}
-                    onChangeText={(email) => { this.setState({email: email, isEmailBlank: false}); }}
-                    placeholder="Saisissez votre adresse email..."/> */}
 
                 { this.state.isEmailBlank ? <Text style={styles.textError}>Vous devez saisir votre email.</Text> : null }
 
@@ -78,12 +74,6 @@ class FormLogin extends Component {
                     isPassword={true}
                     typeOfInput="password"
                 />
-
-                {/* <TextInput
-                    style={styles.inputText}
-                    onChangeText={(password) => { this.setState({password: password, isPasswordBlank: false}); }}
-                    placeholder="Saisissez votre mot de passe..."
-                    secureTextEntry={this.state.isSecureTextEntry}/> */}
 
                 { this.props.state.AuthenticationReducer.auth_message_error !== "" ? <Text style={styles.textError}>{this.props.state.AuthenticationReducer.auth_message_error}</Text> : null }
 

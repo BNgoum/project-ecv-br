@@ -3,7 +3,10 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-nativ
 
 import { connect } from 'react-redux';
 
+import ButtonPrimary from '../../Components/Style/ButtonPrimary';
+import ButtonPrimaryText from '../../Components/Style/ButtonPrimaryText';
 import RewardsComponent from '../../Components/BetRoom/Rewards';
+import PaginationPoints from '../../Components/Style/PaginationPoints';
 
 class Rewards extends Component {
     constructor(props) {
@@ -15,26 +18,30 @@ class Rewards extends Component {
     
     render() {
         return (
-            <View style={styles.wrapperRewards}>
+            <View style={styles.container}>
                 <RewardsComponent />
 
-                <TouchableOpacity onPress={ () => this.props.navigation.navigate('Friends')} style={ styles.buttonValidate }>
-                    <Text style={ styles.textValidate }>Valider</Text>
-                </TouchableOpacity>
+                <ButtonPrimary onPress={ () => this.props.navigation.navigate('Friends') } style={styles.buttonValidate}>
+                    <ButtonPrimaryText>Suivant</ButtonPrimaryText>
+                </ButtonPrimary>
+
+                <PaginationPoints style={ styles.paginationStyle } isActive={2} />
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    buttonValidate: {
-        alignSelf: 'center',
-        backgroundColor: '#ccc',
-        padding: 12,
-        marginTop: 16
+    container: {
+        flex: 1,
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
-    textValidate: {
-        fontSize: 18
+    buttonValidate: {
+        width: 156,
+        alignSelf: 'center'
     }
 })
 

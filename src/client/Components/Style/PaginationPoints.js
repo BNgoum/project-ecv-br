@@ -9,10 +9,6 @@ export default class PaginationPoints extends Component {
         }
     }
 
-    displayPagination = () => {
-        
-    }
-
     render() {
         return (
             <View style={styles.container}>
@@ -27,10 +23,6 @@ export default class PaginationPoints extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
-        bottom: 14,
-        left: '50%',
-        transform: [{translateX: 6}],
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',

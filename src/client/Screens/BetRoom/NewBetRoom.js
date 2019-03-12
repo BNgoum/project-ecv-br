@@ -54,26 +54,32 @@ class NewBetRoom extends Component {
                     placeholder="Saisissez un nom pour votre Bet Room..." 
                     style={styles.inputName}
                 /> */}
+                <View>
+                    <StepNumberContainer><StepNumber>1</StepNumber></StepNumberContainer>
+                    <TextBold style={ styles.title }>Donne lui un nom</TextBold>
+                </View>
+                
+                <View>
+                    <InputText 
+                        placeholder="Nom de ma Bet Room"
+                        sendPropsToParent={ this.handleOnChangeText }
+                        typeOfInput="email"
+                        style={ styles.inputTextStyle }
+                    />
 
-                <StepNumberContainer><StepNumber>1</StepNumber></StepNumberContainer>
-                <TextBold style={ styles.title }>Donne lui un nom</TextBold>
-
-                <InputText 
-                    placeholder="Nom de ma Bet Room"
-                    sendPropsToParent={ this.handleOnChangeText }
-                    typeOfInput="email"
-                    style={ styles.inputTextStyle }
-                />
+                    <ButtonPrimary onPress={ () => this.handleOnPress(this.state.name) } style={styles.buttonValidate}>
+                        <ButtonPrimaryText>Suivant</ButtonPrimaryText>
+                    </ButtonPrimary>
+                </View>
+                
 
                 {/* <TouchableOpacity style={styles.wrapperButton} onPress={ () => this.handleOnPress(this.state.name) }>
                     <Text style={ styles.textValidate }>Valider</Text>
                 </TouchableOpacity> */}
 
-                <ButtonPrimary onPress={ () => this.handleOnPress(this.state.name) } style={styles.buttonValidate}>
-                    <ButtonPrimaryText>Suivant</ButtonPrimaryText>
-                </ButtonPrimary>
+                
 
-                <PaginationPoints style={ styles.paginationStyle } isActive={1} />
+                <PaginationPoints isActive={1} />
             </View>
         )
     }
@@ -92,7 +98,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         padding: 40,
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
     },
     backgroundSplashScreen: {
         position: 'absolute',
@@ -114,7 +120,6 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        marginBottom: 60,
         marginTop: 4,
         textAlign: 'center'
     },

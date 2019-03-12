@@ -31,14 +31,8 @@ export default class App extends React.Component {
     return (
       this.state.fontLoaded &&
       <Provider store={Store}>
-        <Navigation style={ styles.container} />
+        <Navigation />
       </Provider>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#151830'
-  },
-});

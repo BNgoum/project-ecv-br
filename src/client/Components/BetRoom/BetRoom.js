@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
 
 import { connect } from 'react-redux';
 
 import { requestPointsBR } from '../../Store/Reducers/BetRoom/action';
 import { requestUserInformationById } from '../../Store/Reducers/User/action';
 
+import TextBold from '../../Components/Style/TextBold';
+import TextRegular from '../../Components/Style/TextRegular';
 
 class BetRoom extends Component {
     constructor(props) {
@@ -14,11 +16,14 @@ class BetRoom extends Component {
             statut: "Pas débuté",
             arrayStatut: [],
             participants: [],
-            ranking: {}
+            ranking: {},
+            reward: {}
         }
     }
 
     componentDidMount() {
+        this.setImage();
+
         const idUser = this.props.state.AuthenticationReducer.userInfo._id;
 
         return new Promise((resolve, reject) => {
@@ -178,21 +183,41 @@ class BetRoom extends Component {
         .catch((error) => console.log('Erreur lors du handleOnPress (BetRoom.js) : ', error))
     }
 
+    setImage = () => {
+        const picto = this.props.data.reward;
+
+        switch (picto) {
+            case 'Gage':
+                this.setState({ reward: require("../../Images/new_bet_room/gage.png") })
+                break;
+            case 'Double les points':
+                this.setState({ reward: require("../../Images/new_bet_room/double_points.png") })
+                break;
+            case 'Un verre':
+                this.setState({ reward: require("../../Images/new_bet_room/verre.png") })
+                break;
+            case 'Restaurant':
+                this.setState({ reward: require("../../Images/new_bet_room/restaurant.png") })
+                break;
+        }
+    }
+
     render() {
         return (
-            <TouchableOpacity onPress={ this.handleOnPress } 
-                style={[styles.wrapperContent, 
-                    this.state.statut === "Terminée" && styles.isFinished,
-                    this.state.statut === "En cours" && styles.isInLive]}>
-                <Text style={styles.title}>{ this.props.data.name }</Text>
-                {
-                    this.props.data.betsNumber > 1 ? 
-                    <Text>{ this.props.data.betsNumber } paris</Text> :
-                    <Text>{ this.props.data.betsNumber } pari</Text>
-                }
-                <Text>{ this.props.data.participants.length + 1 } participants</Text>
-                <Text>Récompense : { this.props.data.reward }</Text>
-                <Text>Statut: { this.state.statut }</Text>
+            <TouchableOpacity onPress={ this.handleOnPress } style={ styles.wrapperContent }>
+                <Image source={this.state.reward} style={ styles.rewardPicto } />
+
+                <View style={ styles.wrapperRight }>
+                    <TextRegular style={styles.typeParticipant}>{ this.props.typeParticipant === "owner" ? "Admin" : "Participant" }</TextRegular>
+                    <TextBold style={styles.title}>{ this.props.data.name }</TextBold>
+                    {
+                        this.props.data.betsNumber > 1 ? 
+                        <TextRegular style={ styles.textBetsNumber }>{ this.props.data.betsNumber } paris</TextRegular> :
+                        <TextRegular style={ styles.textBetsNumber }>{ this.props.data.betsNumber } pari</TextRegular>
+                    }
+                    <Text>{ this.props.data.participants.length + 1 } participants</Text>
+                    <Text>Statut: { this.state.statut }</Text>
+                </View>
             </TouchableOpacity>
         )
     }
@@ -200,18 +225,28 @@ class BetRoom extends Component {
 
 const styles = StyleSheet.create({
     wrapperContent: {
-        backgroundColor: '#ccc',
-        padding: 16,
-        margin: 8
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: '#242647',
+        paddingVertical: 12,
+        paddingRight: 15,
+        paddingLeft: 30,
+        marginBottom: 8,
+        borderRadius: 7
     },
     title: {
-        fontSize: 18
+        fontSize: 16,
     },
-    isFinished: {
-        backgroundColor: '#F00'
+    textBetsNumber: {
+        fontSize: 12
     },
-    isInLive: {
-        backgroundColor: '#0F0'
+    typeParticipant: {
+        fontSize: 12,
+        color: '#6b6d8a'
+    },
+    rewardPicto: {
+        width: '50%',
+        height: '50%'
     }
 })
 
