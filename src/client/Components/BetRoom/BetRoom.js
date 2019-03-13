@@ -9,6 +9,8 @@ import { requestUserInformationById } from '../../Store/Reducers/User/action';
 import TextBold from '../../Components/Style/TextBold';
 import TextRegular from '../../Components/Style/TextRegular';
 
+import { Arrow } from '../../Images/icons';
+
 class BetRoom extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,8 @@ class BetRoom extends Component {
             arrayStatut: [],
             participants: [],
             ranking: {},
-            reward: {}
+            reward: {},
+            styleReward: {}
         }
     }
 
@@ -188,16 +191,16 @@ class BetRoom extends Component {
 
         switch (picto) {
             case 'Gage':
-                this.setState({ reward: require("../../Images/new_bet_room/gage.png") })
+                this.setState({ reward: require("../../Images/new_bet_room/gage.png"), styleReward: { width: 54, height: 31} })
                 break;
             case 'Double les points':
-                this.setState({ reward: require("../../Images/new_bet_room/double_points.png") })
+                this.setState({ reward: require("../../Images/new_bet_room/double_points.png"), styleReward: { width: 56, height: 48} })
                 break;
             case 'Un verre':
-                this.setState({ reward: require("../../Images/new_bet_room/verre.png") })
+                this.setState({ reward: require("../../Images/new_bet_room/verre.png"), styleReward: { width: 49, height: 49} })
                 break;
             case 'Restaurant':
-                this.setState({ reward: require("../../Images/new_bet_room/restaurant.png") })
+                this.setState({ reward: require("../../Images/new_bet_room/restaurant.png"), styleReward: { width: 50, height: 50} })
                 break;
         }
     }
@@ -205,19 +208,25 @@ class BetRoom extends Component {
     render() {
         return (
             <TouchableOpacity onPress={ this.handleOnPress } style={ styles.wrapperContent }>
-                <Image source={this.state.reward} style={ styles.rewardPicto } />
-
                 <View style={ styles.wrapperRight }>
-                    <TextRegular style={styles.typeParticipant}>{ this.props.typeParticipant === "owner" ? "Admin" : "Participant" }</TextRegular>
-                    <TextBold style={styles.title}>{ this.props.data.name }</TextBold>
-                    {
-                        this.props.data.betsNumber > 1 ? 
-                        <TextRegular style={ styles.textBetsNumber }>{ this.props.data.betsNumber } paris</TextRegular> :
-                        <TextRegular style={ styles.textBetsNumber }>{ this.props.data.betsNumber } pari</TextRegular>
-                    }
-                    <Text>{ this.props.data.participants.length + 1 } participants</Text>
-                    <Text>Statut: { this.state.statut }</Text>
+                    <Image source={this.state.reward} style={ styles.iconRewards } resizeMode={"contain"} />
+                    
+                    <View>
+                        <TextRegular style={styles.typeParticipant}>{ this.props.typeParticipant === "owner" ? "Admin" : "Participant" }</TextRegular>
+                        <TextBold style={styles.title}>{ this.props.data.name }</TextBold>
+                        {
+                            this.props.data.betsNumber > 1 ? 
+                            <TextRegular style={ styles.textBetsNumber }>{ this.props.data.betsNumber } paris</TextRegular> :
+                            <TextRegular style={ styles.textBetsNumber }>{ this.props.data.betsNumber } pari</TextRegular>
+                        }
+                        <View style={ styles.wrapperParticipant }>
+                            <Image style={ styles.iconParticipant } source={require('../../Images/tab_bar/participant.png')} resizeMode={"contain"}/>
+                            <TextRegular style={ styles.secondText }> x { this.props.data.participants.length + 1 }</TextRegular>
+                        </View>
+                    </View>
                 </View>
+
+                <Arrow />
             </TouchableOpacity>
         )
     }
@@ -227,12 +236,19 @@ const styles = StyleSheet.create({
     wrapperContent: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         backgroundColor: '#242647',
         paddingVertical: 12,
         paddingRight: 15,
         paddingLeft: 30,
         marginBottom: 8,
         borderRadius: 7
+    },
+    wrapperRight: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     title: {
         fontSize: 16,
@@ -244,9 +260,24 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: '#6b6d8a'
     },
-    rewardPicto: {
-        width: '50%',
-        height: '50%'
+    iconRewards: {
+        width: 55,
+        height: 55,
+        marginRight: 32
+    },
+    iconParticipant: {
+        width: 11,
+        height: 12
+    },
+    wrapperParticipant: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 3
+    },
+    secondText: {
+        fontSize: 12,
+        color: '#6b6d8a'
     }
 })
 

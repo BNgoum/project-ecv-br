@@ -8,6 +8,9 @@ import { getAllMatchs, requestGetMatchsBetweenIntervalAndCompetitions } from '..
 import { requestUpdateMatch } from '../Store/Reducers/BetRoom/action';
 
 import BetRoom from '../Components/BetRoom/BetRoom';
+import Tabs from '../Components/Tabs';
+
+import TextBold from '../Components/Style/TextBold';
 
 class Home extends Component {
     constructor(props) {
@@ -18,7 +21,13 @@ class Home extends Component {
             betRoomParticipant: [],
             firstDate: "",
             lastDate: "",
-            leagues: []
+            leagues: [],
+            isPending: true,
+            isFinished: false,
+            isOnGoing: false,
+            betRoomPending: [],
+            betRoomOnGoing: [],
+            betRoomFinished: [],
         }
     }
 
@@ -105,15 +114,85 @@ class Home extends Component {
             const actionAddParticipantBR = { type: "ADD_PARTICIPANT_BET_ROOM", value: this.state.betRoomParticipant }
             this.props.dispatch(actionAddParticipantBR);
         })
+        .then(() => {
+            this.dispatchBetRoomByStatus()
+        })
         .catch((error) => console.log('Erreur lors de la récupération des Bet Room (Home.js) : ', error))
+    }
+
+    dispatchBetRoomByStatus = () => {
+        const betRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
+        const betRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
+
+        // On dispatch les BR admin
+        betRoomOwner.map(betroom => {
+            let status = [];
+            // on parcours tous les matchs de la BR et on ajoute son statut dans le array status
+            betroom.matchs.map(match => {
+                status.push(match.statut)
+            })
+
+            // On test les cas où tous les status sont à "finished", "scheduled" ou "in play" et on les ajoute dans le state correspondant
+            if (status.every( val => val === "FINISHED" ) ) {
+                this.setState({
+                    betRoomFinished: [...this.state.betRoomFinished, betroom]
+                })
+            } else if (status.includes("IN_PLAY") || status.includes("PAUSED") || status.includes("FINISHED")) { 
+                this.setState({
+                    betRoomPending: [...this.state.betRoomPending, betroom]
+                })
+            }
+            else { 
+                this.setState({
+                    betRoomOnGoing: [...this.state.betRoomOnGoing, betroom]
+                })
+            }
+        })
+
+        console.log('Is finished : ', this.state.betRoomFinished)
+        console.log('Is on going : ', this.state.betRoomOnGoing)
+        console.log('Is pending : ', this.state.betRoomPending)
+    }
+
+    displayContent = () => {
+        const betRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
+        const betRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
+
+        let arrayBetRoomOwner = [];
+        let arrayBetRoomParticipant = [];
+
+        if (this.state.isPending) {
+
+        } else if (this.state.isFinished) {
+            betRoomOwner.map(betroom => {
+                betroom.matchs.map(match => {
+
+                })
+            })
+        } else {
+
+        }
+    }
+
+    handleDisplayTabContent = side => {
+        if ( side === "first" ) { this.setState({ isPending: true, isFinished: false, isOnGoing: false }) }
+        else if (side === "second") { this.setState({ isPending: false, isFinished: false, isOnGoing: true }) }
+        else { this.setState({ isPending: false, isFinished: true, isOnGoing: false }) }
     }
 
     render() {
         const betRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
         const betRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
+
         return (
             <View style={styles.wrapperContent}>
-                <Text style={styles.title}>Bet Room en cours</Text>
+                <TextBold style={ styles.titleScreen} >Mes Bet Rooms</TextBold>
+
+                <Tabs displayTabContent={this.handleDisplayTabContent}/>
+
+                { this.displayContent() }
+
+                {/* <Text style={styles.title}>Bet Room en cours</Text>
       
                  {
                     betRoomOwner.length > 0 && 
@@ -141,7 +220,7 @@ class Home extends Component {
                             />
                         </ScrollView>
                     </View>
-                }
+                } */}
             </View>
         )
     }
@@ -149,7 +228,13 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     wrapperContent: {
-        flex: 1
+        flex: 1,
+        marginHorizontal: 20
+    },
+    titleScreen: {
+        fontSize: 18,
+        alignSelf: 'center',
+        marginVertical: 20
     },
     title: {
         margin: 16,

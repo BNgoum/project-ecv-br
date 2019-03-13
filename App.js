@@ -1,6 +1,5 @@
 import React from 'react';
 import { Font } from 'expo';
-import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 
 import Store from './src/client/Store/configureStore'
