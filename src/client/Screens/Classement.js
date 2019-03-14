@@ -4,12 +4,44 @@ import { connect } from 'react-redux';
 
 import { requestUserInformationById } from '../Store/Reducers/User/action';
 
+import ItemClassement from '../Components/Classement/ItemClassement';
+
+import TextBold from '../Components/Style/TextBold';
+import TextRegular from '../Components/Style/TextRegular';
+
 class Classement extends Component {
     constructor(props) {
         super(props);
         this.state = {
             friends: []
         }
+    }
+
+    componentDidMount() {
+        const user = this.props.state.AuthenticationReducer.userInfo;
+
+        return new Promise((resolve, reject) => {
+            resolve(this.setFriends())
+        })
+        .then( () => {
+            let currentUser = { "pseudo": user.pseudo, "totalPoints": user.totalPoints };
+            this.setState(prevState => ({
+                friends: [...prevState.friends, currentUser]
+            }))
+        })
+        .then(() => {
+            let arraySort = this.state.friends.sort((friendA, friendB) => {
+                return friendA.totalPoints > friendB.totalPoints
+            })
+            arraySort.reverse();
+
+            arraySort.map((user, index) => {
+                user.rang = index + 1
+            })
+
+            this.setState({ friends: arraySort });
+        })
+        .catch(error => console.log('Erreur dans le componentDidMount des amis (classement.js) : ', error))
     }
 
     setFriends = () => {
@@ -34,42 +66,19 @@ class Classement extends Component {
 
         return Promise.all(promiseAllFriends)
     }
-
-    componentDidMount() {
-        const user = this.props.state.AuthenticationReducer.userInfo;
-
-        return new Promise((resolve, reject) => {
-            resolve(this.setFriends())
-        })
-        .then( () => {
-            let currentUser = { "pseudo": user.pseudo, "totalPoints": user.totalPoints };
-            this.setState(prevState => ({
-                friends: [...prevState.friends, currentUser]
-            }))
-        })
-        .then(() => {
-            let arraySort = this.state.friends.sort((friendA, friendB) => {
-                return friendA.totalPoints > friendB.totalPoints
-            })
-            arraySort.reverse();
-        })
-        .catch(error => console.log('Erreur dans le componentDidMount des amis (classement.js) : ', error))
-    }
     
     render() {
+        console.log('Array friends : ', this.state.friends)
         return (
-            <View>
-                <Text>Classement Screen</Text>
+            <View style={ styles.container }>
+                <TextBold style={ styles.title }>Classement</TextBold>
                 {
                     this.state.friends.length > 0 &&
                     <FlatList
                         data={ this.state.friends }
                         keyExtractor={ (item) => item.pseudo }
                         renderItem={ ({item}) => 
-                            <View style={ styles.wrapperContent }>
-                                <Text>{item.pseudo}</Text>
-                                <Text>{item.totalPoints}</Text>
-                            </View>
+                            <ItemClassement data={item} />
                         }
                     />
                 }
@@ -80,6 +89,10 @@ class Classement extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingVertical: 20
+    },
     wrapperContent: {
         borderColor: '#ccc',
         borderWidth: 1,
@@ -88,6 +101,11 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    title: {
+        fontSize: 18,
+        alignSelf: 'center',
+        marginBottom: 20
     }
 })
 

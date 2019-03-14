@@ -16,7 +16,7 @@ const HomeStack = createStackNavigator({
     Home : {
         screen: Home,
         navigationOptions: {
-            title: 'Accueil',
+            title: 'BET ROOM',
             headerTitleStyle: {
                 color: '#fff'
             },
@@ -31,7 +31,16 @@ const HomeStack = createStackNavigator({
     BetRoomDetails : {
         screen: BetRoomDetails,
         navigationOptions: {
-            title: 'Détails de la Bet Room'
+            title: 'BET ROOM',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+             headerStyle: {
+                backgroundColor: '#151830'
+            },
+             headerTintColor: {
+                color: '#fff'
+            }
         }
     }    
 },
@@ -44,7 +53,16 @@ const MatchsInComingStack = createStackNavigator({
     Matchs : {
         screen: MatchsInComing,
         navigationOptions: {
-            title: 'Matchs à venir'
+            title: 'BET ROOM',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+             headerStyle: {
+                backgroundColor: '#151830'
+            },
+             headerTintColor: {
+                color: '#fff'
+            }
         }
     }
 })
@@ -53,7 +71,7 @@ const CreateBetRoomStack = createStackNavigator({
     NewBetRoom : {
         screen: NewBetRoom,
         navigationOptions: {
-            title: 'Créer une Bet Room',
+            title: 'BET ROOM',
             headerTitleStyle: {
                 color: '#fff'
             },
@@ -68,7 +86,7 @@ const CreateBetRoomStack = createStackNavigator({
     Rewards: {
         screen: Rewards,
         navigationOptions: {
-            title: 'Choix de la récompense',
+            title: 'BET ROOM',
             headerTitleStyle: {
                 color: '#fff'
             },
@@ -83,7 +101,7 @@ const CreateBetRoomStack = createStackNavigator({
     Friends: {
         screen: FriendsBetRoom,
         navigationOptions: {
-            title: 'Choix des participants',
+            title: 'BET ROOM',
             headerTitleStyle: {
                 color: '#fff'
             },
@@ -98,7 +116,7 @@ const CreateBetRoomStack = createStackNavigator({
     MatchsBR: {
         screen: MatchsBetRoom,
         navigationOptions: {
-            title: 'Choix des matchs',
+            title: 'BET ROOM',
             headerTitleStyle: {
                 color: '#fff'
             },
@@ -119,7 +137,16 @@ const ClassementStack = createStackNavigator({
     Classement : {
         screen: Classement,
         navigationOptions: {
-            title: 'Classement'
+            title: 'BET ROOM',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+             headerStyle: {
+                backgroundColor: '#151830'
+            },
+             headerTintColor: {
+                color: '#fff'
+            }
         }
     }
 },

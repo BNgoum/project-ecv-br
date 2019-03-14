@@ -149,9 +149,9 @@ class Home extends Component {
             }
         })
 
-        console.log('Is finished : ', this.state.betRoomFinished)
-        console.log('Is on going : ', this.state.betRoomOnGoing)
-        console.log('Is pending : ', this.state.betRoomPending)
+        // console.log('Is finished : ', this.state.betRoomFinished)
+        // console.log('Is on going : ', this.state.betRoomOnGoing)
+        // console.log('Is pending : ', this.state.betRoomPending)
     }
 
     displayContent = () => {
@@ -192,12 +192,12 @@ class Home extends Component {
 
                 { this.displayContent() }
 
-                {/* <Text style={styles.title}>Bet Room en cours</Text>
+                {/* <Text style={styles.title}>Bet Room en cours</Text> */}
       
                  {
                     betRoomOwner.length > 0 && 
-                    <View>
-                        <Text style={styles.title}>Bet Room Admin :</Text>
+                    <View style={{ marginTop: 20 }}>
+                        {/* <Text style={styles.title}>Bet Room Admin :</Text> */}
                         <ScrollView style={ styles.wrapperBetRoom }>
                             <FlatList
                                 data={ betRoomOwner }
@@ -211,7 +211,7 @@ class Home extends Component {
                 {
                     betRoomParticipant.length > 0 &&
                     <View>
-                        <Text style={styles.title}>Bet Room Participant :</Text>
+                        {/* <Text style={styles.title}>Bet Room Participant :</Text> */}
                         <ScrollView style={ styles.wrapperBetRoom }>
                             <FlatList
                                 data={ betRoomParticipant }
@@ -220,7 +220,7 @@ class Home extends Component {
                             />
                         </ScrollView>
                     </View>
-                } */}
+                }
             </View>
         )
     }
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     wrapperBetRoom: {
-        maxHeight: 270
+        marginBottom: 100
     }
 })
 
