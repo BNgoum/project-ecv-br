@@ -4,8 +4,9 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import { requestGetMatch } from '../../Store/Reducers/Match/action';
-import moment from 'moment';
 
+import TextRegular from '../Style/TextRegular';
+import TextBold from '../Style/TextBold';
 
 class Match extends Component {
 
@@ -73,15 +74,15 @@ class Match extends Component {
 
     render() {
         return (
-            <TouchableOpacity style={[styles.wrapperMatch, this.state.isActive ? styles.isActive : null, this.state.isBegin ? styles.isBegin : null]} onPress={this.handleOnPress} disabled={this.state.isFinished}>
+            <TouchableOpacity style={[styles.wrapperMatch, this.state.isActive && styles.isActive, this.state.isBegin && styles.isBegin]} onPress={this.handleOnPress} disabled={this.state.isFinished}>
                 <View style={styles.wrapperDate}>
-                    <Text style={styles.dateMatch}>{this.props.matchs.dateMatch}</Text>
-                    <Text style={styles.heureMatch}>{this.props.matchs.heureMatch}</Text>
+                    <TextRegular style={styles.dateMatch}>{this.props.matchs.dateMatch}</TextRegular>
+                    <TextRegular style={styles.dateMatch}>{this.props.matchs.heureMatch}</TextRegular>
                 </View>
                 <View style={styles.wrapperTeams}>
-                    <Text style={styles.nameTeam}>{this.props.matchs.homeTeam}</Text>
-                    <Text style={styles.versusText}>VS</Text>
-                    <Text style={styles.nameTeam}>{this.props.matchs.awayTeam}</Text>
+                    <TextBold style={styles.nameTeam}>{this.props.matchs.homeTeam}</TextBold>
+                    <TextRegular style={styles.versusText}>VS</TextRegular>
+                    <TextBold style={styles.nameTeam}>{this.props.matchs.awayTeam}</TextBold>
                 </View>
             </TouchableOpacity>
         )
@@ -90,16 +91,13 @@ class Match extends Component {
 
 const styles = StyleSheet.create({
     wrapperMatch: {
-        marginBottom: 16,
-        marginLeft: 16,
-        marginRight: 16,
-        marginTop: 16,
-        paddingTop: 16,
-        paddingBottom: 16,
-        paddingRight: 8,
-        paddingLeft: 8,
-        borderRadius: 15,
-        backgroundColor: '#fff',
+        marginHorizontal: 16,
+        marginTop: 8,
+        marginBottom: 0,
+        paddingVertical: 16,
+        paddingHorizontal: 8,
+        borderRadius: 7,
+        backgroundColor: '#282a4e',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -108,6 +106,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        borderColor: "#282a4e",
+        borderWidth: 2
     },
     wrapperDate: {
       display: "flex",
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
     dateMatch: {
-      fontSize: 13
+      fontSize: 11
     },
     wrapperTeams: {
       display: "flex",
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
     nameTeam : {
-        fontSize: 18,
+        fontSize: 14,
         flex: 2,
         textAlign: 'center'
     },
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     isActive: {
-        backgroundColor: "#ccc"
+        borderColor: "#fff",
     },
     isBegin: {
         opacity: 0.4

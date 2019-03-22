@@ -7,6 +7,9 @@ import {requestMatchs} from '../../Store/Reducers/Match/action'
 
 import MatchsSelected from '../../Components/BetRoom/MatchsSelected';
 
+import PaginationPoints from '../Style/PaginationPoints';
+import TextBold from '../Style/TextBold';
+
 class ListMatchs extends Component {
     constructor(props) {
         super(props);
@@ -57,17 +60,17 @@ class ListMatchs extends Component {
     render() {
         const numberBets = this.props.state.BetRoomReducer.numberBets;
         return (
-            <View style={styles.wrapperContent}>
+            <View style={styles.container}>
                 <View>
                     <TabButtons />
                 </View>
-                <ScrollView>
+                <ScrollView style={styles.wrapperContent}>
 
                     { this.props.state.MatchReducer.isActive === "LDC" && 
                         <View style={styles.wrapperLeague}>
                             <View style={styles.wrapperLeagueHeader}>
-                                <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_des_champions.png')}/>
-                                <Text style={styles.titreLeague}>Ligue des Champions</Text>
+                                {/* <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_des_champions.png')}/> */}
+                                <TextBold style={styles.titreLeague}>Ligue des Champions</TextBold>
                             </View>
 
                             <FlatList
@@ -82,8 +85,8 @@ class ListMatchs extends Component {
                         this.props.state.MatchReducer.isActive === "Ligue1" &&
                             <View style={styles.wrapperLeague}>
                                 <View style={styles.wrapperLeagueHeader}>
-                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_1.png')}/>
-                                    <Text style={styles.titreLeague}>Ligue 1</Text>
+                                    {/* <Image style={styles.pictoLeague} source={require('../../Images/leagues/ligue_1.png')}/> */}
+                                    <TextBold style={styles.titreLeague}>Ligue 1</TextBold>
                                 </View>
                                 
                                 <FlatList
@@ -98,8 +101,8 @@ class ListMatchs extends Component {
                         this.props.state.MatchReducer.isActive === "LaLiga" &&
                             <View style={styles.wrapperLeague}>
                                 <View style={styles.wrapperLeagueHeader}>
-                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/la_liga.png')}/>
-                                    <Text style={styles.titreLeague}>La Liga</Text>
+                                    {/* <Image style={styles.pictoLeague} source={require('../../Images/leagues/la_liga.png')}/> */}
+                                    <TextBold style={styles.titreLeague}>La Liga</TextBold>
                                 </View>
                                 <FlatList
                                     data={this.props.state.MatchReducer.LaLiga}
@@ -113,8 +116,8 @@ class ListMatchs extends Component {
                         this.props.state.MatchReducer.isActive === "PremierLeague" &&
                             <View style={styles.wrapperLeague}>
                                 <View style={styles.wrapperLeagueHeader}>
-                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/premier_league.png')}/>
-                                    <Text style={styles.titreLeague}>Premier League</Text>
+                                    {/* <Image style={styles.pictoLeague} source={require('../../Images/leagues/premier_league.png')}/> */}
+                                    <TextBold style={styles.titreLeague}>Premier League</TextBold>
                                 </View>
 
                                 <FlatList
@@ -129,8 +132,8 @@ class ListMatchs extends Component {
                         this.props.state.MatchReducer.isActive === "SerieA" &&
                             <View style={styles.wrapperLeague}>
                                 <View style={styles.wrapperLeagueHeader}>
-                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/serie_a.png')}/>
-                                    <Text style={styles.titreLeague}>Serie A</Text>
+                                    {/* <Image style={styles.pictoLeague} source={require('../../Images/leagues/serie_a.png')}/> */}
+                                    <TextBold style={styles.titreLeague}>Serie A</TextBold>
                                 </View>
 
                                 <FlatList
@@ -145,8 +148,8 @@ class ListMatchs extends Component {
                         this.props.state.MatchReducer.isActive === "Bundesliga" &&
                             <View style={styles.wrapperLeague}>
                                 <View style={styles.wrapperLeagueHeader}>
-                                    <Image style={styles.pictoLeague} source={require('../../Images/leagues/bundesliga.png')}/>
-                                    <Text style={styles.titreLeague}>Bundesliga</Text>
+                                    {/* <Image style={styles.pictoLeague} source={require('../../Images/leagues/bundesliga.png')}/> */}
+                                    <TextBold style={styles.titreLeague}>Bundesliga</TextBold>
                                 </View>
 
                                 <FlatList
@@ -157,22 +160,29 @@ class ListMatchs extends Component {
                             </View>
                     }
                 </ScrollView>
-                { numberBets > 0 ? <MatchsSelected navigation={this.props.navigation} /> : null }
+                
+                { numberBets > 0 && <MatchsSelected navigation={this.props.navigation} /> }
+
+                <PaginationPoints isActive={4} />
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginBottom: 16
+    },
     wrapperContent: {
-        flex: 1
+        marginBottom: 16
     },
     buttonLoad: {
         alignSelf: 'flex-end',
         padding: 16,
     },
     wrapperLeague: {
-        marginBottom: 32,
+        marginTop: 16,
     },
     wrapperLeagueHeader: {
         display: 'flex',
@@ -181,7 +191,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     titreLeague: {
-        fontSize: 32,
+        fontSize: 22,
         alignSelf: 'center',
         marginTop: 16,
         marginBottom: 16
@@ -194,7 +204,7 @@ const styles = StyleSheet.create({
     icon: {
         width: 20,
         height: 20
-    }
+    },
 })
 
 const mapStateToProps = (state) => { 

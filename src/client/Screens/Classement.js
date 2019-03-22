@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import { LinearGradient } from 'expo';
 
 import { requestUserInformationById } from '../Store/Reducers/User/action';
 
 import ItemClassement from '../Components/Classement/ItemClassement';
 
 import TextBold from '../Components/Style/TextBold';
-import TextRegular from '../Components/Style/TextRegular';
 
 class Classement extends Component {
     constructor(props) {
@@ -68,22 +68,23 @@ class Classement extends Component {
     }
     
     render() {
-        console.log('Array friends : ', this.state.friends)
         return (
-            <View style={ styles.container }>
-                <TextBold style={ styles.title }>Classement</TextBold>
-                {
-                    this.state.friends.length > 0 &&
-                    <FlatList
-                        data={ this.state.friends }
-                        keyExtractor={ (item) => item.pseudo }
-                        renderItem={ ({item}) => 
-                            <ItemClassement data={item} />
-                        }
-                    />
-                }
-                
-            </View>
+            <LinearGradient style={{ flex: 1 }} colors={['#10122d', '#385284', '#10122d']}>
+                <View style={ styles.container }>
+                    <TextBold style={ styles.title }>Classement</TextBold>
+                    {
+                        this.state.friends.length > 0 &&
+                        <FlatList
+                            data={ this.state.friends }
+                            keyExtractor={ (item) => item.pseudo }
+                            renderItem={ ({item}) => 
+                                <ItemClassement data={item} />
+                            }
+                        />
+                    }
+                    
+                </View>
+            </LinearGradient>
         )
     }
 }

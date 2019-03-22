@@ -42,18 +42,29 @@ export default class TabResearch extends Component {
     render() {
         return (
             <View style={ styles.container }>
-                <TouchableOpacity onPress={ () => this.handleOnPressTab("first") } style={ styles.wrapperTab }>
-                    <TextRegular style={ [styles.title, this.state.isFirstActive && styles.titleActive] }>En cours</TextRegular>
-                    <View style={ this.state.isFirstActive && styles.borderBottomActive }></View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={ () => this.handleOnPressTab("second") } style={ styles.wrapperTab }>
-                    <Text style={ [styles.title, this.state.isSecondActive && styles.titleActive] }>À venir</Text>
-                    <View style={ this.state.isSecondActive && styles.borderBottomActive }></View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={ () => this.handleOnPressTab("third") } style={ styles.wrapperTab }>
-                    <Text style={ [styles.title, this.state.isThirdActive && styles.titleActive] }>Terminée</Text>
-                    <View style={ this.state.isThirdActive && styles.borderBottomActive }></View>
-                </TouchableOpacity>
+                {
+                    this.props.firstTab && 
+                    <TouchableOpacity onPress={ () => this.handleOnPressTab("first") } style={ styles.wrapperTab }>
+                        <TextRegular style={ [styles.title, this.state.isFirstActive && styles.titleActive] }>{ this.props.firstTab }</TextRegular>
+                        <View style={ this.state.isFirstActive && styles.borderBottomActive }></View>
+                    </TouchableOpacity>
+                }
+
+                {
+                    this.props.secondTab && 
+                    <TouchableOpacity onPress={ () => this.handleOnPressTab("second") } style={ styles.wrapperTab }>
+                        <TextRegular style={ [styles.title, this.state.isSecondActive && styles.titleActive] }>{ this.props.secondTab }</TextRegular>
+                        <View style={ this.state.isSecondActive && styles.borderBottomActive }></View>
+                    </TouchableOpacity>
+                }
+
+                {
+                    this.props.thirdTab && 
+                    <TouchableOpacity onPress={ () => this.handleOnPressTab("third") } style={ styles.wrapperTab }>
+                        <TextRegular style={ [styles.title, this.state.isThirdActive && styles.titleActive] }>{ this.props.thirdTab }</TextRegular>
+                        <View style={ this.state.isThirdActive && styles.borderBottomActive }></View>
+                    </TouchableOpacity>
+                }
             </View>
         )
     }
@@ -70,7 +81,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         paddingBottom: 12,
         color: '#fff',
-        opacity: 0.5
+        opacity: 0.75
     },
     titleActive: {
         fontFamily: 'pt-bold',

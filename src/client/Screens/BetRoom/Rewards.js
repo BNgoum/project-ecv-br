@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         position: 'relative',
-        display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center'
     },

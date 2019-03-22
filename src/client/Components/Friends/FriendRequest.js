@@ -6,6 +6,10 @@ import { friendRequest } from '../../Store/Reducers/Friends/action'
 const jwtDecode = require('jwt-decode');
 import { connect } from 'react-redux';
 
+import InputText from '../Form/InputText';
+import ButtonPrimary from '../Style/ButtonPrimary';
+import ButtonPrimaryText from '../Style/ButtonPrimaryText';
+
 class FriendRequest extends Component {
     constructor(props) {
         super(props);
@@ -54,11 +58,17 @@ class FriendRequest extends Component {
         .catch((error) => console.log('Erreur lors de la requête d\'amis (FriendRequest.js) : ', error))
     }
 
+    handleOnChangeText = () => {
+        this.setState({pseudo, isEmpty: false});
+        const action = { type: "FOUND_USER_BY_PSEUDO", value: "" }
+        this.props.dispatch(action);
+    }
+
     render() {
         return (
-            <View styles={styles.wrapperRequestFriend}>
+            <View styles={styles.container}>
                 <View style={ styles.wrapperInput } >
-                    <TextInput
+                    {/* <TextInput
                         placeholder="Entrez le pseudo de votre ami..."
                         onChangeText={(pseudo) => {
                             this.setState({pseudo, isEmpty: false});
@@ -66,59 +76,53 @@ class FriendRequest extends Component {
                             this.props.dispatch(action);
                         }}
                         value={this.state.pseudo}
-                        style={styles.inputPseudo} />
+                        style={styles.inputPseudo} /> */}
 
-                    { this.props.state.AuthenticationReducer.found_user_by_pseudo !== "" ?
+                    <InputText 
+                        placeholder="Tapez le pseudo d'un ami"
+                        sendPropsToParent={ this.handleOnChangeText }
+                        typeOfInput="pseudo"
+                        value={this.state.pseudo}
+                    />
+
+                    { this.props.state.AuthenticationReducer.found_user_by_pseudo !== "" &&
                         <Text>{this.props.state.AuthenticationReducer.found_user_by_pseudo}</Text>
-                    :
-                        null
                     }
 
-                    { this.props.state.FriendReducer.friend_request !== "" ?
+                    { this.props.state.FriendReducer.friend_request !== "" &&
                         <Text>{this.props.state.FriendReducer.friend_request}</Text>
-                    :
-                        null
                     }
 
-                    { this.state.isEmpty ?
-                        <Text>Le champs de saisi est vide.</Text>
-                    :
-                        null
-                    }
+                    { this.state.isEmpty && <Text>Le champs de saisi est vide.</Text> }
                 </View>
 
-                <TouchableOpacity
+                <ButtonPrimary
                     style={styles.button}
                     onPress={this.sendRequest}>
-                    <Text style={ styles.textButton }>Envoyer</Text>
-                </TouchableOpacity>
+                    <ButtonPrimaryText style={ styles.textButton }>Rechercher</ButtonPrimaryText>
+                </ButtonPrimary>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    wrapperInput: {
-        alignSelf: 'center'
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
-    inputPseudo: {
-        fontSize: 14,
-        color: '#000',
-        backgroundColor: '#fff',
-        padding: 8,
-        width: 270,
-        marginBottom: 6
+    wrapperInput: {
+        // width: '50%'
     },
     button: {
-        backgroundColor: '#fff',
-        padding: 8,
-        marginTop: 16,
-        width: 80,
-        display: 'flex',
+        width: 140,
         alignSelf: 'center'
+        // backgroundColor: '#fff',
+        // padding: 8,
+        // marginTop: 16,
     },
     textButton: {
-        textAlign: 'center'
+        // textAlign: 'center'
     }
 })
 

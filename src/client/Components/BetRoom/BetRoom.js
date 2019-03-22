@@ -258,7 +258,8 @@ const styles = StyleSheet.create({
     },
     typeParticipant: {
         fontSize: 12,
-        color: '#6b6d8a'
+        color: '#6b6d8a',
+        marginBottom: 12
     },
     iconRewards: {
         width: 55,

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Font } from 'expo';
+import { StatusBar, View } from 'react-native';
 import { Provider } from 'react-redux';
 
 import Store from './src/client/Store/configureStore'
@@ -30,7 +31,11 @@ export default class App extends React.Component {
     return (
       this.state.fontLoaded &&
       <Provider store={Store}>
-        <Navigation />
+        <View style={ { flex: 1 } }>
+          <StatusBar barStyle="light-content" translucent={true} />
+          <Navigation />
+        </View>
+        
       </Provider>
     )
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo';
 
 import { connect } from 'react-redux';
 
@@ -23,7 +24,7 @@ class NewBetRoom extends Component {
     componentDidMount() {
         setTimeout(() => {
             this.setState({isSplashScreen: false})
-        }, 500);
+        }, 200);
     }
 
     handleOnPress = (name) => {
@@ -48,39 +49,29 @@ class NewBetRoom extends Component {
         return (
             this.state.isSplashScreen ?
             this.displaySplashScreen() :
-            <View style={styles.container}>
-                {/* <TextInput
-                    onChangeText={(name) => this.setState({name})}
-                    placeholder="Saisissez un nom pour votre Bet Room..." 
-                    style={styles.inputName}
-                /> */}
-                <View>
-                    <StepNumberContainer><StepNumber>1</StepNumber></StepNumberContainer>
-                    <TextBold style={ styles.title }>Donne lui un nom</TextBold>
+            <LinearGradient style={{ flex: 1 }} colors={['#10122d', '#385284', '#10122d']}>
+                <View style={styles.container}>
+                        <View>
+                            <StepNumberContainer><StepNumber>1</StepNumber></StepNumberContainer>
+                            <TextBold style={ styles.title }>Donne lui un nom</TextBold>
+                        </View>
+                        
+                        <View>
+                            <InputText 
+                                placeholder="Nom de ma Bet Room"
+                                sendPropsToParent={ this.handleOnChangeText }
+                                typeOfInput="email"
+                                style={ styles.inputTextStyle }
+                            />
+
+                            <ButtonPrimary onPress={ () => this.handleOnPress(this.state.name) } style={styles.buttonValidate}>
+                                <ButtonPrimaryText>Suivant</ButtonPrimaryText>
+                            </ButtonPrimary>
+                        </View>
+                        
+                        <PaginationPoints isActive={1} />
                 </View>
-                
-                <View>
-                    <InputText 
-                        placeholder="Nom de ma Bet Room"
-                        sendPropsToParent={ this.handleOnChangeText }
-                        typeOfInput="email"
-                        style={ styles.inputTextStyle }
-                    />
-
-                    <ButtonPrimary onPress={ () => this.handleOnPress(this.state.name) } style={styles.buttonValidate}>
-                        <ButtonPrimaryText>Suivant</ButtonPrimaryText>
-                    </ButtonPrimary>
-                </View>
-                
-
-                {/* <TouchableOpacity style={styles.wrapperButton} onPress={ () => this.handleOnPress(this.state.name) }>
-                    <Text style={ styles.textValidate }>Valider</Text>
-                </TouchableOpacity> */}
-
-                
-
-                <PaginationPoints isActive={1} />
-            </View>
+            </LinearGradient>
         )
     }
 }

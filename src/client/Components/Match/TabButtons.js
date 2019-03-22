@@ -12,48 +12,54 @@ class TabButtons extends Component {
     render() {
         const isActive = this.props.state.MatchReducer.isActive;
         return (
-            <View style={styles.wrapperTab}>
+            <View style={styles.container}>
                 <TouchableOpacity 
-                    style={[styles.wrapperButton, isActive === "LDC" && styles.isSelected]} 
+                    style={styles.wrapperButton} 
                     onPress={() => this.handleOnPress("LDC")}>
                     <Image 
                         style={styles.pictoLeague} 
                         source={require('../../Images/leagues/ligue_des_champions.png')}/>
+                    <View style={ isActive === "LDC" && styles.isSelected }></View>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    style={[styles.wrapperButton, isActive === "Ligue1" && styles.isSelected]} 
+                    style={styles.wrapperButton} 
                     onPress={() => this.handleOnPress("Ligue1")}>
                     <Image 
                         style={styles.pictoLeague} 
                         source={require('../../Images/leagues/ligue_1.png')}/>
+                    <View style={ isActive === "Ligue1" && styles.isSelected }></View>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                style={[styles.wrapperButton, isActive === "LaLiga" && styles.isSelected]} 
+                style={styles.wrapperButton} 
                 onPress={() => this.handleOnPress("LaLiga")}>
                     <Image 
                         style={styles.pictoLeague} 
                         source={require('../../Images/leagues/la_liga.png')}/>
+                    <View style={ isActive === "LaLiga" && styles.isSelected }></View>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    style={[styles.wrapperButton, isActive === "PremierLeague" && styles.isSelected]} 
+                    style={styles.wrapperButton} 
                     onPress={() => this.handleOnPress("PremierLeague")}>
                     <Image 
                         style={styles.pictoLeague} 
                         source={require('../../Images/leagues/premier_league.png')}/>
+                    <View style={ isActive === "PremierLeague" && styles.isSelected }></View>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    style={[styles.wrapperButton, isActive === "SerieA" && styles.isSelected]} 
+                    style={styles.wrapperButton} 
                     onPress={() => this.handleOnPress("SerieA")}>
                     <Image 
                         style={styles.pictoLeague} 
                         source={require('../../Images/leagues/serie_a.png')}/>
+                    <View style={ isActive === "SerieA" && styles.isSelected }></View>
                 </TouchableOpacity>
-                <TouchableOpacity 
-                    style={[styles.wrapperButton, isActive === "Bundesliga" && styles.isSelected]} 
+                <TouchableOpacity
+                    style={styles.wrapperButton} 
                     onPress={() => this.handleOnPress("Bundesliga")}>
-                    <Image 
+                    <Image
                         style={styles.pictoLeague} 
                         source={require('../../Images/leagues/bundesliga.png')}/>
+                    <View style={ isActive === "Bundesliga" && styles.isSelected }></View>
                 </TouchableOpacity>
             </View>
         )
@@ -61,23 +67,35 @@ class TabButtons extends Component {
 }
 
 const styles = StyleSheet.create({
-    wrapperTab: {
+    container: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 2,
-        borderBottomColor: "#dedede",
+        // borderBottomWidth: 1,
+        // borderBottomColor: "#dedede",
+        backgroundColor: '#fff',
+        borderBottomLeftRadius: 7,
+        borderBottomRightRadius: 7,
+        paddingVertical: 8
     },
     wrapperButton: {
+        position: 'relative',
         padding: 6,
+        width: '20%',
+        alignItems: 'center'
     },
     isSelected: {
-        borderBottomWidth: 3,
-        borderBottomColor: '#000'
+        position: 'absolute',
+        bottom: -2,
+        alignSelf: 'center',
+        width: 16,
+        height: 4,
+        backgroundColor: '#ff450c',
+        borderRadius: 50,
     },
     pictoLeague: {
-        width: 55,
-        height: 55,
+        width: 50,
+        height: 50,
     }
 })
 

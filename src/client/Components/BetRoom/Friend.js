@@ -3,6 +3,9 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import { connect } from 'react-redux';
 
+import TextRegular from '../Style/TextRegular';
+import TextBold from '../Style/TextBold';
+import { AntDesign } from '@expo/vector-icons';
 
 class Friend extends Component {
     constructor(props) {
@@ -42,8 +45,16 @@ class Friend extends Component {
             <View>
                 <TouchableOpacity 
                     onPress={() => this.handleOnPress()} 
-                    style={ [styles.wrapperButtonFriend, this.state.active ? styles.wrapperButtonFriendSelected : null] }>
-                    <Text style={ styles.friendsName }>{friend.pseudo}</Text>
+                    style={ [styles.container, this.state.active && styles.wrapperButtonFriendSelected] }>
+                    {/* <Text style={ styles.friendsName }>{friend.pseudo}</Text> */}
+
+                    <View style={ styles.avatar }>
+                        <AntDesign name="user" size={32} color="black" />
+                    </View>
+                    <View style={ styles.wrapperText }>
+                        <TextBold style={styles.pseudo} >{friend.pseudo}</TextBold>
+                        <TextRegular style={styles.sousTexte} >4 Bet Rooms joués ensemble</TextRegular>
+                    </View>
                 </TouchableOpacity>
             </View>
         )
@@ -51,6 +62,15 @@ class Friend extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
+        borderRadius: 4,
+        backgroundColor: '#242647',
+        paddingHorizontal: 20,
+        paddingVertical: 12
+    },
     buttonFriend: {
         backgroundColor: '#FFF',
         padding: 16,
@@ -61,17 +81,34 @@ const styles = StyleSheet.create({
         padding: 16,
         marginTop: 16
     },
-    wrapperButtonFriend: {
-        margin: 16
+    avatar: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 40,
+        height: 40,
+        backgroundColor: '#fff',
+        borderRadius: 50,
+        marginRight: 20
     },
     wrapperButtonFriendSelected: {
-        backgroundColor: '#ccc',
+        borderColor: '#fff',
+        borderWidth: 2
     },
-    friendsName: {
-        fontSize: 20,
-        borderWidth: 1,
-        padding: 16,
-        borderColor: '#ccc'
+    // friendsName: {
+    //     fontSize: 20,
+    //     borderWidth: 1,
+    //     padding: 16,
+    //     borderColor: '#ccc'
+    // },
+    wrapperText: {
+        justifyContent: 'center',
+        alignItems: 'flex-start'
+    },
+    pseudo: {
+        fontSize: 16
+    },
+    sousTexte: {
+        fontSize: 12
     }
 })
 

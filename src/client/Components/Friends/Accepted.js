@@ -11,8 +11,6 @@ export default class Accepted extends Component {
     render() {
         return (
             <View>
-                <Text style={styles.title} >Acceptés : </Text>
-
                 <FlatList
                     data={ this.props.friends }
                     keyExtractor={ (item) => item._id.toString() }

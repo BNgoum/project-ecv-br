@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { connect } from 'react-redux';
 
 const jwtDecode = require('jwt-decode');
 import { requestUserInformation, requestUserInformationById } from '../../Store/Reducers/User/action';
 
-import FriendsComponent from '../../Components/BetRoom/Friends'
+import FriendsComponent from '../../Components/BetRoom/Friends';
+import PaginationPoints from '../../Components/Style/PaginationPoints';
 
 class Friends extends Component {
     constructor(props) {
@@ -98,18 +99,22 @@ class Friends extends Component {
     
     render() {
         return (
-            <View style={styles.wrapperFriends}>
+            <View style={styles.container}>
                 <FriendsComponent navigation={this.props.navigation} />
+
+                <PaginationPoints isActive={3} />
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    wrapperButton: {
-        alignSelf: 'center',
-        backgroundColor: '#f7f7f7',
-        padding: 16
+    container: {
+        flex: 1,
+        marginBottom: 16
+    },
+    paginationStyle: {
+        marginBottom: 16
     }
 })
 

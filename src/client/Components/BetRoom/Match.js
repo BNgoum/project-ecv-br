@@ -88,7 +88,6 @@ export default class Match extends Component {
     }
 
     render() {
-        console.log('### In Render pour ', this.props.data.homeTeam);
         return (
             <View style={styles.wrapperMatch}>
                 <View style={styles.wrapperDate}>

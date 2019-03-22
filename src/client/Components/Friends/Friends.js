@@ -10,6 +10,12 @@ import Pending from './Pending';
 import Recipient from './Recipient';
 import FriendRequest from './FriendRequest';
 
+import TextBold from '../Style/TextBold';
+import ButtonPrimary from '../Style/ButtonPrimary';
+import Link from '../Style/Link';
+import LinkText from '../Style/LinkText';
+import ButtonPrimaryText from '../Style/ButtonPrimaryText';
+
 class Friends extends Component {
     constructor(props) {
         super(props);
@@ -103,13 +109,22 @@ class Friends extends Component {
         const { accepted, recipient, pending } = this.props.state.FriendReducer
         return (
             <View style={ styles.wrapperContent } >
-                <Text style={styles.title} >Ajouter un ami</Text>
-                <FriendRequest user={this.state.user} />
+                <ButtonPrimary onPress={ () => this.props.navigation.navigate('ResearchFriends')} style={ styles.linkStyle }>
+                    <ButtonPrimaryText style={styles.linkTitle} >Ajouter un ami</ButtonPrimaryText>
+                </ButtonPrimary>
+                {/* <FriendRequest user={this.state.user} /> */}
 
-                <Text style={styles.title} >Mes amis</Text>
-                { accepted.length > 0 ? <Accepted friends={accepted} /> : <View><Text style={ styles.subTitle }>Acceptés</Text><Text style={ styles.empty }>Aucun amis</Text></View> }
-                { recipient.length > 0 ? <Recipient friends={recipient} /> : <View><Text style={ styles.subTitle }>Demande reçues</Text><Text style={ styles.empty }>Aucun demande d'amis</Text></View> }
-                { pending.length > 0 ? <Pending friends={pending} /> : <View><Text style={ styles.subTitle }>En attente</Text><Text style={ styles.empty }>Aucune demande en attente</Text></View> }
+                <TextBold style={styles.title} >Mes amis</TextBold>
+
+                {
+                    accepted.length > 0 ? 
+                    <Accepted friends={accepted} /> : 
+                    <View><Text style={ styles.empty }>Aucun amis</Text></View>
+                }
+
+                { recipient.length > 0 && <Recipient friends={recipient} /> }
+
+                { pending.length > 0 && <Pending friends={pending} /> }
             </View>
         )
     }
@@ -117,13 +132,12 @@ class Friends extends Component {
 
 const styles = StyleSheet.create({
     wrapperContent: {
-        padding: 16
+        padding: 20
     },
     title: {
-        alignSelf: 'center',
-        fontSize: 24,
-        marginTop: 16,
-        marginBottom: 16
+        fontSize: 18,
+        marginTop: 12,
+        marginBottom: 12
     },
     subTitle: {
         fontSize: 22,
@@ -131,6 +145,15 @@ const styles = StyleSheet.create({
     },
     empty: {
         marginBottom: 16
+    },
+    linkStyle: {
+        alignSelf: 'center',
+        marginVertical: 12,
+        width: 160
+    },
+    linkTitle: {
+        color: '#fff',
+        fontSize: 18,
     }
 })
 

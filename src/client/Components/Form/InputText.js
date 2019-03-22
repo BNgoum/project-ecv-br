@@ -33,7 +33,7 @@ export default class InputText extends Component {
                 <TextInput
                     style={ styles.inputText }
                     onChangeText={(text) => this.handleChange(text)}
-                    value={this.state.text}
+                    value={this.props.testvalue || ""}
                     onFocus={() => this.setState({isFocus: true})}
                     onBlur={() => this.handleOnBlur()}
                     textContentType={this.props.typeContent}
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     container: {
         position: 'relative',
         height: 28,
-        marginBottom: 32
+        marginBottom: 32,
     },
     inputText: {
         borderBottomColor: '#fff',

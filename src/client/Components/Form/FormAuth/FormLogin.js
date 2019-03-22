@@ -15,8 +15,8 @@ class FormLogin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "",
-            password: "",
+            email: "Ben",
+            password: "ben",
             isSecureTextEntry: true,
             isFound: true,
             isEmailBlank: false,
@@ -66,6 +66,7 @@ class FormLogin extends Component {
                     placeholder="E-mail"
                     sendPropsToParent={ this.handleOnChangeText }
                     typeOfInput="email"
+                    testvalue={this.state.email}
                 />
                 
                 <InputText 
@@ -73,6 +74,7 @@ class FormLogin extends Component {
                     sendPropsToParent={ this.handleOnChangeText }
                     isPassword={true}
                     typeOfInput="password"
+                    testvalue={this.state.password}
                 />
 
                 { this.props.state.AuthenticationReducer.auth_message_error !== "" ? <Text style={styles.textError}>{this.props.state.AuthenticationReducer.auth_message_error}</Text> : null }

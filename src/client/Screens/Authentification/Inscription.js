@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import FormSignUp from '../../Components/Form/FormAuth/FormSignUp'
+import FormSignUp from '../../Components/Form/FormAuth/FormSignUp';
+import { LinearGradient } from 'expo';
 
 class Inscription extends Component {
-    render() { return ( <FormSignUp navigation={this.props.navigation}/> ) }
+    render() { return ( 
+        <LinearGradient style={{ flex: 1 }} colors={['#10122d', '#385284', '#10122d']}>
+            <FormSignUp navigation={this.props.navigation}/> 
+        </LinearGradient>
+    ) }
 }
 
 const mapStateToProps = (state) => { 

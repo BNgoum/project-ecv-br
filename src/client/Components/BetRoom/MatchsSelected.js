@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 
 import { requestCreateBetRoom, requestAddOwner, requestAddParticipant } from '../../Store/Reducers/BetRoom/action';
 
+import ButtonPrimaryText from '../Style/ButtonPrimaryText';
+import ButtonPrimary from '../Style/ButtonPrimary';
+import TextRegular from '../Style/TextRegular';
+import TextBold from '../Style/TextBold';
 
 class MatchsSelected extends Component {
 
@@ -38,34 +42,52 @@ class MatchsSelected extends Component {
     render() {
         const numberBets = this.props.state.BetRoomReducer.numberBets;
         return (
-            <View style={styles.wrapperContent}>
+            <View style={styles.container}>
                 { numberBets > 1 ? 
-                    <Text style={styles.label}>{numberBets} matchs sélectionnés</Text> :
-                    <Text style={styles.label}>{numberBets} match sélectionné</Text>
+                    <TextRegular style={styles.label}>
+                        <TextBold style={styles.labelNumber}>{numberBets}</TextBold> matchs sélectionnés
+                    </TextRegular> :
+                    <TextRegular style={styles.label}>
+                        <TextBold style={styles.labelNumber}>{numberBets}</TextBold> match sélectionné
+                    </TextRegular>
                 }
-                <TouchableOpacity style={styles.buttonValidate} onPress={this.handleOnPress}>
+                {/* <TouchableOpacity style={styles.buttonValidate} onPress={this.handleOnPress}>
                     <Text>Valider</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
+                <ButtonPrimary style={styles.buttonValidate} onPress={this.handleOnPress}>
+                    <ButtonPrimaryText style={styles.buttonValidateText}>Créer</ButtonPrimaryText>
+                </ButtonPrimary>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    wrapperContent: {
-        backgroundColor: '#ccc',
-        padding: 16,
-        display: 'flex',
+    container: {
+        backgroundColor: '#fff',
+        paddingVertical: 8,
+        paddingHorizontal: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 16
     },
     label: {
-        fontSize: 18,
+        color: '#333',
+        fontSize: 14,
         alignSelf: 'center'
     },
     buttonValidate: {
-        alignSelf: 'flex-end'
+        padding: 0,
+        width: 100,
+    },
+    buttonValidateText: {
+        fontSize: 14
+    },
+    labelNumber: {
+        color: '#333',
+        fontSize: 16
     }
 })
 

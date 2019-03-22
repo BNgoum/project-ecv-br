@@ -7,10 +7,15 @@ import { requestUserInformation, requestSetLastCallApi } from '../Store/Reducers
 import { getAllMatchs, requestGetMatchsBetweenIntervalAndCompetitions } from '../Store/Reducers/Match/action';
 import { requestUpdateMatch } from '../Store/Reducers/BetRoom/action';
 
+import ActionButton from 'react-native-circular-action-menu';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import BetRoom from '../Components/BetRoom/BetRoom';
 import Tabs from '../Components/Tabs';
 
 import TextBold from '../Components/Style/TextBold';
+
+import { LinearGradient } from 'expo';
 
 class Home extends Component {
     constructor(props) {
@@ -186,41 +191,43 @@ class Home extends Component {
 
         return (
             <View style={styles.wrapperContent}>
-                <TextBold style={ styles.titleScreen} >Mes Bet Rooms</TextBold>
+                <LinearGradient style={{ padding: 20 }} colors={['#10122d', '#385284', '#10122d']} >
+                    <TextBold style={ styles.titleScreen} >Mes Bet Rooms</TextBold>
 
-                <Tabs displayTabContent={this.handleDisplayTabContent}/>
+                    <Tabs firstTab="En cours" secondTab="À venir" thirdTab="Terminée" displayTabContent={this.handleDisplayTabContent}/>
 
-                { this.displayContent() }
+                    { this.displayContent() }
 
-                {/* <Text style={styles.title}>Bet Room en cours</Text> */}
-      
-                 {
-                    betRoomOwner.length > 0 && 
-                    <View style={{ marginTop: 20 }}>
-                        {/* <Text style={styles.title}>Bet Room Admin :</Text> */}
-                        <ScrollView style={ styles.wrapperBetRoom }>
-                            <FlatList
-                                data={ betRoomOwner }
-                                keyExtractor={ (item) => item._id.toString() }
-                                renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="owner" /> }
-                            />
-                        </ScrollView>
-                    </View>
-                }
+                    {/* <Text style={styles.title}>Bet Room en cours</Text> */}
 
-                {
-                    betRoomParticipant.length > 0 &&
-                    <View>
-                        {/* <Text style={styles.title}>Bet Room Participant :</Text> */}
-                        <ScrollView style={ styles.wrapperBetRoom }>
-                            <FlatList
-                                data={ betRoomParticipant }
-                                keyExtractor={ (item) => item._id.toString() }
-                                renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="participant" /> }
-                            />
-                        </ScrollView>
-                    </View>
-                }
+                    {
+                        betRoomOwner.length > 0 && 
+                        <View style={{ marginTop: 20 }}>
+                            {/* <Text style={styles.title}>Bet Room Admin :</Text> */}
+                            <ScrollView style={ styles.wrapperBetRoom }>
+                                <FlatList
+                                    data={ betRoomOwner }
+                                    keyExtractor={ (item) => item._id.toString() }
+                                    renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="owner" /> }
+                                />
+                            </ScrollView>
+                        </View>
+                    }
+
+                    {
+                        betRoomParticipant.length > 0 &&
+                        <View>
+                            {/* <Text style={styles.title}>Bet Room Participant :</Text> */}
+                            <ScrollView style={ styles.wrapperBetRoom }>
+                                <FlatList
+                                    data={ betRoomParticipant }
+                                    keyExtractor={ (item) => item._id.toString() }
+                                    renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="participant" /> }
+                                />
+                            </ScrollView>
+                        </View>
+                    }
+                </LinearGradient>
             </View>
         )
     }
@@ -229,7 +236,7 @@ class Home extends Component {
 const styles = StyleSheet.create({
     wrapperContent: {
         flex: 1,
-        marginHorizontal: 20
+        // paddingHorizontal: 20
     },
     titleScreen: {
         fontSize: 18,
@@ -242,7 +249,12 @@ const styles = StyleSheet.create({
     },
     wrapperBetRoom: {
         marginBottom: 100
-    }
+    },
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
+    },
 })
 
 const mapStateToProps = (state) => { 

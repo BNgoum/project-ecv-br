@@ -10,7 +10,9 @@ import Rewards from '../Screens/BetRoom/Rewards'
 import FriendsBetRoom from '../Screens/BetRoom/Friends'
 import MatchsBetRoom from '../Screens/BetRoom/Match'
 import Classement from '../Screens/Classement'
-import FriendsAndProfil from '../Screens/FriendsAndProfil'
+
+import FriendsAndProfil from '../Screens/FriendsProfil/FriendsAndProfil'
+import ResearchFriends from '../Screens/FriendsProfil/ResearchFriends'
 
 const HomeStack = createStackNavigator({
     Home : {
@@ -62,9 +64,13 @@ const MatchsInComingStack = createStackNavigator({
             },
              headerTintColor: {
                 color: '#fff'
-            }
+            },
+            headerBackTitle: null,
         }
     }
+},
+{
+    cardStyle: { backgroundColor: '#151830' }
 })
 
 const CreateBetRoomStack = createStackNavigator({
@@ -80,7 +86,8 @@ const CreateBetRoomStack = createStackNavigator({
             },
             headerTintColor: {
                 color: '#fff'
-            }
+            },
+            headerBackTitle: null,
         }
     },
     Rewards: {
@@ -95,7 +102,8 @@ const CreateBetRoomStack = createStackNavigator({
             },
             headerTintColor: {
                 color: '#fff'
-            }
+            },
+            headerBackTitle: null,
         }
     },
     Friends: {
@@ -110,7 +118,8 @@ const CreateBetRoomStack = createStackNavigator({
             },
             headerTintColor: {
                 color: '#fff'
-            }
+            },
+            headerBackTitle: null,
         }
     },
     MatchsBR: {
@@ -125,7 +134,8 @@ const CreateBetRoomStack = createStackNavigator({
             },
             headerTintColor: {
                 color: '#fff'
-            }
+            },
+            headerBackTitle: null,
         }
     }
 },
@@ -146,7 +156,8 @@ const ClassementStack = createStackNavigator({
             },
              headerTintColor: {
                 color: '#fff'
-            }
+            },
+            headerBackTitle: null,
         }
     }
 },
@@ -158,7 +169,33 @@ const FriendsAndProfilStack = createStackNavigator({
     FriendsAndProfil : {
         screen: FriendsAndProfil,
         navigationOptions: {
-            title: 'Profil / Amis'
+            title: 'BET ROOM',
+            headerBackTitle: null,
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerStyle: {
+                backgroundColor: '#151830'
+            },
+            headerTintColor: {
+                color: '#fff'
+            }
+        }        
+    },
+    ResearchFriends : {
+        screen: ResearchFriends,
+        navigationOptions: {
+            title: 'BET ROOM',
+            headerBackTitle: null,
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerStyle: {
+                backgroundColor: '#151830'
+            },
+            headerTintColor: {
+                color: '#fff'
+            }
         }
     }
 },

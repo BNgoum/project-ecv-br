@@ -7,7 +7,9 @@ const jwtDecode = require('jwt-decode');
 import { requestUserInformation } from '../../Store/Reducers/User/action';
 
 import Friend from './Friend';
-
+import ButtonPrimary from '../Style/ButtonPrimary';
+import ButtonPrimaryText from '../Style/ButtonPrimaryText';
+import TextRegular from '../Style/TextRegular';
 
 class Friends extends Component {
     constructor(props) {
@@ -48,13 +50,15 @@ class Friends extends Component {
     render() {
         const friends = this.props.state.FriendReducer.accepted;
         return (
-            <View>
-                <TouchableOpacity 
+            <View style={ styles.container }>
+                <TouchableOpacity
                     onPress={() => this.handleOnPressAllFriends()}
-                    style={ this.state.isAllActive ? styles.buttonAllFriendsSelected : styles.buttonAllFriends}
+                    style={ [styles.buttonAllFriends, this.state.isAllActive && styles.buttonAllFriendsSelected]}
                 >
-                    <Text>Tous mes amis</Text>
+                    <TextRegular style={ styles.textButton }>Tous mes amis</TextRegular>
                 </TouchableOpacity>
+
+                <View style={ styles.separateLine }></View>
 
                 <FlatList
                     data={ friends }
@@ -64,52 +68,48 @@ class Friends extends Component {
                     }
                 />
 
-                <TouchableOpacity onPress={() => this.handleValidate()} style={ styles.buttonValidate }>
-                    <Text style={ styles.textValidate }>Valider</Text>
-                </TouchableOpacity>
+                <ButtonPrimary onPress={() => this.handleValidate()} style={ styles.buttonValidate }>
+                    <ButtonPrimaryText style={ styles.textValidate }>Suivant</ButtonPrimaryText>
+                </ButtonPrimary>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    wrapperRewards: {
-        display: 'flex',
-        flexDirection: 'row'
-
-    },
-    title: {
-        fontSize: 20,
-        alignSelf: 'center',
-        marginTop: 16,
-        marginBottom: 32,
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        padding: 20
     },
     buttonAllFriends: {
-        backgroundColor: '#FFF',
-        padding: 16,
-        marginTop: 32
+        justifyContent: 'center',
+        alignItem: 'center',
+        marginBottom: 8,
+        borderRadius: 4,
+        backgroundColor: '#242647',
+        paddingHorizontal: 20,
+        paddingVertical: 12,
+        borderWidth: 2,
+        borderColor: '#242647',
+        height: 60
     },
     buttonAllFriendsSelected: {
-        backgroundColor: '#0F0',
-        padding: 16,
-        marginTop: 32
-    },
-    buttonFriend: {
-        backgroundColor: '#0FF',
-        padding: 16,
-        marginTop: 32
-    },
-    buttonFriendSelected: {
-        borderColor: '#F00'
+        borderColor: '#fff',
     },
     buttonValidate: {
         alignSelf: 'center',
-        backgroundColor: '#ccc',
-        padding: 12,
-        marginTop: 16
+        width: 150
     },
-    textValidate: {
-        fontSize: 18
+    separateLine: {
+        height: 1,
+        width: '20%',
+        backgroundColor: '#fff',
+        alignSelf: 'center',
+        marginVertical: 24
+    },
+    textButton: {
+        fontSize: 16
     }
 })
 
