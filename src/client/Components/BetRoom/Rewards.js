@@ -7,7 +7,6 @@ import TextBold from '../../Components/Style/TextBold';
 import TextRegular from '../../Components/Style/TextRegular';
 import StepNumber from '../../Components/Style/StepNumber';
 import StepNumberContainer from '../../Components/Style/StepNumberContainer';
-import PaginationPoints from '../../Components/Style/PaginationPoints';
 
 class Rewards extends Component {
 
@@ -28,7 +27,7 @@ class Rewards extends Component {
                         onPress={() => this.handleOnPress("Restaurant")}
                         style={[styles.wrapperButtonReward, reward === "Restaurant" && styles.buttonSelect]}
                     >
-                        <Image style={ [styles.pictoStyle, reward === "Restaurant" ? styles.rewardSelected : styles.rewardUnselected] } source={require('../../Images/new_bet_room/restaurant.png')}/>
+                        <Image style={ styles.pictoStyle } source={require('../../Images/new_bet_room/restaurant.png')}/>
                         <TextRegular style={styles.rewardText}>Restaurant</TextRegular>
                     </TouchableOpacity>
 
@@ -45,7 +44,7 @@ class Rewards extends Component {
                         onPress={() => this.handleOnPress("Double les points")}
                         style={[styles.wrapperButtonReward, reward === "Double les points" && styles.buttonSelect]}
                     >
-                        <Image style={ [styles.pictoStyle, styles.pictoDoublePoints] } source={require('../../Images/new_bet_room/double_points.png')}/>
+                        <Image style={ [styles.pictoStyle, styles.pictoDoublePoints] } source={require('../../Images/new_bet_room/double_points.png')} resizeMode={'contain'}/>
                         <TextRegular style={styles.rewardText}>Double points</TextRegular>
                     </TouchableOpacity>
 
@@ -53,7 +52,7 @@ class Rewards extends Component {
                         onPress={() => this.handleOnPress("Gage")}
                         style={[styles.wrapperButtonReward, reward === "Gage" && styles.buttonSelect]}
                     >
-                        <Image style={ [styles.pictoStyle, styles.pictoGage] } source={require('../../Images/new_bet_room/gage.png')}/>
+                        <Image style={ [styles.pictoStyle, styles.pictoGage] } source={require('../../Images/new_bet_room/gage.png')} resizeMode={'contain'}/>
                         <TextRegular style={styles.rewardText}>Gage</TextRegular>
                     </TouchableOpacity>
                 </View>
@@ -105,14 +104,6 @@ const styles = StyleSheet.create({
     rewardText: {
         fontSize: 14,
         marginTop: 8
-    },
-    pictoDoublePoints: {
-        width: 56,
-        height: 48,
-    },
-    pictoGage: {
-        width: 54,
-        height: 31,
     }
 })
 

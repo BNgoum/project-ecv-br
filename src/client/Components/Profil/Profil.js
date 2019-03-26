@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 
+import { connect } from 'react-redux';
+
 import TextRegular from '../Style/TextRegular';
 import TextBold from '../Style/TextBold';
 
-export default class Profil extends Component {
+class Profil extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,9 +14,10 @@ export default class Profil extends Component {
     }
 
     render() {
-
+        const pseudo = this.props.state.AuthenticationReducer.userInfo.pseudo;
         return (
             <View style={styles.container}>
+                <TextBold style={ styles.titleStyle }>Bonjour { "\n" + pseudo }</TextBold>
                 <View style={ styles.wrapperFabs }>
                     <View style={ styles.circle }></View>
                     <View style={ [styles.itemProfil, styles.itemProfil1] }>
@@ -34,8 +37,9 @@ export default class Profil extends Component {
                         <TextRegular style={ styles.itemText }>Bet Rooms remportées</TextRegular>
                     </View>
 
-                    <Image style={ styles.imageUser } source={require('../../Images/profil/mbappe.png')} resizeMode={"cover"} />
+                    
                 </View>
+                <Image style={ styles.imageUser } source={require('../../Images/profil/mbappe2.png')} resizeMode={"center"} />
             </View>
         )
     }
@@ -45,8 +49,9 @@ const styles = StyleSheet.create({
     container: {
         position: 'relative',
         flex: 1,
-        justifyContent: 'center',
-        marginBottom: 90
+        // justifyContent: 'space-around',
+        alignItems: 'center',
+        marginTop: 40
     },  
     imageUser: {
         position: 'absolute',
@@ -116,5 +121,16 @@ const styles = StyleSheet.create({
     itemNumber: {
         fontSize: 24,
         color: '#ffd200'
+    },
+    titleStyle: {
+        fontSize: 28,
+        textAlign: 'center',
+        marginBottom: 60
     }
 })
+
+const mapStateToProps = (state) => { 
+    return {state};
+}
+
+export default connect(mapStateToProps)(Profil)

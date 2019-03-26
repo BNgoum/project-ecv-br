@@ -23,7 +23,6 @@ export default class PaginationPoints extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'

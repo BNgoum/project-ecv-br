@@ -42,21 +42,19 @@ class Friend extends Component {
     render() {
         const friend = this.props.data;
         return (
-            <View>
-                <TouchableOpacity 
-                    onPress={() => this.handleOnPress()} 
-                    style={ [styles.container, this.state.active && styles.wrapperButtonFriendSelected] }>
-                    {/* <Text style={ styles.friendsName }>{friend.pseudo}</Text> */}
+            <TouchableOpacity 
+                onPress={() => this.handleOnPress()} 
+                style={ [styles.container, this.state.active && styles.wrapperButtonFriendSelected] }>
+                {/* <Text style={ styles.friendsName }>{friend.pseudo}</Text> */}
 
-                    <View style={ styles.avatar }>
-                        <AntDesign name="user" size={32} color="black" />
-                    </View>
-                    <View style={ styles.wrapperText }>
-                        <TextBold style={styles.pseudo} >{friend.pseudo}</TextBold>
-                        <TextRegular style={styles.sousTexte} >4 Bet Rooms joués ensemble</TextRegular>
-                    </View>
-                </TouchableOpacity>
-            </View>
+                <View style={ styles.avatar }>
+                    <AntDesign name="user" size={32} color="black" />
+                </View>
+                <View style={ styles.wrapperText }>
+                    <TextBold style={styles.pseudo} >{friend.pseudo}</TextBold>
+                    <TextRegular style={styles.sousTexte} >4 Bet Rooms joués ensemble</TextRegular>
+                </View>
+            </TouchableOpacity>
         )
     }
 }
@@ -94,12 +92,6 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         borderWidth: 2
     },
-    // friendsName: {
-    //     fontSize: 20,
-    //     borderWidth: 1,
-    //     padding: 16,
-    //     borderColor: '#ccc'
-    // },
     wrapperText: {
         justifyContent: 'center',
         alignItems: 'flex-start'

@@ -10,6 +10,9 @@ import MatchsSelected from '../../Components/BetRoom/MatchsSelected';
 import PaginationPoints from '../Style/PaginationPoints';
 import TextBold from '../Style/TextBold';
 
+import StepNumber from '../../Components/Style/StepNumber';
+import StepNumberContainer from '../../Components/Style/StepNumberContainer';
+
 class ListMatchs extends Component {
     constructor(props) {
         super(props);
@@ -61,6 +64,9 @@ class ListMatchs extends Component {
         const numberBets = this.props.state.BetRoomReducer.numberBets;
         return (
             <View style={styles.container}>
+                <StepNumberContainer><StepNumber>4</StepNumber></StepNumberContainer>
+                <TextBold style={ styles.title }>Choisis les matchs sur lesquels parier</TextBold>
+
                 <View>
                     <TabButtons />
                 </View>
@@ -172,7 +178,14 @@ class ListMatchs extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: 16,
         marginBottom: 16
+    },
+    title: {
+        fontSize: 18,
+        alignSelf: 'center',
+        marginBottom: 25,
+        marginTop: 4
     },
     wrapperContent: {
         marginBottom: 16

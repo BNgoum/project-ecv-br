@@ -10,6 +10,10 @@ import Friend from './Friend';
 import ButtonPrimary from '../Style/ButtonPrimary';
 import ButtonPrimaryText from '../Style/ButtonPrimaryText';
 import TextRegular from '../Style/TextRegular';
+import TextBold from '../Style/TextBold';
+
+import StepNumber from '../../Components/Style/StepNumber';
+import StepNumberContainer from '../../Components/Style/StepNumberContainer';
 
 class Friends extends Component {
     constructor(props) {
@@ -51,6 +55,9 @@ class Friends extends Component {
         const friends = this.props.state.FriendReducer.accepted;
         return (
             <View style={ styles.container }>
+                <StepNumberContainer><StepNumber>3</StepNumber></StepNumberContainer>
+                <TextBold style={ styles.title }>Invite tes amis</TextBold>
+                
                 <TouchableOpacity
                     onPress={() => this.handleOnPressAllFriends()}
                     style={ [styles.buttonAllFriends, this.state.isAllActive && styles.buttonAllFriendsSelected]}
@@ -79,8 +86,14 @@ class Friends extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
+        justifyContent: 'space-around',
         padding: 20
+    },
+    title: {
+        fontSize: 18,
+        alignSelf: 'center',
+        marginBottom: 25,
+        marginTop: 4
     },
     buttonAllFriends: {
         justifyContent: 'center',

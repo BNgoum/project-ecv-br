@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo';
 
 import { connect } from 'react-redux';
@@ -24,7 +24,7 @@ class NewBetRoom extends Component {
     componentDidMount() {
         setTimeout(() => {
             this.setState({isSplashScreen: false})
-        }, 200);
+        }, 2000);
     }
 
     handleOnPress = (name) => {
