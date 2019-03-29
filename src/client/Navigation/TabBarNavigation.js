@@ -27,7 +27,8 @@ const HomeStack = createStackNavigator({
             },
              headerTintColor: {
                 color: '#fff'
-            }
+            },
+            headerBackTitle: null
         }
     },
     BetRoomDetails : {
@@ -42,7 +43,8 @@ const HomeStack = createStackNavigator({
             },
              headerTintColor: {
                 color: '#fff'
-            }
+            },
+            
         }
     }    
 },

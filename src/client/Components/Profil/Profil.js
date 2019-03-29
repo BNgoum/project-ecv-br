@@ -37,9 +37,9 @@ class Profil extends Component {
                         <TextRegular style={ styles.itemText }>Bet Rooms remportées</TextRegular>
                     </View>
 
-                    
+                    <Image style={ styles.imageUser } source={require('../../Images/profil/mbappe2.png')} resizeMode={"cover"} />
                 </View>
-                <Image style={ styles.imageUser } source={require('../../Images/profil/mbappe2.png')} resizeMode={"center"} />
+                
             </View>
         )
     }
@@ -55,18 +55,20 @@ const styles = StyleSheet.create({
     },  
     imageUser: {
         position: 'absolute',
-        bottom: -110,
-        left: -50,
-        width: '100%',
-        height: '100%',
-        zIndex: 50
+        bottom: -250,
+        left: -20,
+        // width: '100%',
+        // height: '100%',
+        width: 220,
+        height: 450,
+        zIndex: 55
     },
     wrapperFabs: {
         position: 'relative',
         marginLeft: -20,
         width: 280,
         height: 280,
-        borderRadius: 500,
+        borderRadius: '50%',
         zIndex: 50
     },
     circle: {

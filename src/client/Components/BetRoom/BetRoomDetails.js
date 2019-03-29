@@ -12,6 +12,7 @@ import StatusBetRoom from "../Style/StatusBetRoom";
 import RewardDetailsBetRoom from '../Style/RewardDetailsBetRoom';
 import BlockFriend from '../Style/BlockFriend';
 import TextRegular from '../Style/TextRegular';
+import TextBold from "../Style/TextBold";
 
 class BetRoomDetails extends Component {
   constructor(props) {
@@ -86,6 +87,16 @@ class BetRoomDetails extends Component {
     }
   };
 
+  displayTextStatut = () => {
+    if (this.state.statut === "Terminée") {
+        return <TextBold style={ styles.textStatut }>La Bet Room est terminée</TextBold>
+    } else if (this.state.statut === "En cours") {
+        return <TextBold style={ styles.textStatut }>La Bet Room est en cours</TextBold>
+    } else {
+        return <TextBold style={ styles.textStatut }>Faites vos pronostics !</TextBold>
+    }
+  }
+
   displayContent = () => {
     const betRoomDetails = this.props.state.AuthenticationReducer
     .currentBetRoom;
@@ -100,7 +111,7 @@ class BetRoomDetails extends Component {
 
             <View style={styles.wrapperParticipants}>
                 <Image style={ styles.iconParticipant } source={require('../../Images/tab_bar/participant.png')} resizeMode={"contain"}/>
-                <TextRegular style={styles.textParticipant}>Les participants : </TextRegular>
+                <TextRegular style={styles.textParticipant}>Participants ({this.state.participants.length + 1}) </TextRegular>
             </View>
 
             {
@@ -114,24 +125,21 @@ class BetRoomDetails extends Component {
             
         </View>
       } else {
-        return <View>
-            <View style={styles.wrapperMatchs}>
-                <Text>Les matchs</Text>
-                <ScrollView>
-                    <FlatList
-                    data={betRoomDetails.matchs}
-                    keyExtractor={item => item._id.toString()}
-                    renderItem={({ item }) => (
-                        <Match
-                        data={item}
-                        betRoom={betRoomDetails}
-                        userId={userId}
-                        typeParticipant={typeParticipant}
-                        />
-                    )}
+        return <View style={ { flex: 1 } }>
+            { this.displayTextStatut() }
+
+            <FlatList
+                data={betRoomDetails.matchs}
+                keyExtractor={item => item._id.toString()}
+                renderItem={({ item }) => (
+                    <Match
+                    data={item}
+                    betRoom={betRoomDetails}
+                    userId={userId}
+                    typeParticipant={typeParticipant}
                     />
-                </ScrollView>
-            </View>
+                )}
+            />
         </View>
       }
   }
@@ -168,11 +176,7 @@ class BetRoomDetails extends Component {
 
         {/* <View style={styles.wrapperReward}>
           <Text>Récompense : {betRoomDetails.reward}</Text>
-        </View> */}
-
-        
-
-        
+        </View> */}        
       </View>
     );
   }
@@ -216,6 +220,11 @@ const styles = StyleSheet.create({
   textParticipant: {
       color: '#6b6d8a',
       fontSize: 13
+  },
+  textStatut: {
+      fontSize: 22,
+      marginVertical: 22,
+      textAlign: 'center'
   }
 });
 

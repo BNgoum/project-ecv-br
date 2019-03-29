@@ -4,6 +4,9 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { requestSetScore, requestUpdateMatch, requestPoints } from '../../Store/Reducers/BetRoom/action';
 import { requestGetMatch } from '../../Store/Reducers/Match/action';
 
+import TextRegular from '../Style/TextRegular';
+import TextBold from '../Style/TextBold';
+
 export default class Match extends Component {
     constructor(props) {
         super(props);
@@ -89,20 +92,114 @@ export default class Match extends Component {
 
     render() {
         return (
-            <View style={styles.wrapperMatch}>
+            <View style={styles.container}>
                 <View style={styles.wrapperDate}>
+                    <View style={styles.ligneVerticaleTop}></View>
                     <Text style={styles.dateMatch}>{this.props.data.dateMatch}</Text>
-                    <Text style={styles.heureMatch}>{this.props.data.heureMatch}</Text>
+                    <Text style={styles.dateMatch}>{this.props.data.heureMatch}</Text>
                 </View>
-                <View style={styles.wrapperTeams}>
+
+                {/* <View style={styles.wrapperTeams}>
                     <Text style={styles.nameTeam}>{this.props.data.homeTeam}</Text>
                     <Text style={styles.versusText}>VS</Text>
                     <Text style={styles.nameTeam}>{this.props.data.awayTeam}</Text>
+                </View> */}
+
+                <View style={ styles.wrapperInfoTeams }>
+                    <View style={[styles.wrapperHomeTeam, !this.state.isBegin && styles.largeBlock]}>
+                    <View>
+
+                    {
+                        this.state.isBegin &&
+                        <View style={ styles.wrapperResultatHomeTeam }>
+                            <TextRegular style={ styles.scoreResultatHomeTeam }>Résultat</TextRegular>
+                            <TextRegular style={ styles.scoreResultatHomeTeam }>{this.props.data.scoreAwayTeam}</TextRegular>
+                        </View>
+                    }         
+
+                        <View style={[styles.wrapperHomeTeamScore, !this.state.isBegin && styles.centerBlock]}>
+                            { this.state.isBegin && <TextRegular style={ styles.textMonPronostic }>Mon pronostic</TextRegular> }
+
+                            {
+                                !this.state.isBegin &&
+                                <TouchableOpacity onPress={ () => this.handleOnPressScore("moins", "scoreHomeTeam") } style={ styles.wrapperButtonScore }>
+                                    <TextRegular style={styles.buttonScore}>-</TextRegular>
+                                </TouchableOpacity>
+                            }
+
+                            <TextBold style={styles.teamScore}>{this.state.scoreHomeTeam}</TextBold>
+
+                            {
+                                !this.state.isBegin &&
+                                <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreHomeTeam") } style={ styles.wrapperButtonScore }>
+                                    <TextRegular style={styles.buttonScore}>+</TextRegular>
+                                </TouchableOpacity>
+                            }
+                        </View>
+
+                        {
+                            !this.state.isBegin && 
+                            <TouchableOpacity onPress={this.handleOnPressValidate} style={[styles.buttonValidatePronostic, this.state.isDisabled ? styles.isDisabled : null]} disabled={this.state.isDisabled}><TextRegular style={ styles.textButtonValidate }>Valider le pronostic</TextRegular></TouchableOpacity>
+                        }
+                        </View>
+                        
+                        <TextBold style={styles.nameTeam}>{this.props.data.homeTeam}</TextBold>
+                    </View>
+
+
+                    <View style={styles.separateurTeams}>
+                        <View style={styles.ligneVerticaleBottom}></View>
+                        <TextBold style={styles.separateurDots}>:</TextBold>
+                    </View>
+
+
+                    <View style={[styles.wrapperAwayTeam, !this.state.isBegin && styles.largeBlock]}>
+                        <View>
+                            {
+                                this.state.isBegin &&
+                                <View style={ styles.wrapperResultatAwayTeam }>
+                                    <TextRegular style={ styles.scoreResultatHomeTeam }>Résultat</TextRegular>
+                                    <TextRegular style={ styles.scoreResultatHomeTeam }>{this.props.data.scoreAwayTeam}</TextRegular>
+                                </View>
+                            }
+
+                            <View style={[styles.wrapperAwayTeamScore, !this.state.isBegin && styles.centerBlock]}>
+
+                                {
+                                    this.state.isBegin &&
+                                    <TextRegular style={ styles.textMonPronosticAwayTeam }>Mon pronostic</TextRegular>
+                                }
+
+                                {
+                                    !this.state.isBegin && 
+                                    <TouchableOpacity onPress={ () => this.handleOnPressScore("moins", "scoreAwayTeam") } style={ styles.wrapperButtonScore }><TextRegular style={styles.buttonScore}>-</TextRegular></TouchableOpacity>
+                                }
+
+                                <TextBold style={styles.teamScore}>{this.state.scoreAwayTeam}</TextBold>
+
+                                {
+                                    !this.state.isBegin && 
+                                    <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreAwayTeam") } style={ styles.wrapperButtonScore }><TextRegular style={styles.buttonScore}>+</TextRegular></TouchableOpacity>
+                                }
+                            </View>
+
+                            {
+                                !this.state.isBegin && 
+                                <TouchableOpacity onPress={this.handleOnPressValidate} style={[styles.buttonValidatePronostic, this.state.isDisabled ? styles.isDisabled : null]} disabled={this.state.isDisabled}><TextRegular style={ styles.textButtonValidate }>Valider le pronostic</TextRegular></TouchableOpacity>
+                            }
+                        </View>
+
+                        <TextBold style={styles.nameTeam}>{this.props.data.awayTeam}</TextBold>
+                    </View>
                 </View>
-                <View style={styles.wrapperScore}>
+                
+
+
+
+                {/* <View style={styles.wrapperScore}>
                     <View style={styles.wrapperTeamScore}>
                         {
-                            this.state.isBegin ? null : 
+                            !this.state.isBegin &&
                             <TouchableOpacity onPress={ () => this.handleOnPressScore("moins", "scoreHomeTeam") } style={ styles.wrapperButtonScore }>
                                 <Text style={styles.buttonScore}>-</Text>
                             </TouchableOpacity>
@@ -111,7 +208,7 @@ export default class Match extends Component {
                         <Text style={styles.teamScore}>{this.state.scoreHomeTeam}</Text>
 
                         {
-                            this.state.isBegin ? null : 
+                            !this.state.isBegin &&
                             <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreHomeTeam") } style={ styles.wrapperButtonScore }>
                                 <Text style={styles.buttonScore}>+</Text>
                             </TouchableOpacity>
@@ -134,9 +231,9 @@ export default class Match extends Component {
                             <TouchableOpacity onPress={ () => this.handleOnPressScore("plus", "scoreAwayTeam") } style={ styles.wrapperButtonScore }><Text style={styles.buttonScore}>+</Text></TouchableOpacity>
                         }
                     </View>
-                </View>
+                </View> */}
 
-                {
+                {/* {
                     this.state.statut === "Terminée" && 
                     <View>
                         <Text style={ styles.titleScoreFinal }>Score final</Text>
@@ -151,7 +248,7 @@ export default class Match extends Component {
                 {
                     !this.state.isBegin && 
                     <TouchableOpacity onPress={this.handleOnPressValidate} style={[styles.buttonValidatePronostic, this.state.isDisabled ? styles.isDisabled : null]} disabled={this.state.isDisabled}><Text>Valider le pronostic</Text></TouchableOpacity>
-                }
+                } */}
                 
             </View>
         )
@@ -159,31 +256,19 @@ export default class Match extends Component {
 }
 
 const styles = StyleSheet.create({
-    wrapperMatch: {
-        marginBottom: 16,
-        marginTop: 16,
-        paddingTop: 16,
-        paddingBottom: 16,
-        paddingRight: 8,
-        paddingLeft: 8,
-        borderRadius: 15,
-        backgroundColor: '#fff',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+    container: {
+        position: 'relative',
+        marginVertical: 16,
+        paddingVertical: 16,
+        paddingHorizontal: 8,
     },
     wrapperDate: {
-      display: "flex",
       justifyContent: "center",
       alignItems: 'center'
     },
     dateMatch: {
-      fontSize: 13
+      fontSize: 12,
+      color: '#fff'
     },
     wrapperTeams: {
       display: "flex",
@@ -193,9 +278,7 @@ const styles = StyleSheet.create({
     },
     nameTeam : {
         fontSize: 18,
-        flex: 2,
-        textAlign: 'center',
-        fontWeight: 'bold'
+        color: '#fff'
     },
     versusText: {
         marginLeft: 8,
@@ -220,10 +303,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     teamScore: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginRight: 12,
-        marginLeft: 12
+        fontSize: 27,
     },
     buttonScore: {
         fontSize: 24,
@@ -231,12 +311,19 @@ const styles = StyleSheet.create({
         marginLeft: 8,
     },
     wrapperButtonScore: {
-        borderWidth: 1,
+        borderRadius: 7,
+        marginHorizontal: 12,
+        width: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#2539ff'
     },
     buttonValidatePronostic: {
         alignSelf: 'center',
-        backgroundColor: '#ccc',
-        padding: 8
+        backgroundColor: '#2539ff',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 7
     },
     isDisabled: {
         opacity: 0.4
@@ -250,5 +337,103 @@ const styles = StyleSheet.create({
     titleScoreFinal: {
         fontSize: 14,
         alignSelf: 'center'
+    },
+    wrapperHomeTeam: {
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        backgroundColor: '#242647',
+        borderRadius: 7,
+        width: '47%',
+        height: 165,
+        paddingVertical: 16,
+        paddingHorizontal: 20
+    },
+    wrapperHomeTeamScore: {
+        position: 'relative',
+        flexDirection: 'row',
+        paddingTop: 8,
+        justifyContent: 'flex-end'
+    },
+    wrapperAwayTeamScore: {
+        position: 'relative',
+        flexDirection: 'row',
+        paddingTop: 8
+    },
+    wrapperAwayTeam: {
+        justifyContent: 'space-between',
+        backgroundColor: '#242647',
+        borderRadius: 7,
+        width: '47%',
+        height: 165,
+        paddingVertical: 16,
+        paddingHorizontal: 20
+    },
+    wrapperInfoTeams: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        width: '100%',
+        marginTop: 5
+    },
+    separateurTeams: {
+        position: 'relative',
+        width: '6%',
+    },
+    separateurDots: {
+        textAlign: 'center',
+        fontSize: 25,
+    },
+    ligneVerticaleBottom: {
+        position: 'absolute',
+        left: '50%',
+        bottom: -115,
+        height: 110,
+        width: 1,
+        backgroundColor: '#fff',
+    },
+    ligneVerticaleTop: {
+        position: 'absolute',
+        left: '50%',
+        top: -30,
+        height: 25,
+        width: 1,
+        backgroundColor: '#fff',
+    },
+    centerBlock: {
+        // alignSelf: 'center',
+        alignItems: 'space-between',
+        marginBottom: 8
+    },
+    largeBlock: {
+        height: 160
+    },
+    textButtonValidate: {
+        fontSize: 12
+    },
+    wrapperResultatHomeTeam: {
+        alignItems: 'flex-end',
+        marginBottom: 8
+    },
+    wrapperResultatAwayTeam: {
+        alignItems: 'flex-start',
+        marginBottom: 8
+    },
+    scoreResultatHomeTeam: {
+        fontSize: 12
+    },
+    textMonPronostic: {
+        position: 'absolute',
+        top: -10,
+        right: 0,
+        fontSize: 12
+    },
+    textMonPronosticAwayTeam: {
+        position: 'absolute',
+        top: -10,
+        left: 0,
+        fontSize: 12
+    },
+    teamScoreRight: {
+        alignSelf: 'flex-end'
     }
 })
