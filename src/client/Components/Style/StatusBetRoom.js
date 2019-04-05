@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     badgeStatus: {
         width: 9,
         height: 9,
-        borderRadius: '50%',
+        borderRadius: 500,
         marginRight: 10
     },
     badgeEnd: {

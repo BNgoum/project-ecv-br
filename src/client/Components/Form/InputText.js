@@ -20,9 +20,7 @@ export default class InputText extends Component {
     }
 
     handleChange = (text) => {
-        this.setState({
-            text
-        })
+        this.setState({ text })
 
         this.props.sendPropsToParent(this.props.typeOfInput, text);            
     }
@@ -33,7 +31,7 @@ export default class InputText extends Component {
                 <TextInput
                     style={ styles.inputText }
                     onChangeText={(text) => this.handleChange(text)}
-                    value={this.props.testvalue || ""}
+                    value={this.state.text}
                     onFocus={() => this.setState({isFocus: true})}
                     onBlur={() => this.handleOnBlur()}
                     textContentType={this.props.typeContent}

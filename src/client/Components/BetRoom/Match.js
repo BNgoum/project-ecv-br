@@ -386,8 +386,8 @@ const styles = StyleSheet.create({
     ligneVerticaleBottom: {
         position: 'absolute',
         left: '50%',
-        bottom: -115,
-        height: 110,
+        bottom: -185,
+        height: 180,
         width: 1,
         backgroundColor: '#fff',
     },
@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
     },
     centerBlock: {
         // alignSelf: 'center',
-        alignItems: 'space-between',
+        // alignItems: 'space-between',
         marginBottom: 8
     },
     largeBlock: {

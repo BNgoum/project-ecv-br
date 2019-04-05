@@ -40,11 +40,7 @@ const HomeStack = createStackNavigator({
             },
              headerStyle: {
                 backgroundColor: '#151830'
-            },
-             headerTintColor: {
-                color: '#fff'
-            },
-            
+            }            
         }
     }    
 },
@@ -211,8 +207,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={styles.icon} source={require('../Images/tab_bar/home_active.png')}/>
-                : <Image style={styles.icon} source={require('../Images/tab_bar/home_inactive.png')}/>
+                ? <Image style={styles.icon} source={require('../../../assets/images/tab_bar/home_active.png')}/>
+                : <Image style={styles.icon} source={require('../../../assets/images/tab_bar/home_inactive.png')}/>
             )
         }
     },
@@ -221,8 +217,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={styles.icon} source={require('../Images/tab_bar/match_active.png')}/>
-                : <Image style={styles.icon} source={require('../Images/tab_bar/match_inactive.png')}/>
+                ? <Image style={styles.icon} source={require('../../../assets/images/tab_bar/match_active.png')}/>
+                : <Image style={styles.icon} source={require('../../../assets/images/tab_bar/match_inactive.png')}/>
             )
         }
     },
@@ -231,8 +227,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={styles.icon} source={require('../Images/tab_bar/add_active.png')}/>
-                : <Image style={styles.icon} source={require('../Images/tab_bar/add_inactive.png')}/>
+                ? <Image style={styles.icon} source={require('../../../assets/images/tab_bar/add_active.png')}/>
+                : <Image style={styles.icon} source={require('../../../assets/images/tab_bar/add_inactive.png')}/>
             )
         }
     },
@@ -241,8 +237,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={styles.icon} source={require('../Images/tab_bar/classement_active.png')}/>
-                : <Image style={styles.icon} source={require('../Images/tab_bar/classement_inactive.png')}/>
+                ? <Image style={styles.icon} source={require('../../../assets/images/tab_bar/classement_active.png')}/>
+                : <Image style={styles.icon} source={require('../../../assets/images/tab_bar/classement_inactive.png')}/>
             )
         }
     },
@@ -251,8 +247,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={ styles.icon } source={require('../Images/tab_bar/profil_active.png')} resizeMode={"contain"}/>
-                : <Image style={ styles.icon } source={require('../Images/tab_bar/profil_inactive.png')} resizeMode={"contain"}/>
+                ? <Image style={ styles.icon } source={require('../../../assets/images/tab_bar/profil_active.png')} resizeMode={"contain"}/>
+                : <Image style={ styles.icon } source={require('../../../assets/images/tab_bar/profil_inactive.png')} resizeMode={"contain"}/>
             )
         }
     }

@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     },
     buttonAllFriends: {
         justifyContent: 'center',
-        alignItem: 'center',
+        alignItems: 'center',
         marginBottom: 8,
         borderRadius: 4,
         backgroundColor: '#242647',

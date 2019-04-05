@@ -20,7 +20,7 @@ class BetRoom extends Component {
             participants: [],
             ranking: {},
             reward: {},
-            styleReward: {}
+            styleReward: {},
         }
     }
 
@@ -51,12 +51,16 @@ class BetRoom extends Component {
             }
         })
         .then(() => {
-            this.setParticipantsName();
+            // this.setParticipantsName();
+        })
+        .then(() => {
+            this.checkStatutParticipant();
         })
     }
 
     setParticipantsName = () => {
-        const idUser = this.props.state.AuthenticationReducer.userInfo._id;
+        //const idUser = this.props.state.AuthenticationReducer.userInfo._id;
+
         // On récupère tous les participant de la bet room courante et les ajoutent dans le state participants
         let promiseParticipants = this.props.data.participants.map(participant => {
             return new Promise((resolve, reject) => {
@@ -205,6 +209,26 @@ class BetRoom extends Component {
         }
     }
 
+    checkStatutParticipant = () => {
+        // const currentId = this.props.state.AuthenticationReducer.userInfo._id;
+        // const currentIdBetRoomOwner = this.props.data.owner;
+
+        // if (currentId == currentIdBetRoomOwner) {
+        //     this.setState({ participantStatut: "Admin" })
+        // } else {
+        //     this.setState({ participantStatut: "Participant" })
+        // }
+
+        const currentId = this.props.state.AuthenticationReducer.userInfo._id;
+        const currentIdBetRoomOwner = this.props.data.owner;
+
+        if (currentId == currentIdBetRoomOwner) {
+            return "Admin"
+        } else {
+            return "Participant"
+        }
+    }
+
     render() {
         return (
             <TouchableOpacity onPress={ this.handleOnPress } style={ styles.wrapperContent }>
@@ -212,7 +236,7 @@ class BetRoom extends Component {
                     <Image source={this.state.reward} style={ styles.iconRewards } resizeMode={"contain"} />
                     
                     <View>
-                        <TextRegular style={styles.typeParticipant}>{ this.props.typeParticipant === "owner" ? "Admin" : "Participant" }</TextRegular>
+                        <TextRegular style={styles.typeParticipant}>{ this.checkStatutParticipant() }</TextRegular>
                         <TextBold style={styles.title}>{ this.props.data.name }</TextBold>
                         {
                             this.props.data.betsNumber > 1 ? 
@@ -220,7 +244,7 @@ class BetRoom extends Component {
                             <TextRegular style={ styles.textBetsNumber }>{ this.props.data.betsNumber } pari</TextRegular>
                         }
                         <View style={ styles.wrapperParticipant }>
-                            <Image style={ styles.iconParticipant } source={require('../../Images/tab_bar/participant.png')} resizeMode={"contain"}/>
+                            <Image style={ styles.iconParticipant } source={require('../../../../assets/images/tab_bar/participant.png')} resizeMode={"contain"}/>
                             <TextRegular style={ styles.secondText }> x { this.props.data.participants.length + 1 }</TextRegular>
                         </View>
                     </View>

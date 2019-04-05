@@ -37,7 +37,7 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        this.getBetRoom()
+        this.getBetRoom();
     }
 
     getInformationsUser = () => {
@@ -160,22 +160,44 @@ class Home extends Component {
     }
 
     displayContent = () => {
-        const betRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
-        const betRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
-
-        let arrayBetRoomOwner = [];
-        let arrayBetRoomParticipant = [];
-
         if (this.state.isPending) {
-
+            if (this.state.betRoomPending.length > 0) {
+                return <ScrollView contentContainerStyle={ styles.wrapperBetRoom }>
+            {
+                this.state.betRoomPending.map((item, index) => (
+                    <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
+                ))
+            }
+            </ScrollView>
+            } else {
+                return <View style={ styles.wrapperText }><TextBold style={ styles.textInfo }>Aucune Bet Room en attente.</TextBold></View>
+            }
+            
         } else if (this.state.isFinished) {
-            betRoomOwner.map(betroom => {
-                betroom.matchs.map(match => {
-
-                })
-            })
+            if (this.state.betRoomFinished.length > 0) {
+                return <ScrollView contentContainerStyle={ styles.wrapperBetRoom }>
+            {
+                this.state.betRoomFinished.map((item, index) => (
+                    <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
+                ))
+            }
+            </ScrollView>
+            } else {
+                return <View style={ styles.wrapperText }><TextBold style={ styles.textInfo }>Aucune Bet Room terminée.</TextBold></View>
+            }
         } else {
 
+            if (this.state.betRoomOnGoing.length > 0) {
+                return <ScrollView contentContainerStyle={ styles.wrapperBetRoom }>
+            {
+                this.state.betRoomOnGoing.map((item, index) => (
+                    <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
+                ))
+            }
+            </ScrollView>
+            } else {
+                return <View style={ styles.wrapperText }><TextBold style={ styles.textInfo }>Aucune Bet Room à venir.</TextBold></View>
+            }
         }
     }
 
@@ -186,12 +208,9 @@ class Home extends Component {
     }
 
     render() {
-        const betRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
-        const betRoomParticipant = this.props.state.AuthenticationReducer.betRoomParticipant;
-
         return (
             <View style={styles.wrapperContent}>
-                <LinearGradient style={{ padding: 20 }} colors={['#10122d', '#385284', '#10122d']} >
+                <LinearGradient style={{ padding: 20, flex: 1 }} colors={['#10122d', '#385284', '#10122d']} >
                     <TextBold style={ styles.titleScreen} >Mes Bet Rooms</TextBold>
 
                     <Tabs firstTab="En cours" secondTab="À venir" thirdTab="Terminée" displayTabContent={this.handleDisplayTabContent}/>
@@ -200,10 +219,9 @@ class Home extends Component {
 
                     {/* <Text style={styles.title}>Bet Room en cours</Text> */}
 
-                    {
+                    {/* {
                         betRoomOwner.length > 0 && 
                         <View style={{ marginTop: 20 }}>
-                            {/* <Text style={styles.title}>Bet Room Admin :</Text> */}
                             <ScrollView style={ styles.wrapperBetRoom }>
                                 <FlatList
                                     data={ betRoomOwner }
@@ -217,7 +235,6 @@ class Home extends Component {
                     {
                         betRoomParticipant.length > 0 &&
                         <View>
-                            {/* <Text style={styles.title}>Bet Room Participant :</Text> */}
                             <ScrollView style={ styles.wrapperBetRoom }>
                                 <FlatList
                                     data={ betRoomParticipant }
@@ -226,7 +243,7 @@ class Home extends Component {
                                 />
                             </ScrollView>
                         </View>
-                    }
+                    } */}
                 </LinearGradient>
             </View>
         )
@@ -248,13 +265,22 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     wrapperBetRoom: {
-        marginBottom: 100
+        flex: 1,
+        marginTop: 20
     },
     actionButtonIcon: {
         fontSize: 20,
         height: 22,
         color: 'white',
     },
+    wrapperText: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textInfo: {
+        fontSize: 22
+    }
 })
 
 const mapStateToProps = (state) => { 
