@@ -3,9 +3,9 @@ import { Font } from 'expo';
 import { StatusBar, View } from 'react-native';
 import { Provider } from 'react-redux';
 
-import Store from './src/client/Store/configureStore'
+import Store from './src/Store/configureStore'
 
-import Navigation from './src/client/Navigation/Navigation';
+import Navigation from './src/Navigation/Navigation';
 // import Authentification from './src/client/Navigation/Authentification';
 
 export default class App extends React.Component {

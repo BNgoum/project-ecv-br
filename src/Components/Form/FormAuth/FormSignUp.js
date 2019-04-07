@@ -56,10 +56,10 @@ class FormSignUp extends Component {
                 this.setState({ email: value })
                 break;
             case 'prenom':
-                this.setState({ prenom: value })
+                this.setState({ firstName: value })
                 break;
             case 'nom':
-                this.setState({ nom: value })
+                this.setState({ lastName: value })
                 break;
             case 'password':
                 this.setState({ password: value })
@@ -102,6 +102,7 @@ class FormSignUp extends Component {
                     placeholder="Mot de passe"
                     sendPropsToParent={ this.handleOnChangeText }
                     typeOfInput="password"
+                    isPassword={true}
                 />
 
                 { this.state.isEmpty ? <Text>Tous les champs doivent être remplis.</Text> : null }

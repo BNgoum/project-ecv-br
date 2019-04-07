@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
 
-import FriendRecipient from './FriendRecipient';
+import Friend from './Friend';
+import TextBold from '../Style/TextBold';
 
-export default class Recipient extends Component {
+export default class Pending extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <View>
-                <Text style={styles.title} >Demande reçues : </Text>
+                <TextBold style={styles.title} >En attente : </TextBold>
 
                 <FlatList
                     data={ this.props.friends }
                     keyExtractor={ (item) => item._id.toString() }
-                    renderItem={ ({item}) => <FriendRecipient data={item} />}
-                    style={styles.friendRecipient}
+                    renderItem={ ({item}) => <Friend data={item.pseudo} /> }
                 />
             </View>
         )
@@ -22,7 +26,8 @@ export default class Recipient extends Component {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 22,
-        marginBottom: 8
-    },
+        fontSize: 18,
+        marginTop: 12,
+        marginBottom: 12
+    }
 })

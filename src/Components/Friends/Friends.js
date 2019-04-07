@@ -11,6 +11,7 @@ import Recipient from './Recipient';
 import FriendRequest from './FriendRequest';
 
 import TextBold from '../Style/TextBold';
+import TextRegular from '../Style/TextRegular';
 import ButtonPrimary from '../Style/ButtonPrimary';
 import Link from '../Style/Link';
 import LinkText from '../Style/LinkText';
@@ -119,7 +120,7 @@ class Friends extends Component {
                 {
                     accepted.length > 0 ? 
                     <Accepted friends={accepted} /> : 
-                    <View><Text style={ styles.empty }>Aucun amis</Text></View>
+                    <TextRegular style={ styles.empty }>Aucun amis, ajoute tes amis en appuyant sur le bouton au-dessus</TextRegular>
                 }
 
                 { recipient.length > 0 && <Recipient friends={recipient} /> }

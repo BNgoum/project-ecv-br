@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { requestUserInformation, requestUserInformationByPseudo } from '../../Store/Reducers/User/action';
+import { StyleSheet, View } from 'react-native';
+import { requestUserInformationByPseudo } from '../../Store/Reducers/User/action';
 import { friendRequest } from '../../Store/Reducers/Friends/action'
 
-const jwtDecode = require('jwt-decode');
 import { connect } from 'react-redux';
 
 import InputText from '../Form/InputText';
 import ButtonPrimary from '../Style/ButtonPrimary';
 import ButtonPrimaryText from '../Style/ButtonPrimaryText';
+import TextRegular from '../Style/TextRegular';
 
 class FriendRequest extends Component {
     constructor(props) {
@@ -35,7 +35,7 @@ class FriendRequest extends Component {
                 return new Promise((resolve, reject) => {
                     this.setState({idRecipient: data._id})
                     // On donne en paramètre l'id du user qui emet la demande et en 2nd paramètres l'id du user qui reçoit la demande
-                    resolve(friendRequest(this.props.user._id, data._id))
+                    resolve(friendRequest(this.props.state.AuthenticationReducer.userInfo._id, data._id))
                 })
                 .then((action) => {
                     // On dispatch l'affichage du message de succès
@@ -58,26 +58,17 @@ class FriendRequest extends Component {
         .catch((error) => console.log('Erreur lors de la requête d\'amis (FriendRequest.js) : ', error))
     }
 
-    handleOnChangeText = () => {
+    handleOnChangeText = (type, pseudo) => {
         this.setState({pseudo, isEmpty: false});
         const action = { type: "FOUND_USER_BY_PSEUDO", value: "" }
         this.props.dispatch(action);
     }
 
     render() {
+        console.log('Pseudo : ', this.state.pseudo)
         return (
             <View styles={styles.container}>
                 <View style={ styles.wrapperInput } >
-                    {/* <TextInput
-                        placeholder="Entrez le pseudo de votre ami..."
-                        onChangeText={(pseudo) => {
-                            this.setState({pseudo, isEmpty: false});
-                            const action = { type: "FOUND_USER_BY_PSEUDO", value: "" }
-                            this.props.dispatch(action);
-                        }}
-                        value={this.state.pseudo}
-                        style={styles.inputPseudo} /> */}
-
                     <InputText 
                         placeholder="Tapez le pseudo d'un ami"
                         sendPropsToParent={ this.handleOnChangeText }
@@ -85,15 +76,11 @@ class FriendRequest extends Component {
                         value={this.state.pseudo}
                     />
 
-                    { this.props.state.AuthenticationReducer.found_user_by_pseudo !== "" &&
-                        <Text>{this.props.state.AuthenticationReducer.found_user_by_pseudo}</Text>
-                    }
+                    { this.props.state.AuthenticationReducer.found_user_by_pseudo !== "" && <TextRegular>{this.props.state.AuthenticationReducer.found_user_by_pseudo}</TextRegular> }
 
-                    { this.props.state.FriendReducer.friend_request !== "" &&
-                        <Text>{this.props.state.FriendReducer.friend_request}</Text>
-                    }
+                    { this.props.state.FriendReducer.friend_request !== "" && <TextRegular>{this.props.state.FriendReducer.friend_request}</TextRegular> }
 
-                    { this.state.isEmpty && <Text>Le champs de saisi est vide.</Text> }
+                    { this.state.isEmpty && <TextRegular>Le champs de saisi est vide.</TextRegular> }
                 </View>
 
                 <ButtonPrimary
@@ -109,10 +96,12 @@ class FriendRequest extends Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        padding: 20
     },
     wrapperInput: {
         // width: '50%'
+        padding: 20
     },
     button: {
         width: 140,

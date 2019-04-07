@@ -244,7 +244,7 @@ class BetRoom extends Component {
                             <TextRegular style={ styles.textBetsNumber }>{ this.props.data.betsNumber } pari</TextRegular>
                         }
                         <View style={ styles.wrapperParticipant }>
-                            <Image style={ styles.iconParticipant } source={require('../../../../assets/images/tab_bar/participant.png')} resizeMode={"contain"}/>
+                            <Image style={ styles.iconParticipant } source={require('../../../assets/images/tab_bar/participant.png')} resizeMode={"contain"}/>
                             <TextRegular style={ styles.secondText }> x { this.props.data.participants.length + 1 }</TextRegular>
                         </View>
                     </View>

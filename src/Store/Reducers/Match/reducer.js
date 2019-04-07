@@ -5,7 +5,8 @@ const initialState = {
     Bundesliga: [],
     SerieA: [],
     LigueDesChampions: [],
-    isActive: "Ligue1"
+    isActive: "Ligue1",
+    matchsPending: []
 }
 
 function betroom(state = initialState, action) {
@@ -45,6 +46,11 @@ function betroom(state = initialState, action) {
         case 'IS_ACTIVE':
             nextState = {
                 ...state, isActive: action.value
+            }
+            return nextState;
+        case 'MATCHS_PENDING':
+            nextState = {
+                ...state, matchsPending: action.value
             }
             return nextState;
         default:

@@ -6,6 +6,10 @@ import { acceptedRequest } from '../../Store/Reducers/Friends/action'
 const jwtDecode = require('jwt-decode');
 import { connect } from 'react-redux';
 
+import TextBold from '../Style/TextBold';
+import TextRegular from '../Style/TextRegular';
+import { AntDesign } from '@expo/vector-icons';
+
 class FriendRecipient extends Component {
     constructor(props) {
         super(props);
@@ -42,29 +46,67 @@ class FriendRecipient extends Component {
 
     render() {
         return (
-            <View styles={styles.wrapperRecipientFriend}>
-                <Text style={styles.pseudo} >{this.props.data.pseudo}</Text>
-                <TouchableOpacity style={styles.button} onPress={this.acceptedRequest}>
-                    <Image style={styles.icon} source={require('../../Images/friends/check.png')} />
-                </TouchableOpacity>
+            // <View styles={styles.wrapperRecipientFriend}>
+            //     <Text style={styles.pseudo} >{this.props.data.pseudo}</Text>
+            //     <TouchableOpacity style={styles.button} onPress={this.acceptedRequest}>
+            //         <Image style={styles.icon} source={require('../../Images/friends/check.png')} />
+            //     </TouchableOpacity>
+            // </View>
+
+            <View style={ styles.container }>
+                <View style={ styles.avatar }>
+                    <AntDesign name="user" size={32} color="black" />
+                </View>
+                <View style={ styles.wrapperText }>
+                    <TextBold style={styles.pseudo} >{ this.props.data.pseudo }</TextBold>
+                    <TextRegular style={styles.sousTexte} >0 Bet Room joué ensemble</TextRegular>
+                </View>
+
+                <TouchableOpacity style={styles.button} onPress={this.acceptedRequest}><Image style={styles.icon} resizeMode={"contain"} source={require('../../Images/friends/check.png')} /></TouchableOpacity>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    wrapperRecipientFriend: {
+    container: {
+        position: 'relative',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
+        borderRadius: 4,
+        backgroundColor: '#242647',
+        paddingHorizontal: 20,
+        paddingVertical: 12 
     },
     pseudo: {
-        fontSize: 14,
+        fontSize: 16
+    },
+    avatar: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 40,
+        height: 40,
+        backgroundColor: '#fff',
+        borderRadius: 50,
+        marginRight: 20
+    },
+    wrapperText: {
+        justifyContent: 'center',
+        alignItems: 'flex-start'
+    },
+    sousTexte: {
+        fontSize: 12
     },
     button: {
+        position: 'absolute',
+        right: 20,
         width: 32,
         height: 32
     },
     icon: {
-        width: 32,
-        height: 32,
+        width: '100%',
+        height: '100%'
     }
 })
 

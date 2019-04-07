@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ScrollView, Image, FlatList } from 'react-nativ
 import { connect } from 'react-redux';
 import Match from './Match';
 import TabButtons from './TabButtons';
-import {requestMatchs} from '../../Store/Reducers/Match/action'
+import {getAllMatchsPending} from '../../Store/Reducers/Match/action'
 
 import MatchsSelected from '../../Components/BetRoom/MatchsSelected';
 
@@ -18,12 +18,6 @@ class ListMatchs extends Component {
         super(props);
         this.state = {
             matchs : [],
-            Ligue1: [],
-            PremierLeague: [],
-            Bundesliga: [],
-            SerieA: [],
-            LaLiga: [],
-            liguedesChampions: [],
             isLoading: true
         }
     }
@@ -33,35 +27,20 @@ class ListMatchs extends Component {
     }
 
     getMatchs = () => {
-        const championnats = ["Serie A", "Primera Division", "Ligue 1", "Bundesliga", "UEFA Champions League", "Premier League"];
-
-        championnats.map(championnat => {
-            return new Promise ((resolve, reject) => {
-                resolve(requestMatchs(championnat));
-            })
-            .then( action => {
-                let matchScheduled = [];
-
-                action.value.map(match => {
-                    if (match.statut === "SCHEDULED" || match.statut === "IN_PLAY" || match.statut === "LIVE") {
-                        matchScheduled.push(match)
-                    }
-                })
-
-                matchScheduled.sort(function(a,b){
-                    return new Date(a.dateHeureMatch) - new Date(b.dateHeureMatch);
-                });
-
-                action.value = matchScheduled;
-
-                this.props.dispatch(action);
-            })
-            .catch(error => console.log('Erreur lors de la promise requestMatchs : ', error))
+        return new Promise((resolve, reject) => {
+            resolve(getAllMatchsPending())
         })
+        .then(data => {
+            const action = { type: "MATCHS_PENDING", value: data.data.data.matchs }
+            this.props.dispatch(action);
+        })
+        .catch(error => console.log('Erreur lors de la récupération des match à venir et en cours (ListMatchs.js) : ', error));
     }
 
     render() {
         const numberBets = this.props.state.BetRoomReducer.numberBets;
+        const matchsPending = this.props.state.MatchReducer.matchsPending;
+
         return (
             <View style={styles.container}>
                 <StepNumberContainer><StepNumber>4</StepNumber></StepNumberContainer>
@@ -80,7 +59,7 @@ class ListMatchs extends Component {
                             </View>
 
                             <FlatList
-                                data={this.state.liguedesChampions}
+                                data={matchsPending.UEFAChampionsLeague}
                                 keyExtractor={(item) => item._id.toString()}
                                 renderItem={({item}) => <Match matchs={item} />}
                             />
@@ -96,7 +75,7 @@ class ListMatchs extends Component {
                                 </View>
                                 
                                 <FlatList
-                                    data={this.props.state.MatchReducer.Ligue1}
+                                    data={matchsPending.Ligue1}
                                     keyExtractor={(item) => item._id.toString()}
                                     renderItem={({item}) => <Match matchs={item} />}
                                 />
@@ -111,7 +90,7 @@ class ListMatchs extends Component {
                                     <TextBold style={styles.titreLeague}>La Liga</TextBold>
                                 </View>
                                 <FlatList
-                                    data={this.props.state.MatchReducer.LaLiga}
+                                    data={matchsPending.PrimeraDivision}
                                     keyExtractor={(item) => item._id.toString()}
                                     renderItem={({item}) => <Match matchs={item} />}
                                 />
@@ -127,7 +106,7 @@ class ListMatchs extends Component {
                                 </View>
 
                                 <FlatList
-                                    data={this.props.state.MatchReducer.PremierLeague}
+                                    data={matchsPending.PremierLeague}
                                     keyExtractor={(item) => item._id.toString()}
                                     renderItem={({item}) => <Match matchs={item} />}
                                 />
@@ -143,7 +122,7 @@ class ListMatchs extends Component {
                                 </View>
 
                                 <FlatList
-                                    data={this.props.state.MatchReducer.SerieA}
+                                    data={matchsPending.SerieA}
                                     keyExtractor={(item) => item._id.toString()}
                                     renderItem={({item}) => <Match matchs={item} />}
                                 />
@@ -159,7 +138,7 @@ class ListMatchs extends Component {
                                 </View>
 
                                 <FlatList
-                                    data={this.props.state.MatchReducer.Bundesliga}
+                                    data={matchsPending.Bundesliga}
                                     keyExtractor={(item) => item._id.toString()}
                                     renderItem={({item}) => <Match matchs={item} />}
                                 />

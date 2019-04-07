@@ -42,7 +42,14 @@ export const requestMatchs = id => {
 export const getAllMatchs = () => {
     return axios.get('https://betroom-api.herokuapp.com/api/match/matchs')
     .catch(err => {
-        console.log('Erreur lors de la tentative de récupération de tous les matchs de la semaine (getAllMatchs) : ', err);
+        console.log('Erreur lors de la tentative de récupération de tous les matchs (getAllMatchs) : ', err);
+    });
+}
+
+export const getAllMatchsPending = () => {
+    return axios.get('https://betroom-api.herokuapp.com/api/match/matchsPending')
+    .catch(err => {
+        console.log('Erreur lors de la tentative de récupération de tous les matchs à venir (getAllMatchs) : ', err);
     });
 }
 

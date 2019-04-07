@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, FlatList, ScrollView, Image } from "react-native";
+import { StyleSheet, View, FlatList, Image } from "react-native";
 
 import { connect } from "react-redux";
 
@@ -110,7 +110,7 @@ class BetRoomDetails extends Component {
             <RewardDetailsBetRoom reward={betRoomDetails.reward} />
 
             <View style={styles.wrapperParticipants}>
-                <Image style={ styles.iconParticipant } source={require('../../../../assets/images/tab_bar/participant.png')} resizeMode={"contain"}/>
+                <Image style={ styles.iconParticipant } source={require('../../../assets/images/tab_bar/participant.png')} resizeMode={"contain"}/>
                 <TextRegular style={styles.textParticipant}>Participants ({this.state.participants.length + 1}) </TextRegular>
             </View>
 

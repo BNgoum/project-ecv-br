@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { connect } from 'react-redux';
 
@@ -18,7 +18,7 @@ class MatchInComing extends Component {
 
     render() {
         return (
-            <TouchableOpacity style={ styles.wrapperMatch }>
+            <View style={ styles.wrapperMatch }>
                 <View style={styles.wrapperDate}>
                     <TextRegular style={styles.dateMatch}>{this.props.matchs.dateMatch}</TextRegular>
                     <TextRegular style={styles.dateMatch}>{this.props.matchs.heureMatch}</TextRegular>
@@ -28,7 +28,7 @@ class MatchInComing extends Component {
                     <TextRegular style={styles.versusText}>VS</TextRegular>
                     <TextBold style={styles.nameTeam}>{this.props.matchs.awayTeam}</TextBold>
                 </View>
-            </TouchableOpacity>
+            </View>
         )
     }
 }
