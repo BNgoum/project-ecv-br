@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import moment from 'moment-timezone';
 import jwt_decode from 'jwt-decode';
-import { requestUserInformation, requestSetLastCallApi } from '../Store/Reducers/User/action';
-import { getAllMatchs, requestGetMatchsBetweenIntervalAndCompetitions } from '../Store/Reducers/Match/action';
+import { requestUserInformation } from '../Store/Reducers/User/action';
+import { getAllMatchs } from '../Store/Reducers/Match/action';
 import { requestUpdateMatch } from '../Store/Reducers/BetRoom/action';
-
-import ActionButton from 'react-native-circular-action-menu';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import BetRoom from '../Components/BetRoom/BetRoom';
 import Tabs from '../Components/Tabs';
 
 import TextBold from '../Components/Style/TextBold';
+import ButtonPrimary from '../Components/Style/ButtonPrimary';
+import ButtonPrimaryText from '../Components/Style/ButtonPrimaryText';
 
 import { LinearGradient } from 'expo';
 
@@ -153,50 +151,55 @@ class Home extends Component {
                 })
             }
         })
-
-        // console.log('Is finished : ', this.state.betRoomFinished)
-        // console.log('Is on going : ', this.state.betRoomOnGoing)
-        // console.log('Is pending : ', this.state.betRoomPending)
     }
 
     displayContent = () => {
         if (this.state.isPending) {
             if (this.state.betRoomPending.length > 0) {
                 return <ScrollView contentContainerStyle={ styles.wrapperBetRoom }>
-            {
-                this.state.betRoomPending.map((item, index) => (
-                    <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
-                ))
-            }
-            </ScrollView>
+                {
+                    this.state.betRoomPending.map((item, index) => (
+                        <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
+                    ))
+                }
+                </ScrollView>
             } else {
-                return <View style={ styles.wrapperText }><TextBold style={ styles.textInfo }>Aucune Bet Room en attente.</TextBold></View>
+                return <View style={ styles.wrapperText }>
+                    <TextBold style={ styles.textInfo }>Aucune Bet Room en attente.</TextBold>
+                    <ButtonPrimary style={ styles.buttonStyle } onPress={() => this.props.navigation.navigate("NewBR")}><ButtonPrimaryText>Crée ta Bet Room</ButtonPrimaryText></ButtonPrimary>
+                </View>
             }
             
         } else if (this.state.isFinished) {
             if (this.state.betRoomFinished.length > 0) {
                 return <ScrollView contentContainerStyle={ styles.wrapperBetRoom }>
-            {
-                this.state.betRoomFinished.map((item, index) => (
-                    <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
-                ))
-            }
-            </ScrollView>
+                {
+                    this.state.betRoomFinished.map((item, index) => (
+                        <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
+                    ))
+                }
+                </ScrollView>
             } else {
-                return <View style={ styles.wrapperText }><TextBold style={ styles.textInfo }>Aucune Bet Room terminée.</TextBold></View>
+                return <View style={ styles.wrapperText }>
+                    <TextBold style={ styles.textInfo }>Aucune Bet Room terminée.</TextBold>
+                    <ButtonPrimary style={ styles.buttonStyle } onPress={() => this.props.navigation.navigate("NewBR")}><ButtonPrimaryText>Crée ta Bet Room</ButtonPrimaryText></ButtonPrimary>
+                </View>
             }
         } else {
 
             if (this.state.betRoomOnGoing.length > 0) {
                 return <ScrollView contentContainerStyle={ styles.wrapperBetRoom }>
-            {
-                this.state.betRoomOnGoing.map((item, index) => (
-                    <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
-                ))
-            }
-            </ScrollView>
+                {
+                    this.state.betRoomOnGoing.map((item, index) => (
+                        <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
+                    ))
+                }
+                </ScrollView>
             } else {
-                return <View style={ styles.wrapperText }><TextBold style={ styles.textInfo }>Aucune Bet Room à venir.</TextBold></View>
+                return <View style={ styles.wrapperText }>
+                    <TextBold style={ styles.textInfo }>Aucune Bet Room à venir.</TextBold>
+                    <ButtonPrimary style={ styles.buttonStyle } onPress={() => this.props.navigation.navigate("NewBR")}><ButtonPrimaryText>Crée ta Bet Room</ButtonPrimaryText></ButtonPrimary>
+                </View>
             }
         }
     }
@@ -217,33 +220,6 @@ class Home extends Component {
 
                     { this.displayContent() }
 
-                    {/* <Text style={styles.title}>Bet Room en cours</Text> */}
-
-                    {/* {
-                        betRoomOwner.length > 0 && 
-                        <View style={{ marginTop: 20 }}>
-                            <ScrollView style={ styles.wrapperBetRoom }>
-                                <FlatList
-                                    data={ betRoomOwner }
-                                    keyExtractor={ (item) => item._id.toString() }
-                                    renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="owner" /> }
-                                />
-                            </ScrollView>
-                        </View>
-                    }
-
-                    {
-                        betRoomParticipant.length > 0 &&
-                        <View>
-                            <ScrollView style={ styles.wrapperBetRoom }>
-                                <FlatList
-                                    data={ betRoomParticipant }
-                                    keyExtractor={ (item) => item._id.toString() }
-                                    renderItem={ ({item}) => <BetRoom data={item} navigation={this.props.navigation} typeParticipant="participant" /> }
-                                />
-                            </ScrollView>
-                        </View>
-                    } */}
                 </LinearGradient>
             </View>
         )
@@ -280,6 +256,11 @@ const styles = StyleSheet.create({
     },
     textInfo: {
         fontSize: 22
+    },
+    buttonStyle: {
+        alignSelf: 'center',
+        width: 150,
+        marginTop: 32
     }
 })
 

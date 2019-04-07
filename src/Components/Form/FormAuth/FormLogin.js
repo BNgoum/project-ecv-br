@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
     },
     linkText: {
         fontSize: 14,
-        color: '#8e8e8e',
         paddingBottom: 5
     }
 })

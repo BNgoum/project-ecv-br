@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         top: '50%',
         transform: [{ translateY: -10 }],
         textTransform: 'uppercase',
-        color: '#8e8e8e',
+        color: '#f1f1f1',
         fontSize: 14,
         fontFamily: 'pt-regular',
         zIndex: -1,
