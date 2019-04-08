@@ -89,7 +89,7 @@ class Home extends Component {
             })
 
             // On parcours les BR Participant du user
-            this.state.betRoomOwner.map(betroom => {
+            this.state.betRoomParticipant.map(betroom => {
                 // Ensuite, on parcours chaque match d'une BR
                 betroom.matchs.map(match => {
                     // On parcours les matchs stockés en BDD
@@ -137,28 +137,69 @@ class Home extends Component {
 
             // On test les cas où tous les status sont à "finished", "scheduled" ou "in play" et on les ajoute dans le state correspondant
             if (status.every( val => val === "FINISHED" ) ) {
-                this.setState({
-                    betRoomFinished: [...this.state.betRoomFinished, betroom]
-                })
+                // this.setState({
+                //     betRoomFinished: [...this.state.betRoomFinished, betroom]
+                // })
+                const action = { type: "ADD_BET_ROOM_FINISHED", value: betroom };
+                this.props.dispatch(action);
             } else if (status.includes("IN_PLAY") || status.includes("PAUSED") || status.includes("FINISHED")) { 
-                this.setState({
-                    betRoomPending: [...this.state.betRoomPending, betroom]
-                })
+                // this.setState({
+                //     betRoomPending: [...this.state.betRoomPending, betroom]
+                // })
+                const action = { type: "ADD_BET_ROOM_PENDING", value: betroom };
+                this.props.dispatch(action);
             }
             else { 
-                this.setState({
-                    betRoomOnGoing: [...this.state.betRoomOnGoing, betroom]
-                })
+                // this.setState({
+                //     betRoomOnGoing: [...this.state.betRoomOnGoing, betroom]
+                // })
+                const action = { type: "ADD_BET_ROOM_ON_GOING", value: betroom };
+                this.props.dispatch(action);
+            }
+        })
+
+        // On dispatch les BR participant
+        betRoomParticipant.map(betroom => {
+            let status = [];
+            // on parcours tous les matchs de la BR et on ajoute son statut dans le array status
+            betroom.matchs.map(match => {
+                status.push(match.statut)
+            })
+
+            // On test les cas où tous les status sont à "finished", "scheduled" ou "in play" et on les ajoute dans le state correspondant
+            if (status.every( val => val === "FINISHED" ) ) {
+                // this.setState({
+                //     betRoomFinished: [...this.state.betRoomFinished, betroom]                    
+                // })
+
+                const action = { type: "ADD_BET_ROOM_FINISHED", value: betroom };
+                this.props.dispatch(action);
+
+            } else if (status.includes("IN_PLAY") || status.includes("PAUSED") || status.includes("FINISHED")) { 
+                // this.setState({
+                //     betRoomPending: [...this.state.betRoomPending, betroom]
+                // })
+
+                const action = { type: "ADD_BET_ROOM_PENDING", value: betroom };
+                this.props.dispatch(action);
+            }
+            else { 
+                // this.setState({
+                //     betRoomOnGoing: [...this.state.betRoomOnGoing, betroom]
+                // })
+
+                const action = { type: "ADD_BET_ROOM_ON_GOING", value: betroom };
+                this.props.dispatch(action);
             }
         })
     }
 
     displayContent = () => {
         if (this.state.isPending) {
-            if (this.state.betRoomPending.length > 0) {
+            if (this.props.state.AuthenticationReducer.betRoomPending.length > 0) {
                 return <ScrollView contentContainerStyle={ styles.wrapperBetRoom }>
                 {
-                    this.state.betRoomPending.map((item, index) => (
+                    this.props.state.AuthenticationReducer.betRoomPending.map((item, index) => (
                         <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
                     ))
                 }
@@ -171,10 +212,10 @@ class Home extends Component {
             }
             
         } else if (this.state.isFinished) {
-            if (this.state.betRoomFinished.length > 0) {
+            if (this.props.state.AuthenticationReducer.betRoomFinished.length > 0) {
                 return <ScrollView contentContainerStyle={ styles.wrapperBetRoom }>
                 {
-                    this.state.betRoomFinished.map((item, index) => (
+                    this.props.state.AuthenticationReducer.betRoomFinished.map((item, index) => (
                         <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
                     ))
                 }
@@ -187,10 +228,10 @@ class Home extends Component {
             }
         } else {
 
-            if (this.state.betRoomOnGoing.length > 0) {
+            if (this.props.state.AuthenticationReducer.betRoomOnGoing.length > 0) {
                 return <ScrollView contentContainerStyle={ styles.wrapperBetRoom }>
                 {
-                    this.state.betRoomOnGoing.map((item, index) => (
+                    this.props.state.AuthenticationReducer.betRoomOnGoing.map((item, index) => (
                         <BetRoom key = {item._id.toString()} data={item} navigation={this.props.navigation} />
                     ))
                 }
@@ -211,6 +252,7 @@ class Home extends Component {
     }
 
     render() {
+        // console.log('Redux BR : ', this.props.state.AuthenticationReducer.betRoomOwner)
         return (
             <View style={styles.wrapperContent}>
                 <LinearGradient style={{ padding: 20, flex: 1 }} colors={['#10122d', '#385284', '#10122d']} >
@@ -228,8 +270,7 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     wrapperContent: {
-        flex: 1,
-        // paddingHorizontal: 20
+        flex: 1
     },
     titleScreen: {
         fontSize: 18,

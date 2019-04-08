@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
 
+import TextRegular from '../Style/TextRegular';
 
 export default class InputText extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ export default class InputText extends Component {
                     textContentType={this.props.typeContent}
                     secureTextEntry={this.props.isPassword}
                 />
-                <Text style={ [styles.placeholder, this.state.isFocus && styles.isFocus] }>{this.props.placeholder.toUpperCase()}</Text>
+                <TextRegular style={ [styles.placeholder, this.state.isFocus && styles.isFocus] }>{this.props.placeholder.toUpperCase()}</TextRegular>
             </View>
         )
     }
@@ -55,7 +56,9 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         fontFamily: 'pt-regular',
         color: '#fff',
-        width: 'auto'
+        width: 'auto',
+        backgroundColor: 'transparent',
+        zIndex: 1
     },
     placeholder: {
         position: 'absolute',
@@ -65,8 +68,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         color: '#f1f1f1',
         fontSize: 14,
-        fontFamily: 'pt-regular',
-        zIndex: -1,
+        zIndex: 0,
     },
     isFocus: {
         fontSize: 10,

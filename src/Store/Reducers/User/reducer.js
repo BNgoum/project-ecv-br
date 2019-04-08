@@ -7,13 +7,31 @@ const initialState = {
     betRoomParticipant: [],
     currentBetRoom: [],
     userInfo: null,
-    typeParticipant: ""
+    typeParticipant: "",
+    betRoomPending: [],
+    betRoomOnGoing: [],
+    betRoomFinished: []
 }
 
 function authentication(state = initialState, action) {
     let nextState;
 
     switch (action.type) {
+        case 'ADD_BET_ROOM_PENDING':
+            nextState = {
+                ...state, betRoomPending: [...state.betRoomPending, action.value]
+            }
+            return nextState;
+        case 'ADD_BET_ROOM_ON_GOING':
+            nextState = {
+                ...state, betRoomOnGoing: [...state.betRoomOnGoing, action.value]
+            }
+            return nextState;
+        case 'ADD_BET_ROOM_FINISHED':
+            nextState = {
+                ...state, betRoomFinished: [...state.betRoomFinished, action.value]
+            }
+            return nextState;
         case 'IS_LOGIN':
             nextState = {
                 ...state, isLogin: action.value

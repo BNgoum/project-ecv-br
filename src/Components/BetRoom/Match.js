@@ -113,7 +113,7 @@ export default class Match extends Component {
                         this.state.isBegin &&
                         <View style={ styles.wrapperResultatHomeTeam }>
                             <TextRegular style={ styles.scoreResultatHomeTeam }>Résultat</TextRegular>
-                            <TextRegular style={ styles.scoreResultatHomeTeam }>{this.props.data.scoreAwayTeam}</TextRegular>
+                            <TextRegular style={ styles.scoreResultatHomeTeam }>{this.props.data.scoreHomeTeam}</TextRegular>
                         </View>
                     }         
 
@@ -351,13 +351,13 @@ const styles = StyleSheet.create({
     wrapperHomeTeamScore: {
         position: 'relative',
         flexDirection: 'row',
-        paddingTop: 8,
+        paddingTop: 12,
         justifyContent: 'flex-end'
     },
     wrapperAwayTeamScore: {
         position: 'relative',
         flexDirection: 'row',
-        paddingTop: 8
+        paddingTop: 12
     },
     wrapperAwayTeam: {
         justifyContent: 'space-between',
@@ -423,13 +423,13 @@ const styles = StyleSheet.create({
     },
     textMonPronostic: {
         position: 'absolute',
-        top: -10,
+        top: -2,
         right: 0,
         fontSize: 12
     },
     textMonPronosticAwayTeam: {
         position: 'absolute',
-        top: -10,
+        top: -2,
         left: 0,
         fontSize: 12
     },

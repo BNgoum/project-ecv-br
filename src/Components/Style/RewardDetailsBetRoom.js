@@ -15,7 +15,7 @@ export default class RewardDetailsBetRoom extends Component {
         if (this.props.reward === "Restaurant") {
             return <View style={ styles.wrapperReward }>
                 <View style={ styles.wrapperPicto } >
-                    <Image style={ styles.pictoStyle } source={require('../../Images/new_bet_room/restaurant.png')} />
+                    <Image style={ styles.pictoStyle } resizeMode={"contain"} source={require('../../Images/new_bet_room/restaurant.png')} />
                 </View>
                 
                 <View style={ styles.wrapperRewardText }>
@@ -26,7 +26,7 @@ export default class RewardDetailsBetRoom extends Component {
         } else if (this.props.reward === "Un verre") {
             return <View style={ styles.wrapperReward }>
                 <View style={ styles.wrapperPicto } >
-                    <Image style={ styles.pictoStyle } source={require('../../Images/new_bet_room/verre.png')} />
+                    <Image style={ styles.pictoStyle } resizeMode={"contain"} source={require('../../Images/new_bet_room/verre.png')} />
                 </View>
                 
                 <View style={ styles.wrapperRewardText }>
@@ -37,7 +37,7 @@ export default class RewardDetailsBetRoom extends Component {
         } else if (this.props.reward === "Double les points") {
             return <View style={ styles.wrapperReward }>
                 <View style={ styles.wrapperPicto } >
-                    <Image style={ styles.pictoStyle } source={require('../../Images/new_bet_room/double_points.png')} />
+                    <Image style={ styles.pictoStyle } resizeMode={"contain"} source={require('../../Images/new_bet_room/double_points.png')} />
                 </View>                
                 
                 <View style={ styles.wrapperRewardText }>
@@ -48,7 +48,7 @@ export default class RewardDetailsBetRoom extends Component {
         } else {
             return <View style={ styles.wrapperReward }>
                 <View style={ styles.wrapperPicto } >
-                    <Image style={ styles.pictoStyle } source={require('../../Images/new_bet_room/gage.png')} />
+                    <Image style={ styles.pictoStyle } resizeMode={"contain"} source={require('../../Images/new_bet_room/gage.png')} />
                 </View>
                 <View style={ styles.wrapperRewardText }>
                     <TextRegular style={ styles.subtitle }>Récompense</TextRegular>
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     wrapperPicto: {
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         marginRight: 38,
         position: 'absolute',
         left: 0

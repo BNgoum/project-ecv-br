@@ -4,6 +4,8 @@ import { StyleSheet, View, FlatList, Image } from "react-native";
 import { connect } from "react-redux";
 
 import { requestUserInformationById } from "../../Store/Reducers/User/action";
+import { requestPoints } from '../../Store/Reducers/BetRoom/action';
+
 import Match from "./Match";
 
 import Tabs from "../Tabs";
@@ -21,7 +23,8 @@ class BetRoomDetails extends Component {
       participants: [],
       statut: "Pas débuté",
       isDetails: true,
-      isMatchs: false
+      isMatchs: false,
+      totalPoints: 0
     };
   }
 
@@ -29,6 +32,8 @@ class BetRoomDetails extends Component {
     this.setParticipantsName();
 
     this.getStatusMatch();
+
+    this.displayNombrePointsGagne();
   }
 
   getStatusMatch = () => {
@@ -56,8 +61,9 @@ class BetRoomDetails extends Component {
   };
 
   setParticipantsName = () => {
-    const participants = this.props.state.AuthenticationReducer.currentBetRoom
-      .participants;
+    const participants = this.props.state.AuthenticationReducer.currentBetRoom.participants;
+
+    participants.push(this.props.state.AuthenticationReducer.userInfo._id);
 
     participants.map(participant => {
       return new Promise((resolve, reject) => {
@@ -87,31 +93,97 @@ class BetRoomDetails extends Component {
     }
   };
 
+  // On calcul le total des points gagné en fonction des paris
+  displayNombrePointsGagne = () => {
+    const currentBetRoom = this.props.state.AuthenticationReducer.currentBetRoom;
+    const typeParticipant = this.props.state.AuthenticationReducer.typeParticipant;
+
+    const userId = this.props.state.AuthenticationReducer.userInfo._id;
+    const idBetRoom = currentBetRoom._id;
+    let matchId = "";
+    
+
+    let points = 0;
+
+    currentBetRoom.matchs.map(match => {
+      matchId = match._id;
+      const scoreHTBet = match.scoreHomeTeamInputUser;
+      const scoreATBet = match.scoreAwayTeamInputUser;
+      const scoreHTFinal = match.scoreHomeTeam;
+      const scoreATFinal = match.scoreAwayTeam;
+      const gagnant = match.gagnant;
+
+      // Si le score parié est égale au score final = 3 points
+      // En cas de match nul / pronostic gagnant réussi = 1 points
+      if (scoreHTBet === scoreHTFinal && scoreATBet === scoreATFinal) { points = 3 }
+      else if ( 
+          scoreATBet === scoreHTBet && gagnant === "DRAW" ||
+          scoreATBet > scoreHTBet && gagnant === "AWAY_TEAM" ||
+          scoreATBet < scoreHTBet && gagnant === "HOME_TEAM"
+      ) { points = 1 }
+      else { points = 0 }
+    })
+
+    this.setState({totalPoints: points})
+
+    return requestPoints(userId, typeParticipant, idBetRoom, matchId, points);
+  }
+
+      // On calcul le total des points gagné en fonction du pari
+    // calculPoints = () => {
+    //     const userId = this.props.userId;
+    //     const typeParticipant = this.props.typeParticipant;
+    //     const idBetRoom = this.props.betRoom._id;
+    //     const matchId = this.props.data._id;
+    //     const scoreHTBet = this.props.data.scoreHomeTeamInputUser;
+    //     const scoreATBet = this.props.data.scoreAwayTeamInputUser;
+    //     const scoreHTFinal = this.props.data.scoreHomeTeam;
+    //     const scoreATFinal = this.props.data.scoreAwayTeam;
+    //     const gagnant = this.props.data.gagnant;
+
+    //     let points = 0;
+
+    //     // Si le score parié est égale au score final = 3 points
+    //     // En cas de match nul / pronostic gagnant réussi = 1 points
+    //     if (scoreHTBet === scoreHTFinal && scoreATBet === scoreATFinal) { points = 3 }
+    //     else if ( 
+    //         scoreATBet === scoreHTBet && gagnant === "DRAW" ||
+    //         scoreATBet > scoreHTBet && gagnant === "AWAY_TEAM" ||
+    //         scoreATBet < scoreHTBet && gagnant === "HOME_TEAM"
+    //     ) { points = 1 }
+    //     else { points = 0 }
+
+    //     console.log('Points pour le match ', this.props.data.homeTeam, this.props.data.awayTeam, ', point gagnés : ', points)
+    //     console.log('Details pour le match : ', userId, ', ', idBetRoom, ', ', matchId)
+
+    //     // Appel à la fonction 
+    //     return requestPoints(userId, typeParticipant, idBetRoom, matchId, points);
+    // }
+
   displayTextStatut = () => {
     if (this.state.statut === "Terminée") {
         return <TextBold style={ styles.textStatut }>La Bet Room est terminée</TextBold>
     } else if (this.state.statut === "En cours") {
-        return <TextBold style={ styles.textStatut }>La Bet Room est en cours</TextBold>
+        return <TextBold style={ styles.textStatutBis }>La Bet Room est en cours</TextBold>
     } else {
-        return <TextBold style={ styles.textStatut }>Faites vos pronostics !</TextBold>
+        return <TextBold style={ styles.textStatutBis }>Faites vos pronostics !</TextBold>
     }
   }
 
   displayContent = () => {
-    const betRoomDetails = this.props.state.AuthenticationReducer
-    .currentBetRoom;
+    const betRoomDetails = this.props.state.AuthenticationReducer.currentBetRoom;
     const userId = this.props.state.AuthenticationReducer.userInfo._id;
-    const typeParticipant = this.props.state.AuthenticationReducer
-      .typeParticipant;
+    const typeParticipant = this.props.state.AuthenticationReducer.typeParticipant;
+
       if (this.state.isDetails) {
-        return <View>
+        return <View style={ { flex: 1 } }>
             <StatusBetRoom statut={this.state.statut} />
 
             <RewardDetailsBetRoom reward={betRoomDetails.reward} />
 
             <View style={styles.wrapperParticipants}>
                 <Image style={ styles.iconParticipant } source={require('../../../assets/images/tab_bar/participant.png')} resizeMode={"contain"}/>
-                <TextRegular style={styles.textParticipant}>Participants ({this.state.participants.length + 1}) </TextRegular>
+                <TextRegular style={styles.textParticipant}>Participants ({this.state.participants.length}) </TextRegular>
             </View>
 
             {
@@ -122,22 +194,23 @@ class BetRoomDetails extends Component {
                     renderItem={({ item }) => <BlockFriend friend={item.pseudo}></BlockFriend>}
                 />
             }
-            
         </View>
       } else {
         return <View style={ { flex: 1 } }>
             { this.displayTextStatut() }
 
+            { this.state.statut === "Terminée" && <TextRegular style={styles.totalPointsText}>Nombre de point(s) gagné(s) : { this.state.totalPoints }</TextRegular>}
+
             <FlatList
                 data={betRoomDetails.matchs}
                 keyExtractor={item => item._id.toString()}
                 renderItem={({ item }) => (
-                    <Match
+                  <Match
                     data={item}
                     betRoom={betRoomDetails}
                     userId={userId}
                     typeParticipant={typeParticipant}
-                    />
+                  />
                 )}
             />
         </View>
@@ -145,10 +218,8 @@ class BetRoomDetails extends Component {
   }
 
   render() {
-    const betRoomDetails = this.props.state.AuthenticationReducer
-      .currentBetRoom;
-    const userId = this.props.state.AuthenticationReducer.userInfo._id;
-    const typeParticipant = this.props.state.AuthenticationReducer.typeParticipant;
+    const betRoomDetails = this.props.state.AuthenticationReducer.currentBetRoom;
+    
     return (
       <View style={styles.container}>
         <HeaderDetailsBetRoom
@@ -156,11 +227,6 @@ class BetRoomDetails extends Component {
           subtitle={betRoomDetails.betsNumber}
           style={styles.headerComponent}
         />
-        {/* <Text style={ styles.title }>{ betRoomDetails.name }</Text>
-
-                <View style={ styles.wrapperBet }>
-                    <Text>{ betRoomDetails.betsNumber } pari</Text>
-                </View> */}
 
         <Tabs
           firstTab="Détails"
@@ -168,15 +234,7 @@ class BetRoomDetails extends Component {
           displayTabContent={this.handleDisplayTabContent}
         />
 
-        {/* <View style={ styles.wrapperIsBegin }>
-                    <Text>Statut: { this.state.statut }</Text>
-                </View> */}
-
         { this.displayContent() }
-
-        {/* <View style={styles.wrapperReward}>
-          <Text>Récompense : {betRoomDetails.reward}</Text>
-        </View> */}        
       </View>
     );
   }
@@ -218,13 +276,23 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   textParticipant: {
-      color: '#6b6d8a',
+      color: '#f1f1f1',
       fontSize: 13
   },
   textStatut: {
       fontSize: 22,
+      marginTop: 22,
+      textAlign: 'center'
+  },
+  textStatutBis: {
+      fontSize: 22,
       marginVertical: 22,
       textAlign: 'center'
+  },
+  totalPointsText: {
+    fontSize: 18,
+    alignSelf: 'center',
+    marginBottom: 22,
   }
 });
 

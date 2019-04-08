@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ScrollView, Image, FlatList } from 'react-native';
+import { StyleSheet, View, ScrollView, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import Match from './Match';
 import TabButtons from './TabButtons';

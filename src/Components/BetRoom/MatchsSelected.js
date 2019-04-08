@@ -32,7 +32,7 @@ class MatchsSelected extends Component {
             let currentBetRoomOwner = this.props.state.AuthenticationReducer.betRoomOwner;
             currentBetRoomOwner.push(response.data.data);
 
-            const action = { type: "ADD_OWNER_BET_ROOM", value: currentBetRoomOwner }
+            const action = { type: "ADD_BET_ROOM_ON_GOING", value: response.data.data }
             this.props.dispatch(action);
         })
         .then(() => this.props.navigation.navigate('Accueil'))

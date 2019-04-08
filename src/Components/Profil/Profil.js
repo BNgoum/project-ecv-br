@@ -15,17 +15,21 @@ class Profil extends Component {
 
     render() {
         const pseudo = this.props.state.AuthenticationReducer.userInfo.pseudo;
+        const nbBRCrees = this.props.state.AuthenticationReducer.betRoomOwner.length;
+        const nbBRParticipe = this.props.state.AuthenticationReducer.betRoomParticipant.length;
+
+        console.log('Nombre de br : ', this.props.state.AuthenticationReducer.betRoomOwner.length)
         return (
             <View style={styles.container}>
                 <TextBold style={ styles.titleStyle }>Bonjour { "\n" + pseudo }</TextBold>
                 <View style={ styles.wrapperFabs }>
                     <View style={ styles.circle }></View>
                     <View style={ [styles.itemProfil, styles.itemProfil1] }>
-                        <View style={ styles.itemProfilContent }><TextBold style={ styles.itemNumber }>4</TextBold></View>
+                        <View style={ styles.itemProfilContent }><TextBold style={ styles.itemNumber }>{ nbBRCrees }</TextBold></View>
                         <TextRegular style={ styles.itemText }>Bet Rooms crées</TextRegular>
                     </View>
                     <View style={ [styles.itemProfil, styles.itemProfil2] }>
-                        <View style={ styles.itemProfilContent }><TextBold style={ styles.itemNumber }>9</TextBold></View>
+                        <View style={ styles.itemProfilContent }><TextBold style={ styles.itemNumber }>{ nbBRCrees + nbBRParticipe }</TextBold></View>
                         <TextRegular style={ styles.itemText }>Bet Rooms participé</TextRegular>
                     </View>
                     <View style={ [styles.itemProfil, styles.itemProfil3] }>

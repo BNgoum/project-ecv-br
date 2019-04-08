@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {requestLogin} from '../../../Store/Reducers/User/action';
 
 import TextBold from '../../Style/TextBold';
+import TextRegular from '../../Style/TextRegular';
 import ButtonPrimary from '../../Style/ButtonPrimary';
 import ButtonPrimaryText from '../../Style/ButtonPrimaryText';
 import Link from '../../Style/Link';
@@ -77,10 +78,10 @@ class FormLogin extends Component {
                     testvalue={this.state.password}
                 />
 
-                { this.props.state.AuthenticationReducer.auth_message_error !== "" ? <Text style={styles.textError}>{this.props.state.AuthenticationReducer.auth_message_error}</Text> : null }
+                { this.props.state.AuthenticationReducer.auth_message_error !== "" && <TextRegular style={styles.textError}>{this.props.state.AuthenticationReducer.auth_message_error}</TextRegular> }
 
-                { this.state.isFound ? null : <Text style={styles.textError}>Email ou mot de passe incorrect.</Text> }
-                { this.state.isPasswordBlank ? <Text style={styles.textError}>Vous devez saisir votre mot de passe.</Text> : null }
+                { !this.state.isFound && <TextRegular style={styles.textError}>Email ou mot de passe incorrect.</TextRegular> }
+                { this.state.isPasswordBlank && <TextRegular style={styles.textError}>Vous devez saisir votre mot de passe.</TextRegular> }
 
                 <ButtonPrimary onPress={this.checkInputNotBlank} style={styles.buttonValidate}>
                     <ButtonPrimaryText>Se connecter</ButtonPrimaryText>
