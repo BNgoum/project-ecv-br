@@ -102,8 +102,9 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 13,
-        color: '#6b6d8a',
-        marginBottom: 6
+        color: '#f1f1f1',
+        marginBottom: 6,
+        opacity: .7
     },
     wrapperRewardText: {
         alignSelf: 'center'

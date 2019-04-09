@@ -16,6 +16,9 @@ import BlockFriend from '../Style/BlockFriend';
 import TextRegular from '../Style/TextRegular';
 import TextBold from "../Style/TextBold";
 
+import { Participant_small } from '../../Images/icons';
+
+
 class BetRoomDetails extends Component {
   constructor(props) {
     super(props);
@@ -182,7 +185,7 @@ class BetRoomDetails extends Component {
             <RewardDetailsBetRoom reward={betRoomDetails.reward} />
 
             <View style={styles.wrapperParticipants}>
-                <Image style={ styles.iconParticipant } source={require('../../../assets/images/tab_bar/participant.png')} resizeMode={"contain"}/>
+                <Participant_small style={ styles.iconParticipant }/>
                 <TextRegular style={styles.textParticipant}>Participants ({this.state.participants.length}) </TextRegular>
             </View>
 
@@ -268,7 +271,7 @@ const styles = StyleSheet.create({
   wrapperParticipants: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 10,
   },
   iconParticipant: {
     width: 11,

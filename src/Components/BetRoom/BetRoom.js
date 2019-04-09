@@ -12,6 +12,7 @@ import TextRegular from '../../Components/Style/TextRegular';
 import { Arrow } from '../../Images/icons';
 
 import { Restaurant, Verre, DoublePoints, Gage } from '../../Images/rewards';
+import { Participant_small } from '../../Images/icons';
 
 class BetRoom extends Component {
     constructor(props) {
@@ -228,8 +229,6 @@ class BetRoom extends Component {
         return (
             <TouchableOpacity onPress={ this.handleOnPress } style={ styles.wrapperContent }>
                 <View style={ styles.wrapperRight }>
-                    {/* <Image source={this.state.reward} style={ styles.iconRewards } resizeMode={"contain"} /> */}
-                    {/* <Restaurant style={ styles.iconRewards } /> */}
 
                     { this.displayReward() }
                     
@@ -242,7 +241,7 @@ class BetRoom extends Component {
                             <TextRegular style={ styles.textBetsNumber }>{ this.props.data.betsNumber } pari</TextRegular>
                         }
                         <View style={ styles.wrapperParticipant }>
-                            <Image style={ styles.iconParticipant } source={require('../../../assets/images/tab_bar/participant.png')} resizeMode={"contain"}/>
+                            <Participant_small style={ styles.iconParticipant }/>
                             <TextRegular style={ styles.secondText }> x { this.props.data.participants.length + 1 }</TextRegular>
                         </View>
                     </View>
@@ -280,8 +279,8 @@ const styles = StyleSheet.create({
     },
     typeParticipant: {
         fontSize: 12,
-        color: '#6b6d8a',
-        marginBottom: 12
+        color: '#f1f1f1',
+        marginBottom: 12,
     },
     iconRewards: {
         width: 55,
@@ -296,11 +295,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 3
+        marginTop: 3,
+        opacity: .7
     },
     secondText: {
         fontSize: 12,
-        color: '#6b6d8a'
+        color: '#f1f1f1',
     }
 })
 
