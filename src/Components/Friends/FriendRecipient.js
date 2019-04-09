@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
-import { requestUserInformation, requestUserInformationById } from '../../Store/Reducers/User/action';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { requestUserInformation } from '../../Store/Reducers/User/action';
 import { acceptedRequest } from '../../Store/Reducers/Friends/action'
 
 const jwtDecode = require('jwt-decode');
@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import TextBold from '../Style/TextBold';
 import TextRegular from '../Style/TextRegular';
 import { AntDesign } from '@expo/vector-icons';
+
+import { Check } from '../../Images/icons';
 
 class FriendRecipient extends Component {
     constructor(props) {
@@ -46,13 +48,6 @@ class FriendRecipient extends Component {
 
     render() {
         return (
-            // <View styles={styles.wrapperRecipientFriend}>
-            //     <Text style={styles.pseudo} >{this.props.data.pseudo}</Text>
-            //     <TouchableOpacity style={styles.button} onPress={this.acceptedRequest}>
-            //         <Image style={styles.icon} source={require('../../Images/friends/check.png')} />
-            //     </TouchableOpacity>
-            // </View>
-
             <View style={ styles.container }>
                 <View style={ styles.avatar }>
                     <AntDesign name="user" size={32} color="black" />
@@ -62,7 +57,7 @@ class FriendRecipient extends Component {
                     <TextRegular style={styles.sousTexte} >0 Bet Room joué ensemble</TextRegular>
                 </View>
 
-                <TouchableOpacity style={styles.button} onPress={this.acceptedRequest}><Image style={styles.icon} resizeMode={"contain"} source={require('../../Images/friends/check.png')} /></TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={this.acceptedRequest}><Check style={ styles.icon } /></TouchableOpacity>
             </View>
         )
     }

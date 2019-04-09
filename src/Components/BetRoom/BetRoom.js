@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 
 import { connect } from 'react-redux';
 
@@ -10,6 +10,8 @@ import TextBold from '../../Components/Style/TextBold';
 import TextRegular from '../../Components/Style/TextRegular';
 
 import { Arrow } from '../../Images/icons';
+
+import { Restaurant, Verre, DoublePoints, Gage } from '../../Images/rewards';
 
 class BetRoom extends Component {
     constructor(props) {
@@ -25,8 +27,6 @@ class BetRoom extends Component {
     }
 
     componentDidMount() {
-        this.setImage();
-
         const idUser = this.props.state.AuthenticationReducer.userInfo._id;
 
         return new Promise((resolve, reject) => {
@@ -190,22 +190,17 @@ class BetRoom extends Component {
         .catch((error) => console.log('Erreur lors du handleOnPress (BetRoom.js) : ', error))
     }
 
-    setImage = () => {
+    displayReward = () => {
         const picto = this.props.data.reward;
 
-        switch (picto) {
-            case 'Gage':
-                this.setState({ reward: require("../../Images/new_bet_room/gage.png"), styleReward: { width: 54, height: 31} })
-                break;
-            case 'Double les points':
-                this.setState({ reward: require("../../Images/new_bet_room/double_points.png"), styleReward: { width: 56, height: 48} })
-                break;
-            case 'Un verre':
-                this.setState({ reward: require("../../Images/new_bet_room/verre.png"), styleReward: { width: 49, height: 49} })
-                break;
-            case 'Restaurant':
-                this.setState({ reward: require("../../Images/new_bet_room/restaurant.png"), styleReward: { width: 50, height: 50} })
-                break;
+        if (picto === 'Gage') {
+            return <Gage style={ styles.iconRewards } />
+        } else if (picto === "Double les points") {
+            return <DoublePoints style={ styles.iconRewards } />
+        } else if (picto === 'Un verre') {
+            return <Verre style={ styles.iconRewards } />
+        } else {
+            return <Restaurant style={ styles.iconRewards } />
         }
     }
 
@@ -233,7 +228,10 @@ class BetRoom extends Component {
         return (
             <TouchableOpacity onPress={ this.handleOnPress } style={ styles.wrapperContent }>
                 <View style={ styles.wrapperRight }>
-                    <Image source={this.state.reward} style={ styles.iconRewards } resizeMode={"contain"} />
+                    {/* <Image source={this.state.reward} style={ styles.iconRewards } resizeMode={"contain"} /> */}
+                    {/* <Restaurant style={ styles.iconRewards } /> */}
+
+                    { this.displayReward() }
                     
                     <View>
                         <TextRegular style={styles.typeParticipant}>{ this.checkStatutParticipant() }</TextRegular>

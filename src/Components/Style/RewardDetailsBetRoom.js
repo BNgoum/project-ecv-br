@@ -4,6 +4,8 @@ import { StyleSheet, View, Image } from 'react-native';
 import TextRegular from './TextRegular';
 import TextBold from './TextBold';
 
+import { Restaurant, Verre, DoublePoints, Gage } from '../../Images/rewards';
+
 export default class RewardDetailsBetRoom extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +17,7 @@ export default class RewardDetailsBetRoom extends Component {
         if (this.props.reward === "Restaurant") {
             return <View style={ styles.wrapperReward }>
                 <View style={ styles.wrapperPicto } >
-                    <Image style={ styles.pictoStyle } resizeMode={"contain"} source={require('../../Images/new_bet_room/restaurant.png')} />
+                    <Restaurant style={ styles.pictoStyle } />
                 </View>
                 
                 <View style={ styles.wrapperRewardText }>
@@ -26,7 +28,7 @@ export default class RewardDetailsBetRoom extends Component {
         } else if (this.props.reward === "Un verre") {
             return <View style={ styles.wrapperReward }>
                 <View style={ styles.wrapperPicto } >
-                    <Image style={ styles.pictoStyle } resizeMode={"contain"} source={require('../../Images/new_bet_room/verre.png')} />
+                    <Verre style={ styles.pictoStyle } />
                 </View>
                 
                 <View style={ styles.wrapperRewardText }>
@@ -37,7 +39,7 @@ export default class RewardDetailsBetRoom extends Component {
         } else if (this.props.reward === "Double les points") {
             return <View style={ styles.wrapperReward }>
                 <View style={ styles.wrapperPicto } >
-                    <Image style={ styles.pictoStyle } resizeMode={"contain"} source={require('../../Images/new_bet_room/double_points.png')} />
+                    <DoublePoints style={ styles.pictoStyle } />
                 </View>                
                 
                 <View style={ styles.wrapperRewardText }>
@@ -48,7 +50,7 @@ export default class RewardDetailsBetRoom extends Component {
         } else {
             return <View style={ styles.wrapperReward }>
                 <View style={ styles.wrapperPicto } >
-                    <Image style={ styles.pictoStyle } resizeMode={"contain"} source={require('../../Images/new_bet_room/gage.png')} />
+                    <Gage style={ styles.pictoStyle } />
                 </View>
                 <View style={ styles.wrapperRewardText }>
                     <TextRegular style={ styles.subtitle }>Récompense</TextRegular>
@@ -87,6 +89,7 @@ const styles = StyleSheet.create({
         height: 60,
         marginRight: 38,
         position: 'absolute',
+        justifyContent: 'center',
         left: 0
     },
     pictoStyle: {

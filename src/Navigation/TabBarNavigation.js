@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation'
-import { StyleSheet, Image } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import Home from '../Screens/Home'
 import BetRoomDetails from '../Screens/BetRoom/BetRoomDetails'
@@ -13,6 +13,8 @@ import Classement from '../Screens/Classement'
 
 import FriendsAndProfil from '../Screens/FriendsProfil/FriendsAndProfil'
 import ResearchFriends from '../Screens/FriendsProfil/ResearchFriends'
+
+import { Home_inactif, Home_actif, Match_inactif, Match_actif, Classement_inactif, Classement_actif, Profil_inactif, Profil_actif, New_actif, New_inactif } from '../Images/tabbar_icons';
 
 const HomeStack = createStackNavigator({
     Home : {
@@ -195,8 +197,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={styles.icon} source={require('../../assets/images/tab_bar/home_active.png')}/>
-                : <Image style={styles.icon} source={require('../../assets/images/tab_bar/home_inactive.png')}/>
+                ? <View style={ styles.icon }><Home_actif  /></View>
+                : <View style={ styles.icon }><Home_inactif /></View>
             )
         }
     },
@@ -205,8 +207,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={styles.icon} source={require('../../assets/images/tab_bar/match_active.png')}/>
-                : <Image style={styles.icon} source={require('../../assets/images/tab_bar/match_inactive.png')}/>
+                ? <View style={ styles.icon }><Match_actif /></View>
+                : <View style={ styles.icon }><Match_inactif /></View>
             )
         }
     },
@@ -215,8 +217,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={styles.icon} source={require('../../assets/images/tab_bar/add_active.png')}/>
-                : <Image style={styles.icon} source={require('../../assets/images/tab_bar/add_inactive.png')}/>
+                ? <View style={ styles.icon }><New_actif /></View>
+                : <View style={ styles.icon }><New_inactif /></View>
             )
         }
     },
@@ -225,8 +227,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={styles.icon} source={require('../../assets/images/tab_bar/classement_active.png')}/>
-                : <Image style={styles.icon} source={require('../../assets/images/tab_bar/classement_inactive.png')}/>
+                ? <View style={ styles.icon }><Classement_actif /></View>
+                : <View style={ styles.icon }><Classement_inactif /></View>
             )
         }
     },
@@ -235,8 +237,8 @@ const TabBarNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ focused }) =>  (
                 focused
-                ? <Image style={ styles.icon } source={require('../../assets/images/tab_bar/profil_active.png')} resizeMode={"contain"}/>
-                : <Image style={ styles.icon } source={require('../../assets/images/tab_bar/profil_inactive.png')} resizeMode={"contain"}/>
+                ? <View style={ styles.icon }><Profil_actif /></View>
+                : <View style={ styles.icon }><Profil_inactif /></View>
             )
         }
     }
@@ -256,8 +258,7 @@ const AppContainer = createAppContainer(TabBarNavigator);
 
 const styles = StyleSheet.create({
     icon: {
-      width: 23,
-      height: 23
+      overflow: 'hidden'
     }
 })
 

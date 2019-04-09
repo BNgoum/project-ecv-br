@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 
 import { connect } from 'react-redux';
 
@@ -7,6 +7,8 @@ import TextBold from '../../Components/Style/TextBold';
 import TextRegular from '../../Components/Style/TextRegular';
 import StepNumber from '../../Components/Style/StepNumber';
 import StepNumberContainer from '../../Components/Style/StepNumberContainer';
+
+import { Restaurant, Verre, DoublePoints, Gage } from '../../Images/rewards';
 
 class Rewards extends Component {
 
@@ -27,7 +29,8 @@ class Rewards extends Component {
                         onPress={() => this.handleOnPress("Restaurant")}
                         style={[styles.wrapperButtonReward, reward === "Restaurant" && styles.buttonSelect]}
                     >
-                        <Image style={ styles.pictoStyle } source={require('../../Images/new_bet_room/restaurant.png')}/>
+                        <Restaurant style={ styles.pictoStyle } />
+                        {/* <Image style={ styles.pictoStyle } source={require('../../Images/new_bet_room/restaurant.png')}/> */}
                         <TextRegular style={styles.rewardText}>Restaurant</TextRegular>
                     </TouchableOpacity>
 
@@ -35,7 +38,8 @@ class Rewards extends Component {
                         onPress={() => this.handleOnPress("Un verre")}
                         style={[styles.wrapperButtonReward, reward === "Un verre" && styles.buttonSelect]}
                     >
-                        <Image style={ styles.pictoStyle } source={require('../../Images/new_bet_room/verre.png')}/>
+                        {/* <Image style={ styles.pictoStyle } source={require('../../Images/new_bet_room/verre.png')}/> */}
+                        <Verre style={ styles.pictoStyle } />
                         <TextRegular style={styles.rewardText}>Un verre</TextRegular>
                     </TouchableOpacity>
                 </View>
@@ -44,7 +48,8 @@ class Rewards extends Component {
                         onPress={() => this.handleOnPress("Double les points")}
                         style={[styles.wrapperButtonReward, reward === "Double les points" && styles.buttonSelect]}
                     >
-                        <Image style={ [styles.pictoStyle, styles.pictoDoublePoints] } source={require('../../Images/new_bet_room/double_points.png')} resizeMode={'contain'}/>
+                        {/* <Image style={ [styles.pictoStyle, styles.pictoDoublePoints] } source={require('../../Images/new_bet_room/double_points.png')} resizeMode={'contain'}/> */}
+                        <DoublePoints style={ styles.pictoStyle } />
                         <TextRegular style={styles.rewardText}>Double points</TextRegular>
                     </TouchableOpacity>
 
@@ -52,7 +57,8 @@ class Rewards extends Component {
                         onPress={() => this.handleOnPress("Gage")}
                         style={[styles.wrapperButtonReward, reward === "Gage" && styles.buttonSelect]}
                     >
-                        <Image style={ [styles.pictoStyle, styles.pictoGage] } source={require('../../Images/new_bet_room/gage.png')} resizeMode={'contain'}/>
+                        {/* <Image style={ [styles.pictoStyle, styles.pictoGage] } source={require('../../Images/new_bet_room/gage.png')} resizeMode={'contain'}/> */}
+                        <Gage style={ styles.pictoStyle } />
                         <TextRegular style={styles.rewardText}>Gage</TextRegular>
                     </TouchableOpacity>
                 </View>
@@ -86,6 +92,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 6,
         backgroundColor: '#282a4e',
         borderRadius: 5,
+        overflow: 'hidden'
     },
     buttonSelect: {
         borderWidth: 1,
